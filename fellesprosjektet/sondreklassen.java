@@ -1,5 +1,7 @@
 package fellesprosjektet;
 
 public class sondreklassen {
-	hei hei
+	public static void main(String args[]) {
+		System.out.println("Hello World!");
+	}
 }
