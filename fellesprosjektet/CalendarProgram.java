@@ -21,6 +21,10 @@ public class CalendarProgram{
 	static JScrollPane stblCalendar; //The scrollpane
 	static JPanel pnlCalendar;
 	static int realYear, realMonth, realDay, currentYear, currentMonth;
+	
+//	public static void main(String args[]) {
+//		System.out.println("hello");
+//	}
 
 	public static void main (String args[]){
 		//Look and feel
