@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controller.Controller;
+
 import sun.tools.tree.CaseStatement;
 
 public class Meeting {
@@ -16,7 +18,6 @@ public class Meeting {
 
 	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting){
 		this.participants = participants;
-		this.leader = getCurrentUser();
 		this.description = " ";
 		this.room = room;
 		this.dateOfMeeting = dateOfMeeting;
@@ -83,30 +84,5 @@ public class Meeting {
 	}
 
 
-	public void deleteMeeting(){
-		
-	}
-
-	public void addParticipant(User participant){
-		//changeListener med ADD_PARTICIPANT
-
-	}
-	public void removeParticipant(User participant){
-		//ChangeListener med REMOVE_PARTICIPANT
-	}
-	
-	public void editMeeting(Change change){
-		switch (change) {
-		case REMOVE_PARTICIPANT: //TODO: slette bruker fra m¿tet
-		case ADD_PARTICIPANT: //TODO: legge til bruker til m¿tet
-		case ROOM: //TODO: sende melding om at rommet er endret
-		case TIME: //TODO: sende melding om at tiden er endret
-		case CANCELLED: //TODO: sende melding om at m¿tet er avlyst
-			break;
-
-		default:System.out.println("Noe ble endret, men vet ikke hva!");
-		break;
-		}
-	}
 
 }
