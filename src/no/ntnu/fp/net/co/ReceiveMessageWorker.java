@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import no.ntnu.fp.net.admin.Log;
-import no.ntnu.fp.net.co.Connection;
+import src.no.ntnu.fp.net.co.Connection;
 
 /**
  * Helper class implementing asynchronous handling of incoming messages. Objects

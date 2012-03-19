@@ -19,10 +19,10 @@ import javax.swing.JOptionPane;
 
 import no.ntnu.fp.net.admin.Log;
 import no.ntnu.fp.net.admin.Settings;
-import no.ntnu.fp.net.co.Connection;
-import no.ntnu.fp.net.co.ConnectionImpl;
-import no.ntnu.fp.net.co.SimpleConnection;
-import no.ntnu.fp.net.separat.client.ChatClient;
+import src.no.ntnu.fp.net.co.Connection;
+import src.no.ntnu.fp.net.co.ConnectionImpl;
+import src.no.ntnu.fp.net.co.SimpleConnection;
+import src.no.ntnu.fp.net.separat.client.ChatClient;
 
 /**
  * @author Geir Vevle
