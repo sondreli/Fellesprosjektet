@@ -84,7 +84,7 @@ public class Meeting {
 
 
 	public void deleteMeeting(){
-
+		
 	}
 
 	public void addParticipant(User participant){
@@ -94,13 +94,14 @@ public class Meeting {
 	public void removeParticipant(User participant){
 		//ChangeListener med REMOVE_PARTICIPANT
 	}
+	
 	public void editMeeting(Change change){
 		switch (change) {
-		case REMOVE_PARTICIPANT: //TODO: noe
-		case ADD_PARTICIPANT: //TODO: noe
-		case ROOM: //TODO: noe
-		case TIME: //TODO: noe
-		case CANCELLED: //TODO: noe
+		case REMOVE_PARTICIPANT: //TODO: slette bruker fra m¿tet
+		case ADD_PARTICIPANT: //TODO: legge til bruker til m¿tet
+		case ROOM: //TODO: sende melding om at rommet er endret
+		case TIME: //TODO: sende melding om at tiden er endret
+		case CANCELLED: //TODO: sende melding om at m¿tet er avlyst
 			break;
 
 		default:System.out.println("Noe ble endret, men vet ikke hva!");
