@@ -21,10 +21,7 @@ public class CalendarProgram{
 	static JScrollPane stblCalendar; //The scrollpane
 	static JPanel pnlCalendar;
 	static int realYear, realMonth, realDay, currentYear, currentMonth;
-	
-//	public static void main(String args[]) {
-//		System.out.println("hello");
-//	}
+	static GridBagConstraints myCon;
 
 	public static void main (String args[]){
 		//Look and feel
@@ -35,13 +32,13 @@ public class CalendarProgram{
 		catch (UnsupportedLookAndFeelException e) {}
 
 		//Prepare frame
-		frmMain = new JFrame ("SuperKalender"); //Create frame
-		frmMain.setSize(330, 375); //Set size to 400x400 pixels
+		frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
+		frmMain.setSize(400, 400); //Set size to 400x400 pixels
 		pane = frmMain.getContentPane(); //Get content pane
-		pane.setLayout(null); //Apply null layout
 		frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
 
 		//Create controls
+		myCon = new GridBagConstraints();
 		lblMonth = new JLabel ("January");
 		lblYear = new JLabel ("Change year:");
 		cmbYear = new JComboBox();
@@ -54,6 +51,8 @@ public class CalendarProgram{
 
 		//Set border
 		pnlCalendar.setBorder(BorderFactory.createTitledBorder("Calendar"));
+		pnlCalendar.setLayout(new GridBagLayout());
+		
 		
 		//Register action listeners
 		btnPrev.addActionListener(new btnPrev_Action());
@@ -61,25 +60,54 @@ public class CalendarProgram{
 		cmbYear.addActionListener(new cmbYear_Action());
 		
 		//Add controls to pane
+		
 		pane.add(pnlCalendar);
-		pnlCalendar.add(lblMonth);
-		pnlCalendar.add(lblYear);
-		pnlCalendar.add(cmbYear);
-		pnlCalendar.add(btnPrev);
-		pnlCalendar.add(btnNext);
-		pnlCalendar.add(stblCalendar);
+		
+		myCon.weightx = 0;
+		myCon.anchor = GridBagConstraints.NORTHWEST;
+		myCon.gridx = 0;
+		myCon.gridy = 0;
+		pnlCalendar.add(btnPrev, myCon);
+		
+		myCon.weightx = 5;
+		myCon.anchor = GridBagConstraints.CENTER;
+		myCon.gridx = 1;
+		myCon.gridy = 0;
+		pnlCalendar.add(lblMonth, myCon);
+		
+		myCon.weightx = 0;
+		myCon.anchor = GridBagConstraints.NORTHEAST;
+		myCon.gridx = 3;
+		myCon.gridy = 0;
+		pnlCalendar.add(btnNext, myCon);
+		
+		myCon.weightx = 50;
+		myCon.weighty = 5;
+		myCon.fill = GridBagConstraints.BOTH;
+		myCon.gridwidth = 4;
+		myCon.gridx = 0;
+		myCon.gridy = 1;
+		pnlCalendar.add(stblCalendar, myCon);
+		
+		myCon.weightx = 0;
+		myCon.weighty = 0;
+		myCon.anchor = GridBagConstraints.SOUTHWEST;
+		myCon.gridx = 0;
+		myCon.gridy = 2;
+		pnlCalendar.add(lblYear, myCon);
+		
+		myCon.weightx = 0;
+		myCon.weighty = 0;
+		myCon.anchor = GridBagConstraints.SOUTHEAST;
+		myCon.gridx = 2;
+		myCon.gridy = 2;
+		pnlCalendar.add(cmbYear, myCon);
 		
 		//Set bounds
-		pnlCalendar.setBounds(0, 0, 320, 335);
-		lblMonth.setBounds(160-lblMonth.getPreferredSize().width/2, 25, 100, 25);
-		lblYear.setBounds(10, 305, 80, 20);
-		cmbYear.setBounds(230, 305, 80, 20);
-		btnPrev.setBounds(10, 25, 50, 25);
-		btnNext.setBounds(260, 25, 50, 25);
-		stblCalendar.setBounds(10, 50, 300, 250);
+		pnlCalendar.setBounds(frmMain.getBounds());
 		
 		//Make frame visible
-		frmMain.setResizable(false);
+		frmMain.setResizable(true);
 		frmMain.setVisible(true);
 		
 		//Get real month/year
