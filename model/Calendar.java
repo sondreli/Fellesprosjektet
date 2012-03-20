@@ -1,7 +1,11 @@
 package model;
 
+<<<<<<< HEAD
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+=======
+import java.util.ArrayList;
+>>>>>>> ecb39b6146d05973e3513b9ac6948df265d4a0b6
 
 public class Calendar {
 	private int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
@@ -75,6 +79,7 @@ public class Calendar {
 		return currentWeek;
 	}
 
+<<<<<<< HEAD
 	public void setCurrentWeek(int currentWeek) {
 		int tempOld = this.currentWeek;
 		this.currentWeek = currentWeek;
@@ -88,5 +93,8 @@ public class Calendar {
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		change.removePropertyChangeListener(listener);
 	}
+=======
+	private ArrayList<Meeting> meetings;
+>>>>>>> ecb39b6146d05973e3513b9ac6948df265d4a0b6
 	
 }

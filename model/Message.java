@@ -8,13 +8,14 @@ import java.text.SimpleDateFormat;
 public class Message {
 
 	private String content, topic;
-	private String sendDate;
+	private String dateSendt;
 	private User sender;
 
 	public Message(String topic, String content){
 		this.topic = topic;
 		this.content = content;
-		this.sendDate = getDateTime();
+		this.dateSendt = getDateTime();
+		
 		
 		//kaller på newMessageListener eller noe slik at alt løser seg
 	}

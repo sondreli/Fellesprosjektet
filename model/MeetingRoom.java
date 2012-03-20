@@ -9,7 +9,7 @@ public class MeetingRoom {
 		this.location = location;
 		this.description = description;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
