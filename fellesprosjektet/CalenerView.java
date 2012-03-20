@@ -33,11 +33,11 @@ public class CalenerView {
 	
 	public CalenerView() {
 		//Look and feel
-		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
-		catch (ClassNotFoundException e) {}
-		catch (InstantiationException e) {}
-		catch (IllegalAccessException e) {}
-		catch (UnsupportedLookAndFeelException e) {}
+//		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
+//		catch (ClassNotFoundException e) {}
+//		catch (InstantiationException e) {}
+//		catch (IllegalAccessException e) {}
+//		catch (UnsupportedLookAndFeelException e) {}
 		
 //		myFrame = new JFrame();
 		myPanel = new JPanel();
@@ -46,7 +46,9 @@ public class CalenerView {
 		Dimension mysize = new Dimension(800, 600);
 		myFrame.setSize(mysize); //Set size to 400x400 pixels
 		myFrame.setLayout(new BorderLayout());
-		myFrame.add(lpane, BorderLayout.CENTER);
+//		lpane.setLayout(new BorderLayout());
+		myFrame.setContentPane(lpane);
+//		myFrame.add(lpane, BorderLayout.CENTER);
 //		pane = myFrame.getContentPane(); //Get content pane
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
 		myFrame.setVisible(true);
@@ -59,17 +61,17 @@ public class CalenerView {
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.Calendar();
-		cal = new MonthCalender(lpane, caldata, 0, 0, 0);
-		cal2 = new MonthCalender(lpane, caldata, 300, 0, 1);
+		cal = new MonthCalender(lpane, caldata, 300, 0, 1, BorderLayout.WEST);
+		cal2 = new MonthCalender(lpane, caldata, 0, 0, 0, BorderLayout.EAST);
 		
 		
 		//Add controls to pane
 		myPanel.add(butt);
 		layout.gridx = 0;
 		layout.gridy = 0;
-		lpane.add(myPanel);
-		lpane.add(cal);
-		lpane.add(cal2);
+//		lpane.add(myPanel);
+//		lpane.add(cal);//, BorderLayout.WEST);
+//		lpane.add(cal2, BorderLayout.EAST);
 		lpane.repaint();
 
 		myPanel.setBounds(0, 0, 800, 600);
