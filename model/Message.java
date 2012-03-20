@@ -16,6 +16,7 @@ public class Message {
 		this.content = content;
 		this.sendDate = getDateTime();
 		
+		
 		//kaller pŒ newMessageListener eller noe slik at alt l¿ser seg
 	}
 	//Setter datoen som en String
