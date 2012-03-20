@@ -7,7 +7,7 @@ import controller.Controller;
 
 import sun.tools.tree.CaseStatement;
 
-public class Meeting {
+public class Meeting extends Appointment{
 
 	private ArrayList<User> participants;
 	private Date dateOfMeeting;
@@ -16,13 +16,22 @@ public class Meeting {
 	private MeetingRoom room;
 	private String description;
 
-	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting){
+	/**
+	 * Creates new meeting
+	 * 
+	 * @param participants
+	 * @param room
+	 * @param dateOfMeeting
+	 * @param description
+	 * @param leader
+	 */
+	
+	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader){
+		super(dateOfMeeting, description);
 		this.participants = participants;
-		this.description = " ";
 		this.room = room;
-		this.dateOfMeeting = dateOfMeeting;
+		this.leader = leader;
 	}
-
 
 	public ArrayList<User> getParticipants() {
 		return participants;

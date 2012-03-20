@@ -1,12 +1,22 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import model.Change;
+import model.Meeting;
+import model.MeetingRoom;
 import model.User;
 
 public class Controller {
 
 	private User currentUser;
+	private Meeting currentMeeting;
+	private ArrayList<MeetingRoom> rooms;
 	
+	public void setCurrentMeeting(Meeting meeting){
+		this.currentMeeting = meeting;
+	}
 	public void setCurrentUser(User user){
 	this.currentUser = user;
 	//oppdatere user
@@ -14,6 +24,16 @@ public class Controller {
 	public User getCurrentUser(){
 		return currentUser;
 	}
+	
+	public void newMeeting(){
+		
+		
+		
+//		this.currentMeeting = new Meeting(new ArrayList<User>(), new MeetingRoom(), new Date(), "", currentUser);
+//		må hente meetingrooms, kan ikke lage nytt rom for møtet.
+		
+	}
+	
 	
 	public void editMeeting(Change change){
 		switch (change) {
