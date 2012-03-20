@@ -1,3 +1,4 @@
+package Database;
 /**
  * @version 1.0
  * Dette programmet tar seg av tilkoblingen til databaseserveren.
@@ -13,9 +14,9 @@ import java.sql.*;
 
 public class DatabaseConnect {
 	private static String driver = "org.gjt.mm.mysql.Driver";
-	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/bjorfoss_test";
-	private static String user = "bjorfoss_test";
-	private static String password = "klovn665";
+	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/datdanny_SU47";
+	private static String user = "datdanny_sql47";
+	private static String password = "gruppe47";
 	private static Connection connection;
 	
 	/**
