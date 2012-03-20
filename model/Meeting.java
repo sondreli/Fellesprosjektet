@@ -15,6 +15,8 @@ public class Meeting extends Appointment{
 	private Answer answer;
 	private MeetingRoom room;
 	private String description;
+	private int start, end;
+
 
 	/**
 	 * Creates new meeting
@@ -25,13 +27,16 @@ public class Meeting extends Appointment{
 	 * @param description
 	 * @param leader
 	 */
-	
-	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader){
-		super(dateOfMeeting, description);
+
+	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader,
+			int start, int end){
+
+		super(dateOfMeeting, description, start, end);
 		this.participants = participants;
 		this.room = room;
 		this.leader = leader;
 	}
+
 
 	public ArrayList<User> getParticipants() {
 		return participants;
@@ -92,6 +97,20 @@ public class Meeting extends Appointment{
 		this.description = description;
 	}
 
+	public int getStart() {
+		return start;
+	}
 
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
 
 }
