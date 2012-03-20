@@ -15,7 +15,6 @@ public class Meeting extends Appointment{
 	private Answer answer;
 	private MeetingRoom room;
 	private String description;
-	private int start, end;
 
 
 	/**
@@ -95,22 +94,6 @@ public class Meeting extends Appointment{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getStart() {
-		return start;
-	}
-
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	public int getEnd() {
-		return end;
-	}
-
-	public void setEnd(int end) {
-		this.end = end;
 	}
 
 }
