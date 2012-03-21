@@ -82,7 +82,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		myCon.gridy = 0;
 		pnlCalendar.add(lblMonth, myCon);
 		
-		myCon.weightx = 0;
+		myCon.weightx = 1;
 		myCon.anchor = GridBagConstraints.NORTHEAST;
 		myCon.gridx = 3;
 		myCon.gridy = 0;
@@ -105,14 +105,14 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		
 		myCon.weightx = 0;
 		myCon.weighty = 0;
-		myCon.anchor = GridBagConstraints.SOUTHEAST;
+//		myCon.anchor = GridBagConstraints.SOUTHEAST;
 		myCon.gridx = 2;
 		myCon.gridy = 2;
 		pnlCalendar.add(cmbYear, myCon);
 		
 		//Set bounds
 //		pnlCalendar.setBounds(frmMain.getBounds());
-		pnlCalendar.setBounds(xpos, ypos, 300, 300);
+		pnlCalendar.setBounds(xpos, ypos, 262, 214);
 //		pnlCalendar.setSize(300, 300);
 		
 		//Make frame visible
