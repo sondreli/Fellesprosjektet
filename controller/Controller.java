@@ -24,6 +24,9 @@ public class Controller {
 	public User getCurrentUser(){
 		return currentUser;
 	}
+	public Meeting getCurrentMeeting(){
+		return currentMeeting;
+	}
 	
 	public void newMeeting(){
 		
