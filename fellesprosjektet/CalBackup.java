@@ -8,24 +8,22 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
-public class MonthCalender extends JComponent implements PropertyChangeListener{
-	private JLabel lblMonth, lblYear;
-	private JButton btnPrev, btnNext;
-	private JTable tblCalendar;
-	private JComboBox cmbYear;
-	private Container pane;
-	private DefaultTableModel mtblCalendar; //Table model
-	private JScrollPane stblCalendar; //The scrollpane
-	private JPanel pnlCalendar;
-	private int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
-	private model.Calendar data;
-	private GridBagConstraints myCon;
-	
-	public MonthCalender(JLayeredPane pane, model.Calendar data, int xpos, int ypos, int nr, String blayout) {
+public class MonthCalendar{
+	static JLabel lblMonth, lblYear;
+	static JButton btnPrev, btnNext;
+	static JTable tblCalendar;
+	static JComboBox cmbYear;
+	static JFrame frmMain;
+	static Container pane;
+	static DefaultTableModel mtblCalendar; //Table model
+	static JScrollPane stblCalendar; //The scrollpane
+	static JPanel pnlCalendar;
+	static int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
+	static GridBagConstraints myCon;
+
+	public static void main (String args[]){
 		//Look and feel
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
 		catch (ClassNotFoundException e) {}
@@ -34,10 +32,10 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		catch (UnsupportedLookAndFeelException e) {}
 
 		//Prepare frame
-//		frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
-//		frmMain.setSize(400, 400); //Set size to 400x400 pixels
-//		pane = frmMain.getContentPane(); //Get content pane
-//		frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
+		frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
+		frmMain.setSize(400, 400); //Set size to 400x400 pixels
+		pane = frmMain.getContentPane(); //Get content pane
+		frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
 
 		//Create controls
 		myCon = new GridBagConstraints();
@@ -46,13 +44,10 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		cmbYear = new JComboBox();
 		btnPrev = new JButton ("<<");
 		btnNext = new JButton (">>");
-		mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return true;}};
+		mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
 		tblCalendar = new JTable(mtblCalendar);
 		stblCalendar = new JScrollPane(tblCalendar);
 		pnlCalendar = new JPanel(null);
-		pnlCalendar.setOpaque(true);	
-		this.data = data;
-		
 
 		//Set border
 		pnlCalendar.setBorder(BorderFactory.createTitledBorder("Calendar"));
@@ -66,8 +61,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		
 		//Add controls to pane
 		
-		pane.add(pnlCalendar, new Integer(nr), nr);
-//		pane.add(pnlCalendar);
+		pane.add(pnlCalendar);
 		
 		myCon.weightx = 0;
 		myCon.anchor = GridBagConstraints.NORTHWEST;
@@ -81,7 +75,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		myCon.gridy = 0;
 		pnlCalendar.add(lblMonth, myCon);
 		
-		myCon.weightx = 1;
+		myCon.weightx = 0;
 		myCon.anchor = GridBagConstraints.NORTHEAST;
 		myCon.gridx = 3;
 		myCon.gridy = 0;
@@ -104,38 +98,27 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		
 		myCon.weightx = 0;
 		myCon.weighty = 0;
-//		myCon.anchor = GridBagConstraints.SOUTHEAST;
+		myCon.anchor = GridBagConstraints.SOUTHEAST;
 		myCon.gridx = 2;
 		myCon.gridy = 2;
 		pnlCalendar.add(cmbYear, myCon);
 		
 		//Set bounds
-//		pnlCalendar.setBounds(frmMain.getBounds());
-		pnlCalendar.setBounds(xpos, ypos, 262, 214);
-//		pnlCalendar.setSize(300, 300);
+		pnlCalendar.setBounds(frmMain.getBounds());
 		
 		//Make frame visible
-//		frmMain.setResizable(true);
-//		frmMain.setVisible(true);
+		frmMain.setResizable(true);
+		frmMain.setVisible(true);
 		
 		//Get real month/year
 		GregorianCalendar cal = new GregorianCalendar(); //Create calendar
 		realDay = cal.get(GregorianCalendar.DAY_OF_MONTH); //Get day
-		data.setRealDay(realDay);
 		realMonth = cal.get(GregorianCalendar.MONTH); //Get month
-		data.setRealMonth(realMonth);
 		realYear = cal.get(GregorianCalendar.YEAR); //Get year
-		data.setRealYear(realYear);
 		realWeek = cal.get(GregorianCalendar.WEEK_OF_YEAR);
-		data.setRealWeek(realWeek);
 		currentMonth = realMonth; //Match month and year
-		data.setCurrentMonth(currentMonth);
 		currentYear = realYear;
-		data.setCurrentYear(currentYear);
 		currentWeek = realWeek;
-		data.setCurrentWeek(currentWeek);
-		
-		this.data.addPropertyChangeListener(this);
 		
 		//Add headers
 		String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
@@ -155,26 +138,20 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		//Set row/column count
-//		tblCalendar.setRowHeight(28);
+		tblCalendar.setRowHeight(38);
 		mtblCalendar.setColumnCount(7);
 		mtblCalendar.setRowCount(6);
 		
 		//Populate table
-		for (int i=data.getRealYear()-100; i<=data.getRealYear()+100; i++){
+		for (int i=realYear-100; i<=realYear+100; i++){
 			cmbYear.addItem(String.valueOf(i));
 		}
 		
 		//Refresh calendar
 		refreshCalendar (realMonth, realYear); //Refresh calendar
 	}
-
-//	public private void main (String args[]){
-//		JFrame myFrame = new JFrame();
-//		MonthCalendar cal = new MonthCalendar();
-//	}
 	
-
-	private void refreshCalendar(int month, int year){
+	public static void refreshCalendar(int month, int year){
 		//Variables
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 		int nod, som; //Number Of Days, Start Of Month
@@ -182,8 +159,8 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		//Allow/disallow buttons
 		btnPrev.setEnabled(true);
 		btnNext.setEnabled(true);
-		if (month == 0 && year <= data.getRealYear()-10){btnPrev.setEnabled(false);} //Too early
-		if (month == 11 && year >= data.getRealYear()+100){btnNext.setEnabled(false);} //Too late
+		if (month == 0 && year <= realYear-10){btnPrev.setEnabled(false);} //Too early
+		if (month == 11 && year >= realYear+100){btnNext.setEnabled(false);} //Too late
 		lblMonth.setText(months[month]); //Refresh the month label (at the top)
 		cmbYear.setSelectedItem(String.valueOf(year)); //Select the correct year in the combo box
 		
@@ -208,11 +185,9 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 
 		//Apply renderers
 		tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new tblCalendarRenderer());
-//		tblCalendar.setDefaultRenderer(tblCalendar.getColumnClass(0), new DefaultTableCellRenderer());
-//		tblCalendar.setDefaultRenderer(int, new DefaultTableCellRenderer());
 	}
 
-	private class tblCalendarRenderer extends DefaultTableCellRenderer{
+	static class tblCalendarRenderer extends DefaultTableCellRenderer{
 		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
 			super.getTableCellRendererComponent(table, value, selected, focused, row, column);
 			if (column == 0 || column == 6){ //Week-end
@@ -222,9 +197,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 				setBackground(new Color(255, 255, 255));
 			}
 			if (value != null){
-				if (Integer.parseInt(value.toString()) == data.getRealDay() &&
-								data.getCurrentMonth() == data.getRealMonth() &&
-								data.getCurrentYear() == data.getRealYear()) { //Today
+				if (Integer.parseInt(value.toString()) == realDay && currentMonth == realMonth && currentYear == realYear){ //Today
 					setBackground(new Color(220, 220, 255));
 				}
 			}
@@ -234,60 +207,37 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		}
 	}
 
-	private class btnPrev_Action implements ActionListener{
+	static class btnPrev_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
-			int currentYear = data.getCurrentYear();
-			int currentMounth = data.getCurrentMonth();
-			if (currentMounth == 0){ //Foward one year
-				data.setCurrentMonth(11);
+			if (currentMonth == 0){ //Back one year
+				currentMonth = 11;
 				currentYear -= 1;
-				data.setCurrentYear(currentYear);
 			}
-			else{ //Foward one month
-				currentMounth -= 1;
-				data.setCurrentMonth(currentMounth);
+			else{ //Back one month
+				currentMonth -= 1;
 			}
 			refreshCalendar(currentMonth, currentYear);
-//			pnlCalendar.repaint();
 		}
 	}
-	private class btnNext_Action implements ActionListener{
+	static class btnNext_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
-			int currentYear = data.getCurrentYear();
-			int currentMounth = data.getCurrentMonth();
-			if (currentMounth == 11){ //Foward one year
-				data.setCurrentMonth(0);
+			if (currentMonth == 11){ //Foward one year
+				currentMonth = 0;
 				currentYear += 1;
-				data.setCurrentYear(currentYear);
 			}
 			else{ //Foward one month
-				currentMounth += 1;
-				data.setCurrentMonth(currentMounth);
+				currentMonth += 1;
 			}
-			refreshCalendar(data.getCurrentMonth(), data.getCurrentYear());
-			System.out.println();
-//			pnlCalendar.repaint();
+			refreshCalendar(currentMonth, currentYear);
 		}
 	}
-	private class cmbYear_Action implements ActionListener{
+	static class cmbYear_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
 			if (cmbYear.getSelectedItem() != null){
 				String b = cmbYear.getSelectedItem().toString();
-				data.setCurrentYear(Integer.parseInt(b));
-				refreshCalendar(data.getCurrentMonth(), data.getCurrentYear());
+				currentYear = Integer.parseInt(b);
+				refreshCalendar(currentMonth, currentYear);
 			}
 		}
-	}
-	
-//	public void setModel(model.Calendar data) {
-//		this.data = data;
-//		this.data.addPropertyChangeListener(this);
-//	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		refreshCalendar(data.getCurrentMonth(), data.getCurrentYear());
-		pnlCalendar.repaint();
-		System.out.println("det skjer ting!");
 	}
 }

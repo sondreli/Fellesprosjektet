@@ -31,7 +31,7 @@ public class CalenerView {
 	public GridBagConstraints layout;
 	public model.Calendar caldata;
 	public MonthCalender cal;
-	public MonthCalender cal2;
+	public WeekCalendar wcal;
 	public JButton butt;
 	
 	public CalenerView() {
@@ -46,7 +46,7 @@ public class CalenerView {
 		myPanel = new JPanel();
 		
 		//Prepare frame
-		Dimension mysize = new Dimension(800, 600);
+		Dimension mysize = new Dimension(1000, 600);
 		myFrame.setSize(mysize); //Set size to 400x400 pixels
 		myFrame.setLayout(new BorderLayout());
 //		lpane.setLayout(new BorderLayout());
@@ -64,8 +64,8 @@ public class CalenerView {
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.Calendar();
-		cal = new MonthCalender(lpane, caldata, 300, 0, 1, BorderLayout.WEST);
-		cal2 = new MonthCalender(lpane, caldata, 0, 0, 0, BorderLayout.EAST);
+		cal = new MonthCalender(lpane, caldata, 0, 0, 1, BorderLayout.WEST);
+		wcal = new WeekCalendar(caldata, 270, 0);
 		mes = new JPanel();
 		
 		
@@ -78,6 +78,7 @@ public class CalenerView {
 		layout.gridx = 0;
 		layout.gridy = 0;
 		lpane.add(mes, new Integer(2));
+		lpane.add(wcal, new Integer(2));
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
