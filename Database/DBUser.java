@@ -1,6 +1,5 @@
 package Database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,9 +50,8 @@ public class DBUser {
 	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> users = new ArrayList<User>();
 		User user;
-		Connection con = DatabaseConnect.getConnection();
 
-		String query = "SELECT * FROM bruker;";
+		String query = "SELECT * FROM bruker";
 		try {
 			ResultSet rs = Interact.execute(query);
 
