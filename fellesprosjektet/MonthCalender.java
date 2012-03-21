@@ -17,7 +17,6 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 	private JButton btnPrev, btnNext;
 	private JTable tblCalendar;
 	private JComboBox cmbYear;
-	private JFrame frmMain;
 	private Container pane;
 	private DefaultTableModel mtblCalendar; //Table model
 	private JScrollPane stblCalendar; //The scrollpane
