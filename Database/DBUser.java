@@ -10,11 +10,37 @@ import model.User;
 
 public class DBUser {
 
-	public void editUser(){
-
+	public void addUser(User user){
+		addUser(user.getUserName(), user.getName(), user.getPassword());
+	}
+	public void addUser(String userName, String name, String password){
+		
+		String query = "INSERT INTO bruker " +
+		"(brukerNavn, navn, passord) VALUES ('"
+		+ userName + "','" + name + "','" + password + "')";
+		Interact.executeUpdate(query);
+		
+	}
+	
+	public static void removeUser(String brukerNavn){
+		String query = "DELETE FROM bruker WHERE brukerNavn = '" + brukerNavn + "'";
+		Interact.executeUpdate(query);
+	}
+	
+	public void editUser(User update){
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append("UPDATE bruker SET brukerNavn = '" + update.getUserName() + "',");
+		query.append("navn = '" + update.getName() + "',");
+		query.append("passord = '" + update.getPassword() + "',");
+		query.append("WHERE brukerNavn = '" + update.getUserName() + "'");
+		
+		Interact.executeUpdate(query.toString());
+		
 	}
 	public User getUser(User usr){
-		String query = usr.getName();
+		String query = "SELECT bruker FROM WHERE brukerNavn = '" + usr.getUserName() + "'";
 		ResultSet rs = Interact.execute(query);
 		User user = makeUserObject(rs); 
 

@@ -2,18 +2,27 @@ package model;
 
 import java.util.Date;
 
+
+import Database.DBAppointment;
+
 public class Appointment{
 
 	private Date dateOfMeeting;
 	private String description;
-	private int start, end;
+	private int start, end, id;
+	private User leader;
 
 	
-	public Appointment(Date dateOfMeeting, String description, int start, int end) {
+	public Appointment(Date dateOfMeeting, String description, int start, int end, User leader) {
 		this.dateOfMeeting = dateOfMeeting;
 		this.description = description;
 		this.start = start;
 		this.end = end;
+		this.leader = leader;
+		
+		this.id = DBAppointment.addAppointment(this);
+		
+		
 	}
 	/**
 	 * Returns true of no overlap, false if they overlap
@@ -60,7 +69,19 @@ public class Appointment{
 	public void setEnd(int end) {
 		this.end = end;
 	}
-
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public User getLeader() {
+		return leader;
+	}
+	public void setLeader(User leader) {
+		this.leader = leader;
+	}
+	
 	
 	
 }
