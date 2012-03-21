@@ -10,6 +10,20 @@ public class AlterDate {
 		
 	}
 	
+	public static int getFirstWeekOfMonth(model.MyCalendar mycal) {
+		int cweek = mycal.getCurrentWeek();
+		int cmonth = mycal.getCurrentMonth();
+		int cyear = mycal.getCurrentYear();
+		
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.MONTH, cmonth);
+		cal.set(Calendar.YEAR, cyear);
+		cweek = cal.get(Calendar.WEEK_OF_YEAR);
+		
+		return cweek;
+	}
+	
 	public static void increaseMonth(model.MyCalendar mycal) {
 //		int cdate;
 		int cweek = mycal.getCurrentWeek();
