@@ -32,7 +32,7 @@ public class Interact {
 	 * @param sql
 	 * @throws SQLException
 	 */
-	public static void executeUpdate(String sql) throws SQLException {
+	public static void executeUpdate(String sql){
 
 		Connection con = null;
 		Statement st = null;
@@ -46,13 +46,6 @@ public class Interact {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			try {
-				con.close();
-				st.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
+
 	}
 }
