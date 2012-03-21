@@ -23,6 +23,7 @@ public class DBAppointment{
 		//Sender tilbake ID på appointment
 		rs = Interact.execute("SELECT * FROM hendelse ORDER BY hendelseId DESC LIMIT 1");
 		try {
+			
 			return rs.getInt("hendelseId");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

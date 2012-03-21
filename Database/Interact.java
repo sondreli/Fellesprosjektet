@@ -21,7 +21,6 @@ public class Interact {
 			rs = st.executeQuery(sql);
 
 
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
