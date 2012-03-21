@@ -11,16 +11,21 @@ import model.User;
 
 public class DBUser {
 
-	public static ArrayList<User> getAllUsers(){
+	public void editUser(){
+
+	}
+	public User getUser(){
+
+	}
+
+	public static ArrayList<User> getAllUsers() {
 		ArrayList<User> users = new ArrayList<User>();
 		User user;
 		Connection con = DatabaseConnect.getConnection();
 
 		String query = "SELECT * FROM bruker;";
-
 		try {
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(query);
+			ResultSet rs = Interact.execute(query);
 
 			while(rs.next()){
 				//Construct user object ResultSet
@@ -29,12 +34,14 @@ public class DBUser {
 				//Add user to users list
 				users.add(user);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 
 		return users;
 	}
+
 	public static User makeUserObject(ResultSet rs){
 		User user = null;
 
