@@ -30,10 +30,9 @@ public class Meeting extends Appointment{
 	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader,
 			int start, int end){
 
-		super(dateOfMeeting, description, start, end);
+		super(dateOfMeeting, description, start, end, leader);
 		this.participants = participants;
 		this.room = room;
-		this.leader = leader;
 	}
 
 
