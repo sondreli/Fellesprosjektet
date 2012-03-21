@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class Interact {
 
 
-	public static ResultSet execute(String sql) throws SQLException{
+	public static ResultSet execute(String sql) {
 
 		Connection con = null;
 		Statement st = null;

@@ -3,7 +3,6 @@ package Database;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -14,7 +13,12 @@ public class DBUser {
 	public void editUser(){
 
 	}
-	public User getUser(){
+	public User getUser(User usr){
+		String query = usr.getName();
+		ResultSet rs = Interact.execute(query);
+		User user = makeUserObject(rs); 
+
+		return user;
 
 	}
 
