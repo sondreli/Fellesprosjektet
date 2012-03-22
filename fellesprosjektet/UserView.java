@@ -52,7 +52,7 @@ public class UserView extends JPanel{
 		cs.gridx = 0;
 		cs.gridy = 0;
 		cs.ipady = 3;
-		cs.ipadx = 55;
+		cs.ipadx = 135;
 		cs.fill = GridBagConstraints.HORIZONTAL;
 		cs.weightx = 0;
 		cs.weighty = 0;
