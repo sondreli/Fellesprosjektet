@@ -64,8 +64,9 @@ public class CalenerView {
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.Calendar();
-		cal = new MonthCalender(lpane, caldata, 0, 0, 1, BorderLayout.WEST);
-		wcal = new WeekCalendar(caldata, 270, 0);
+		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
+		wcal = new WeekCalendar(caldata, 270, 30);
+		MessageBar mbar = new MessageBar(0, 0);
 		mes = new JPanel();
 		
 		
@@ -79,6 +80,7 @@ public class CalenerView {
 		layout.gridy = 0;
 		lpane.add(mes, new Integer(2));
 		lpane.add(wcal, new Integer(2));
+		lpane.add(mbar, new Integer(2));
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
