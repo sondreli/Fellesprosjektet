@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Time;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
@@ -31,9 +34,9 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	private DefaultTableModel mtblCalendar; //Table model
 	private JScrollPane stblCalendar; //The scrollpane
 	private JPanel pnlCalendar;
-	private model.Calendar data;
+	private model.MyCalendar data;
 	
-	public WeekCalendar(model.Calendar data, int xpos, int ypos) {
+	public WeekCalendar(model.MyCalendar data, int xpos, int ypos) {
 		
 		//Create controls
 		lblWeek= new JLabel ("Uke");
@@ -86,7 +89,6 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		constrnts.gridy = 2;
 		add(stblCalendar, constrnts);
 		
-		
 //		this.setSize(1000, 400);
 		initCalendar();
 	}
@@ -125,10 +127,10 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	
 	private void refreshCalendar(int week, int year){
 		//Variables
-		String[] weeks = new String[52];
-		for(int i=0; i<=51; i++) {
-			Integer str = new Integer(i+1);
-			weeks[i] = str.toString();
+		String[] weeks = new String[54];
+		for(int i=1; i<=54; i++) {
+			Integer str = new Integer(i);
+			weeks[i-1] = "Uke " + str.toString();
 		}
 		int nod, som; //Number Of Days, Start Of Month
 			
@@ -137,7 +139,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		btnNext.setEnabled(true);
 //		if (week == 0 && year <= data.getRealYear()-10){btnPrev.setEnabled(false);} //Too early
 //		if (week == 11 && year >= data.getRealYear()+100){btnNext.setEnabled(false);} //Too late
-		lblWeek.setText(weeks[week]); //Refresh the month label (at the top)
+		lblWeek.setText(weeks[week-1]); //Refresh the month label (at the top)
 		
 		//Clear table
 		for (int i=0; i<9; i++){
@@ -145,6 +147,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 				mtblCalendar.setValueAt(null, i, j);
 			}
 		}
+		
+		
 		
 //		//Get first day of month and number of days
 //		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
@@ -186,47 +190,37 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	
 	private class btnPrev_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
-			int currentYear = data.getCurrentYear();
-			int currentWeek = data.getCurrentWeek();
-			if (currentWeek == 0){ //Foward one year
-				data.setCurrentWeek(51);
-				currentWeek = 51;
-				currentYear -= 1;
-				data.setCurrentYear(currentYear);
-			}
-			else{ //Foward one month
-				currentWeek -= 1;
-				data.setCurrentWeek(currentWeek);
-			}
-			refreshCalendar(currentWeek, currentYear);
-			pnlCalendar.repaint(currentWeek);
+			
+			controller.AlterDate.decreaseWeek(data);
 		}
 	}
 	private class btnNext_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
-			int currentYear = data.getCurrentYear();
-			int currentWeek = data.getCurrentWeek();
-			if (currentWeek == 51){ //Foward one year
-				data.setCurrentWeek(0);
-				currentWeek = 0;
-				currentYear += 1;
-				data.setCurrentYear(currentYear);
-			}
-			else{ //Foward one month
-				currentWeek += 1;
-				data.setCurrentWeek(currentWeek);
-			}
-			refreshCalendar(data.getCurrentWeek(), data.getCurrentYear());
-			System.out.println(currentWeek);
-//			pnlCalendar.repaint();
+			
+			controller.AlterDate.increaseWeek(data);
 		}
+	}
+	
+	private int getMonth(int week, int year) {
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.WEEK_OF_YEAR, week);
+		cal.set(Calendar.YEAR, year);
+		
+		Date date = cal.getTime();
+		System.out.println(date.getMonth());
+		return date.getMonth();
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		refreshCalendar(data.getCurrentMonth(), data.getCurrentYear());
+		refreshCalendar(data.getCurrentWeek(), data.getCurrentYear());
 		pnlCalendar.repaint();
 		System.out.println("det skjer ting!");
+		
+	}
+	
+	public static void addSticker() {
 		
 	}
 

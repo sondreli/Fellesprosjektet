@@ -2,6 +2,8 @@ package Database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 
 import model.Appointment;
@@ -20,6 +22,12 @@ public class DBAppointment{
 		+ leader.getUserName() + "','" + description + "','" + dateOfMeeting + "','" + start + "','" + end + "')";
 		Interact.executeUpdate(query);
 		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//Sender tilbake ID på appointment
 		rs = Interact.execute("SELECT * FROM hendelse ORDER BY hendelseId DESC LIMIT 1");
 		try {
@@ -31,6 +39,7 @@ public class DBAppointment{
 		}
 		return 0;
 	}
+	
 
 	public static Appointment makeAppointmentObject(ResultSet rs){
 		Appointment app = null;
@@ -49,4 +58,34 @@ public class DBAppointment{
 		
 		return app;
 	}
+	private final static String HENDELSE = "hendelse";
+	private final static String HENDELSE_ID = "hendelseId";
+	private final static String HENDELSE_START = "start";
+	private final static String HENDELSE_SLUTT = "slutt";
+	private final static String HENDELSE_DATO = "dato";
+	
+
+
+	public static ArrayList<Time> getTime(int ID){
+		ArrayList<Time> tid = new ArrayList<Time>();
+		java.sql.Time tid1, tid2;
+		try {
+			ResultSet rs = Interact.execute("SELECT * FROM "+HENDELSE+" WHERE "+HENDELSE_ID +" = "+ID);
+			while (rs.next()){
+			tid1 = rs.getTime(HENDELSE_START);
+			tid.add(tid1);
+			tid2 = rs.getTime(HENDELSE_SLUTT);
+			tid.add(tid2);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return tid;
+	}
+
+//	public static void main (String[]args){
+//	
+//			System.out.println(getTime(1));
+//		}
 }

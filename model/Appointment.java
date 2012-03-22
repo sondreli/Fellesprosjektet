@@ -18,10 +18,7 @@ public class Appointment{
 		this.description = description;
 		this.start = start;
 		this.end = end;
-		this.leader = leader;
-		
-		this.id = DBAppointment.addAppointment(this);
-		
+		this.leader = leader;		
 		
 	}
 	/**
