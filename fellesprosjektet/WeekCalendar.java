@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -88,7 +89,6 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		constrnts.gridy = 2;
 		add(stblCalendar, constrnts);
 		
-		
 //		this.setSize(1000, 400);
 		initCalendar();
 	}
@@ -127,8 +127,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	
 	private void refreshCalendar(int week, int year){
 		//Variables
-		String[] weeks = new String[52];
-		for(int i=1; i<=52; i++) {
+		String[] weeks = new String[54];
+		for(int i=1; i<=54; i++) {
 			Integer str = new Integer(i);
 			weeks[i-1] = "Uke " + str.toString();
 		}
@@ -147,6 +147,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 				mtblCalendar.setValueAt(null, i, j);
 			}
 		}
+		
+		
 		
 //		//Get first day of month and number of days
 //		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
@@ -215,6 +217,10 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		refreshCalendar(data.getCurrentWeek(), data.getCurrentYear());
 		pnlCalendar.repaint();
 		System.out.println("det skjer ting!");
+		
+	}
+	
+	public static void addSticker() {
 		
 	}
 

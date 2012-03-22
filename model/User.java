@@ -9,6 +9,11 @@ public class User {
 	private String password;
 	private ArrayList<Message> inbox;
 	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 	public User(String usrName){
 		this.userName = usrName;
 		this.name = "Autogenerert";

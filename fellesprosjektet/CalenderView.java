@@ -20,8 +20,8 @@ import model.MyCalendar;
 
 import com.sun.xml.internal.ws.api.server.Container;
 
-public class CalenerView {
-	public JFrame myFrame = new JFrame("Calener");
+public class CalenderView {
+	public JFrame myFrame = new JFrame("Calender");
 	public JLayeredPane lpane = new JLayeredPane();
 	public JPanel myPanel;
 	public JPanel calpanel;
@@ -35,7 +35,7 @@ public class CalenerView {
 	public WeekCalendar wcal;
 	public JButton butt;
 	
-	public CalenerView() {
+	public CalenderView() {
 		//Look and feel
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
 		catch (ClassNotFoundException e) {}
