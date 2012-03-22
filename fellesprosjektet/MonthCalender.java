@@ -22,10 +22,10 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 	private JScrollPane stblCalendar; //The scrollpane
 	private JPanel pnlCalendar;
 	private int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
-	private model.Calendar data;
+	private model.MyCalendar data;
 	private GridBagConstraints myCon;
 	
-	public MonthCalender(JLayeredPane pane, model.Calendar data, int xpos, int ypos, int nr, String blayout) {
+	public MonthCalender(JLayeredPane pane, model.MyCalendar data, int xpos, int ypos, int nr, String blayout) {
 		//Look and feel
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
 		catch (ClassNotFoundException e) {}
@@ -138,8 +138,8 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		this.data.addPropertyChangeListener(this);
 		
 		//Add headers
-		String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
-		for (int i=0; i<7; i++){
+		String[] headers = {"   ", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
+		for (int i=0; i<8; i++){
 			mtblCalendar.addColumn(headers[i]);
 		}
 		
@@ -156,7 +156,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 
 		//Set row/column count
 //		tblCalendar.setRowHeight(28);
-		mtblCalendar.setColumnCount(7);
+		mtblCalendar.setColumnCount(8);
 		mtblCalendar.setRowCount(6);
 		
 		//Populate table
@@ -190,7 +190,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		//Clear table
 		for (int i=0; i<6; i++){
 			for (int j=0; j<7; j++){
-				mtblCalendar.setValueAt(null, i, j);
+				mtblCalendar.setValueAt(null, i, j+1);
 			}
 		}
 		
@@ -202,8 +202,12 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		//Draw calendar
 		for (int i=1; i<=nod; i++){
 			int row = new Integer((i+som-2)/7);
-			int column  =  (i+som-2)%7;
+			int column  =  (i+som-2)%7+1;
 			mtblCalendar.setValueAt(i, row, column);
+		}
+		int fwm = controller.AlterDate.getFirstWeekOfMonth(data);
+		for (int i=0; i<6; i++) {
+			mtblCalendar.setValueAt(i+fwm, i, 0);
 		}
 
 		//Apply renderers
@@ -215,8 +219,12 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 	private class tblCalendarRenderer extends DefaultTableCellRenderer{
 		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
 			super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-			if (column == 0 || column == 6){ //Week-end
+			String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
+			if (column == 1 || column == 7){ //Week-end
 				setBackground(new Color(255, 220, 220));
+			}
+			else if (column == 0) {
+				setBackground(new Color(220, 220, 255));
 			}
 			else{ //Week
 				setBackground(new Color(255, 255, 255));
@@ -227,7 +235,11 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 								data.getCurrentYear() == data.getRealYear()) { //Today
 					setBackground(new Color(220, 220, 255));
 				}
+//				if(row == 0 && column == data.getCurrentWeek()%7) {
+//					setBackground(new Color(220, 220, 255));
+//				}
 			}
+			
 			setBorder(null);
 			setForeground(Color.black);
 			return this;  
@@ -236,37 +248,14 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 
 	private class btnPrev_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
-			int currentYear = data.getCurrentYear();
-			int currentMounth = data.getCurrentMonth();
-			if (currentMounth == 0){ //Foward one year
-				data.setCurrentMonth(11);
-				currentYear -= 1;
-				data.setCurrentYear(currentYear);
-			}
-			else{ //Foward one month
-				currentMounth -= 1;
-				data.setCurrentMonth(currentMounth);
-			}
-			refreshCalendar(currentMonth, currentYear);
-//			pnlCalendar.repaint();
+			
+			controller.AlterDate.decreaseMonth(data);
 		}
 	}
 	private class btnNext_Action implements ActionListener{
 		public void actionPerformed (ActionEvent e){
-			int currentYear = data.getCurrentYear();
-			int currentMounth = data.getCurrentMonth();
-			if (currentMounth == 11){ //Foward one year
-				data.setCurrentMonth(0);
-				currentYear += 1;
-				data.setCurrentYear(currentYear);
-			}
-			else{ //Foward one month
-				currentMounth += 1;
-				data.setCurrentMonth(currentMounth);
-			}
-			refreshCalendar(data.getCurrentMonth(), data.getCurrentYear());
-			System.out.println();
-//			pnlCalendar.repaint();
+			
+			controller.AlterDate.increaseMonth(data);
 		}
 	}
 	private class cmbYear_Action implements ActionListener{
