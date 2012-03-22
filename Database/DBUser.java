@@ -9,10 +9,10 @@ import model.User;
 
 public class DBUser {
 
-	public void addUser(User user){
+	public static void addUser(User user){
 		addUser(user.getUserName(), user.getName(), user.getPassword());
 	}
-	public void addUser(String userName, String name, String password){
+	public static void addUser(String userName, String name, String password){
 		
 		String query = "INSERT INTO bruker " +
 		"(brukerNavn, navn, passord) VALUES ('"
@@ -26,22 +26,30 @@ public class DBUser {
 		Interact.executeUpdate(query);
 	}
 	
-	public void editUser(User update){
+	public static void editUser(User update){
 		
 		StringBuilder query = new StringBuilder();
 		
 		query.append("UPDATE bruker SET brukerNavn = '" + update.getUserName() + "',");
 		query.append("navn = '" + update.getName() + "',");
-		query.append("passord = '" + update.getPassword() + "',");
+		query.append("passord = '" + update.getPassword() + "'");
 		query.append("WHERE brukerNavn = '" + update.getUserName() + "'");
 		
 		Interact.executeUpdate(query.toString());
 		
 	}
-	public User getUser(User usr){
-		String query = "SELECT bruker FROM WHERE brukerNavn = '" + usr.getUserName() + "'";
+	public static User getUser(String userName){
+		String query = "SELECT * FROM bruker WHERE brukerNavn = '" + userName + "'";
 		ResultSet rs = Interact.execute(query);
-		User user = makeUserObject(rs); 
+		User user = null;
+		
+		try {
+			if(rs.next())
+				user = makeUserObject(rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 
 		return user;
 
