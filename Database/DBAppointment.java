@@ -20,6 +20,7 @@ public class DBAppointment{
 		"(brukerNavn, beskrivelse, dato, start, slutt) VALUES ('"
 		+ leader.getUserName() + "','" + description + "','" + dateOfMeeting + "','" + start + "','" + end + "')";
 		Interact.executeUpdate(query);
+		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
