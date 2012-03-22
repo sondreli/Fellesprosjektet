@@ -64,16 +64,11 @@ public class CalenderView {
 		cal2panel = new JPanel();
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
-<<<<<<< HEAD:fellesprosjektet/CalenerView.java
 		caldata = new model.Calendar();
 		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
 		wcal = new WeekCalendar(caldata, 270, 30);
 		MessageBar mbar = new MessageBar(0, 0);
-=======
-		caldata = new model.MyCalendar();
-		cal = new MonthCalender(lpane, caldata, 0, 0, 1, BorderLayout.WEST);
-		wcal = new WeekCalendar(caldata, 270, 0);
->>>>>>> 688e539176875655ccdfe3d0ae50fd453d2a0a6d:fellesprosjektet/CalenderView.java
+
 		mes = new JPanel();
 		uview = new UserView(0, 250);
 		
@@ -88,11 +83,8 @@ public class CalenderView {
 		layout.gridy = 0;
 		lpane.add(mes, new Integer(2));
 		lpane.add(wcal, new Integer(2));
-<<<<<<< HEAD:fellesprosjektet/CalenerView.java
 		lpane.add(mbar, new Integer(2));
-=======
 		lpane.add(uview, new Integer(2));
->>>>>>> 688e539176875655ccdfe3d0ae50fd453d2a0a6d:fellesprosjektet/CalenderView.java
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
