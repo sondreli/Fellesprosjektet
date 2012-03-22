@@ -5,7 +5,6 @@ import java.util.Date;
 
 import model.Appointment;
 import model.Meeting;
-import model.MeetingRoom;
 import model.User;
 
 public class DBTest {
