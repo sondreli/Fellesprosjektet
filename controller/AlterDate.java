@@ -10,6 +10,19 @@ public class AlterDate {
 		
 	}
 	
+	public static int getLastWeekOfYear(int year) {
+		int week;
+		int month = 11;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.YEAR, year);
+		week = cal.get(Calendar.WEEK_OF_YEAR);
+		
+		return week+6;
+	}
+	
 	public static int getFirstWeekOfMonth(model.MyCalendar mycal) {
 		int cweek = mycal.getCurrentWeek();
 		int cmonth = mycal.getCurrentMonth();
@@ -76,7 +89,7 @@ public class AlterDate {
 		int cmonth = mycal.getCurrentMonth();
 		int cyear = mycal.getCurrentYear();
 		
-		if(cweek == 52 && cyear <= 2100) {
+		if(cweek == getLastWeekOfYear(cyear) && cyear <= 2100) {
 			cweek = 1;
 			cyear++;
 		}
