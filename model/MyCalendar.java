@@ -3,12 +3,14 @@ package model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Calendar;
 
-public class Calendar {
+public class MyCalendar {
 	private int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
 	private PropertyChangeSupport change;
 	
-	public Calendar() {
+	public MyCalendar() {
 		change = new PropertyChangeSupport(this);
 	}
 
@@ -80,6 +82,12 @@ public class Calendar {
 		int tempOld = this.currentWeek;
 		this.currentWeek = currentWeek;
 		change.firePropertyChange("NamePropertyComponent", tempOld, currentWeek);
+	}
+	
+	public void setCurrentAll(int week, int month, int year) {
+		setCurrentWeek(week);
+		setCurrentMonth(month);
+		setCurrentYear(year);
 	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
