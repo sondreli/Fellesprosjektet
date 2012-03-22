@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
-
 import model.Appointment;
 import model.User;
 
@@ -21,7 +20,6 @@ public class DBAppointment{
 		"(brukerNavn, beskrivelse, dato, start, slutt) VALUES ('"
 		+ leader.getUserName() + "','" + description + "','" + dateOfMeeting + "','" + start + "','" + end + "')";
 		Interact.executeUpdate(query);
-		
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
