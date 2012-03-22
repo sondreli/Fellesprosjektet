@@ -26,7 +26,6 @@ public class DBEvent {
 			tid.add(tid1);
 			tid2 = rs.getTime(HENDELSE_SLUTT);
 			tid.add(tid2);
-			System.out.println(tid1+" "+tid2 );
 			}
 		} catch (SQLException e) {
 			
