@@ -8,12 +8,11 @@ public class MeetTime {
 	private int month; // mulige verdier: 0 - 11
 	private int year;  // mulige verdier: 2012 +- 100
 	
-	public MeetTime(Time start, Time end, Day day, int week, int month, int year) {
+	public MeetTime(Time start, Time end, Day day, int week, int year) {
 		this.start = start;
 		this.end = end;
 		this.day = day;
 		this.week = week;
-		this.month = month;
 		this.year = year;
 	}
 

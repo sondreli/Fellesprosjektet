@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
+import java.awt.Rectangle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -64,14 +65,15 @@ public class CalenderView {
 		cal2panel = new JPanel();
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
-		caldata = new model.Calendar();
+		caldata = new model.MyCalendar();
 		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
 		wcal = new WeekCalendar(caldata, 270, 30);
 		MessageBar mbar = new MessageBar(0, 0);
+		EventPanel evpnl = new EventPanel(870, 30);
 
 		mes = new JPanel();
 		uview = new UserView(0, 250);
-		
+		Sticker stick = new Sticker(new Rectangle(600, 200, 50, 50), "Hallo");
 		
 		mes.setBounds(150, 150, 50, 50);
 		mes.setBackground(new Color(200, 50, 50, 150));
@@ -85,6 +87,12 @@ public class CalenderView {
 		lpane.add(wcal, new Integer(2));
 		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
+<<<<<<< HEAD
+		lpane.add(wcal.addStickers(), new Integer(3));
+		lpane.add(stick, new Integer(3));
+=======
+		lpane.add(evpnl, new Integer(2));
+>>>>>>> aa853d903206c04c232ac592624a2308b4748672
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);

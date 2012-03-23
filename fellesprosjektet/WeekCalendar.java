@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Time;
+//import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -17,12 +18,19 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import org.omg.CORBA.Bounds;
+
+import model.Day;
+import model.MeetTime;
+import model.Time;
 
 
 public class WeekCalendar extends JPanel implements PropertyChangeListener {
@@ -35,6 +43,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	private JScrollPane stblCalendar; //The scrollpane
 	private JPanel pnlCalendar;
 	private model.MyCalendar data;
+	private Rectangle bounds;
 	
 	public WeekCalendar(model.MyCalendar data, int xpos, int ypos) {
 		
@@ -50,6 +59,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		pnlCalendar = new JPanel(null);
 		pnlCalendar.setOpaque(true);
 		this.data = data;
+		bounds = new Rectangle(xpos, ypos, 600, 400);
 		
 		this.data.addPropertyChangeListener(this);
 		
@@ -60,7 +70,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		//Set border
 		this.setBorder(BorderFactory.createTitledBorder("Calendar"));
 		setLayout(new GridBagLayout());
-		this.setBounds(xpos, ypos, 600, 400);
+		this.setBounds(bounds);
 		
 		
 		constrnts.weightx = 0;
@@ -148,7 +158,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 			}
 		}
 		
-		
+		addStickers();
 		
 //		//Get first day of month and number of days
 //		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
@@ -220,8 +230,22 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 	}
 	
-	public static void addSticker() {
+	public Sticker addStickers() {
+		Rectangle sbounds = bounds;
+		MeetTime time = new MeetTime(new Time(10, 0), new Time(10, 30), Day.Tuesday, 12, 2012);
 		
+//		if(time.getWeek() == data.getCurrentWeek()) {
+		int xpos, ypos, xsize, ysize;
+		int colwidth = sbounds.width/7;
+		xpos = (int)sbounds.getX() + time.getDay().getValue()*colwidth;
+		System.out.println("posx: " + xpos + " colwidth: " + colwidth);
+		ypos = 200;
+		xsize = colwidth;
+		ysize = 50;
+		sbounds.setBounds(xpos, ypos, xsize, ysize);
+		
+		return new Sticker(sbounds, "Hallo");
+	
 	}
 
 }
