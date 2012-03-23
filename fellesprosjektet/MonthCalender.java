@@ -6,6 +6,9 @@ package fellesprosjektet;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+
+import controller.AlterDate;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -22,10 +25,10 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 	private JScrollPane stblCalendar; //The scrollpane
 	private JPanel pnlCalendar;
 	private int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
-	private model.MyCalendar data;
+	private model.MyDate data;
 	private GridBagConstraints myCon;
 	
-	public MonthCalender(JLayeredPane pane, model.MyCalendar data, int xpos, int ypos, int nr, String blayout) {
+	public MonthCalender(JLayeredPane pane, model.MyDate data, int xpos, int ypos, int nr, String blayout) {
 		//Look and feel
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
 		catch (ClassNotFoundException e) {}
@@ -46,7 +49,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		cmbYear = new JComboBox();
 		btnPrev = new JButton ("<<");
 		btnNext = new JButton (">>");
-		mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return true;}};
+		mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
 		tblCalendar = new JTable(mtblCalendar);
 		stblCalendar = new JScrollPane(tblCalendar);
 		pnlCalendar = new JPanel(null);
@@ -63,6 +66,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 		btnPrev.addActionListener(new btnPrev_Action());
 		btnNext.addActionListener(new btnNext_Action());
 		cmbYear.addActionListener(new cmbYear_Action());
+		tblCalendar.addMouseListener(new tbl_Action());
 		
 		//Add controls to pane
 		
@@ -224,10 +228,13 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 				setBackground(new Color(255, 220, 220));
 			}
 			else if (column == 0) {
-				setBackground(new Color(220, 220, 255));
+				setBackground(new Color(235, 235, 235));
 			}
 			else{ //Week
 				setBackground(new Color(255, 255, 255));
+			}
+			if(row == data.getCurrentWeek() - AlterDate.getFirstWeekOfMonth(data)) {
+				setBackground(new Color(220, 220, 255));
 			}
 			if (value != null){
 				if (Integer.parseInt(value.toString()) == data.getRealDay() &&
@@ -267,6 +274,38 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 			}
 		}
 	}
+	private class tbl_Action implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+			int pos = e.getY();
+			int rowh = tblCalendar.getRowHeight();
+			int week = AlterDate.getFirstWeekOfMonth(data);
+			
+			if(pos < rowh)
+				data.setCurrentWeek(week);
+			else if(pos > rowh && pos < 2*rowh)
+				data.setCurrentWeek(week+1);
+			else if(pos > 2*rowh && pos < 3*rowh)
+				data.setCurrentWeek(week+2);
+			else if(pos > 3*rowh && pos < 4*rowh)
+				data.setCurrentWeek(week+3);
+			else if(pos > 4*rowh && pos < 5*rowh)
+				data.setCurrentWeek(week+4);
+			else if(pos > 5*rowh && pos < 6*rowh)
+				data.setCurrentWeek(week+5);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {}
+		@Override
+		public void mouseExited(MouseEvent e) {}
+		@Override
+		public void mousePressed(MouseEvent e) {}
+		@Override
+		public void mouseReleased(MouseEvent e) {}
+	}
 	
 //	public void setModel(model.Calendar data) {
 //		this.data = data;
@@ -277,6 +316,5 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 	public void propertyChange(PropertyChangeEvent evt) {
 		refreshCalendar(data.getCurrentMonth(), data.getCurrentYear());
 		pnlCalendar.repaint();
-		System.out.println("det skjer ting!");
 	}
 }

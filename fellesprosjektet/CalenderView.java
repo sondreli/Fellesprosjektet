@@ -18,7 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import model.Day;
-import model.MyCalendar;
+import model.MyDate;
 import model.MeetTime;
 import model.Time;
 
@@ -33,7 +33,7 @@ public class CalenderView {
 	public UserView uview;
 	public java.awt.Container pane;
 	public GridBagConstraints layout;
-	public model.MyCalendar caldata;
+	public model.MyDate caldata;
 	public MonthCalender cal;
 	public WeekCalendar wcal;
 	public JButton butt;
@@ -50,7 +50,7 @@ public class CalenderView {
 		myPanel = new JPanel();
 		
 		//Prepare frame
-		Dimension mysize = new Dimension(1000, 600);
+		Dimension mysize = new Dimension(1200, 600);
 		myFrame.setSize(mysize); //Set size to 400x400 pixels
 		myFrame.setLayout(new BorderLayout());
 //		lpane.setLayout(new BorderLayout());
@@ -67,7 +67,7 @@ public class CalenderView {
 		cal2panel = new JPanel();
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
-		caldata = new model.MyCalendar();
+		caldata = new model.MyDate();
 		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
 		wcal = new WeekCalendar(caldata, 270, 30);
 		MessageBar mbar = new MessageBar(0, 0);

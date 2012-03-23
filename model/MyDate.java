@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 
-public class MyCalendar {
+public class MyDate {
 	private int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
 	private PropertyChangeSupport change;
 	
-	public MyCalendar() {
+	public MyDate() {
 		change = new PropertyChangeSupport(this);
 	}
 
