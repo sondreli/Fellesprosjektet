@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
+import java.awt.Rectangle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -69,7 +70,7 @@ public class CalenderView {
 		wcal = new WeekCalendar(caldata, 270, 0);
 		mes = new JPanel();
 		uview = new UserView(0, 250);
-		
+		Sticker stick = new Sticker(new Rectangle(600, 200, 50, 50), "Hallo");
 		
 		mes.setBounds(150, 150, 50, 50);
 		mes.setBackground(new Color(200, 50, 50, 150));
@@ -82,6 +83,8 @@ public class CalenderView {
 		lpane.add(mes, new Integer(2));
 		lpane.add(wcal, new Integer(2));
 		lpane.add(uview, new Integer(2));
+		lpane.add(wcal.addStickers(), new Integer(3));
+		lpane.add(stick, new Integer(3));
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
