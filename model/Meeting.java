@@ -7,7 +7,7 @@ import java.util.Date;
 public class Meeting extends Appointment{
 
 	private ArrayList<User> participants;
-	private Date dateOfMeeting;
+	private MeetTime timeOfMeeting;
 	private User leader;
 	private Answer answer;
 	private MeetingRoom room;
@@ -42,13 +42,13 @@ public class Meeting extends Appointment{
 	}
 
 
-	public Date getDateOfMeeting() {
-		return dateOfMeeting;
+	public MeetTime getTimeOfMeeting() {
+		return timeOfMeeting;
 	}
 
 
-	public void setDateOfMeeting(Date dateOfMeeting) {
-		this.dateOfMeeting = dateOfMeeting;
+	public void setTimeOfMeeting(MeetTime timeOfMeeting) {
+		this.timeOfMeeting = timeOfMeeting;
 	}
 
 
