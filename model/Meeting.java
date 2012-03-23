@@ -3,9 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import controller.Controller;
-
-import sun.tools.tree.CaseStatement;
 
 public class Meeting extends Appointment{
 
@@ -29,7 +26,6 @@ public class Meeting extends Appointment{
 
 	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader,
 			int start, int end){
-
 		super(dateOfMeeting, description, start, end, leader);
 		this.participants = participants;
 		this.room = room;

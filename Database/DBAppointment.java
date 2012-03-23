@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
-
 import model.Appointment;
 import model.User;
 
@@ -22,6 +21,12 @@ public class DBAppointment{
 		+ leader.getUserName() + "','" + description + "','" + dateOfMeeting + "','" + start + "','" + end + "')";
 		Interact.executeUpdate(query);
 		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//Sender tilbake ID på appointment
 		rs = Interact.execute("SELECT * FROM hendelse ORDER BY hendelseId DESC LIMIT 1");
 		try {
@@ -78,8 +83,8 @@ public class DBAppointment{
 		return tid;
 	}
 
-	public static void main (String[]args){
-	
-			System.out.println(getTime(1));
-		}
+//	public static void main (String[]args){
+//	
+//			System.out.println(getTime(1));
+//		}
 }

@@ -66,8 +66,11 @@ public class CalenderView {
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.MyCalendar();
-		cal = new MonthCalender(lpane, caldata, 0, 0, 1, BorderLayout.WEST);
-		wcal = new WeekCalendar(caldata, 270, 0);
+		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
+		wcal = new WeekCalendar(caldata, 270, 30);
+		MessageBar mbar = new MessageBar(0, 0);
+		EventPanel evpnl = new EventPanel(870, 30);
+
 		mes = new JPanel();
 		uview = new UserView(0, 250);
 		Sticker stick = new Sticker(new Rectangle(600, 200, 50, 50), "Hallo");
@@ -82,9 +85,14 @@ public class CalenderView {
 		layout.gridy = 0;
 		lpane.add(mes, new Integer(2));
 		lpane.add(wcal, new Integer(2));
+		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
+<<<<<<< HEAD
 		lpane.add(wcal.addStickers(), new Integer(3));
 		lpane.add(stick, new Integer(3));
+=======
+		lpane.add(evpnl, new Integer(2));
+>>>>>>> aa853d903206c04c232ac592624a2308b4748672
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
