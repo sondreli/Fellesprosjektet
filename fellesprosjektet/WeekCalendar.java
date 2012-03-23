@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 //import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -259,14 +260,22 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	
 	}
 	
-	public Sticker addMeeting(Meeting myMeeting) {
-		Rectangle sbounds = getEventBounds(myMeeting.getTimeOfMeeting());
-		return new Sticker(sbounds, myMeeting.getDescription());
+	public void addMeeting(JLayeredPane lpane, ArrayList<Meeting> meetings) {
+		for (Meeting meeting : meetings) {
+			if(meeting.getMeetingTime().getWeek() == data.getCurrentWeek()) {
+				Rectangle sbounds = getEventBounds(meeting.getMeetingTime());
+				lpane.add(new Sticker(sbounds, meeting.getDescription()));
+			}
+		}
 	}
 	
-	public Sticker addAppointment(Appointment myAppointment) {
-		Rectangle sbounds = getEventBounds(myAppointment.getTimeOfAppointment());
-		return new Sticker(sbounds, myAppointment.getDescription());
+	public void addAppointment(JLayeredPane lpane, ArrayList<Appointment> appointments) {
+		for (Appointment appointment : appointments) {
+			if(appointment.getMeetingTime().getWeek() == data.getCurrentWeek()) {
+				Rectangle sbounds = getEventBounds(appointment.getMeetingTime());
+				lpane.add(new Sticker(sbounds, appointment.getDescription()));
+			}
+		}
 	}
 
 }
