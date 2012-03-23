@@ -87,12 +87,9 @@ public class CalenderView {
 		lpane.add(wcal, new Integer(2));
 		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
-<<<<<<< HEAD
 		lpane.add(wcal.addStickers(), new Integer(3));
 		lpane.add(stick, new Integer(3));
-=======
 		lpane.add(evpnl, new Integer(2));
->>>>>>> aa853d903206c04c232ac592624a2308b4748672
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
