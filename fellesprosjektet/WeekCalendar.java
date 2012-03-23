@@ -59,7 +59,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		pnlCalendar = new JPanel(null);
 		pnlCalendar.setOpaque(true);
 		this.data = data;
-		bounds = new Rectangle(xpos, ypos, 600, 400);
+		bounds = new Rectangle(xpos, ypos, 600, 600);
 		
 		this.data.addPropertyChangeListener(this);
 		
@@ -122,7 +122,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		//Set row/column count
-		tblCalendar.setRowHeight(28);
+		tblCalendar.setRowHeight(50);
 		mtblCalendar.setColumnCount(7);
 		mtblCalendar.setRowCount(9);
 		
@@ -158,7 +158,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 			}
 		}
 		
-		addStickers();
+//		addStickers();
 		
 //		//Get first day of month and number of days
 //		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
@@ -230,18 +230,27 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 	}
 	
-	public Sticker addStickers() {
+	public Sticker addStickers(MeetTime time) {
 		Rectangle sbounds = bounds;
-		MeetTime time = new MeetTime(new Time(10, 0), new Time(10, 30), Day.Tuesday, 12, 2012);
+//		MeetTime time = new MeetTime(new Time(10, 0), new Time(11, 30), Day.Tuesday, 12, 2012);
 		
 //		if(time.getWeek() == data.getCurrentWeek()) {
 		int xpos, ypos, xsize, ysize;
-		int colwidth = sbounds.width/7;
-		xpos = (int)sbounds.getX() + time.getDay().getValue()*colwidth;
-		System.out.println("posx: " + xpos + " colwidth: " + colwidth);
-		ypos = 200;
-		xsize = colwidth;
-		ysize = 50;
+		int colwidth = sbounds.width/7 -1;
+		
+		xsize = colwidth +1;
+		ysize = (int)((time.getEnd().getHour() - time.getStart().getHour())/2.0*tblCalendar.getRowHeight()) + 
+				(int)((time.getEnd().getMinute() - time.getStart().getMinute())/60.0/2.0*tblCalendar.getRowHeight()) + 1;
+		
+		xpos = (int)sbounds.getX() + time.getDay().getValue()*colwidth + stblCalendar.getX();
+		ypos = stblCalendar.getY() + btnPrev.getHeight() + 
+				tblCalendar.getTableHeader().getHeight() +
+				(int)((time.getStart().getHour()-6)/2.0*tblCalendar.getRowHeight()) + // Legger til pos for timene
+				(int)(time.getStart().getMinute()/60.0/2.0*tblCalendar.getRowHeight()) + // Legger til pos for minuttene
+				/*ysize - 2*/5;
+
+		System.out.println("posx: " + xpos + " ypos: " + ypos + " colwidth: " + colwidth);
+		System.out.println(tblCalendar.getTableHeader().getHeight());
 		sbounds.setBounds(xpos, ypos, xsize, ysize);
 		
 		return new Sticker(sbounds, "Hallo");

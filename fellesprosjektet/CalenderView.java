@@ -17,7 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import model.Day;
 import model.MyCalendar;
+import model.MeetTime;
+import model.Time;
 
 import com.sun.xml.internal.ws.api.server.Container;
 
@@ -27,7 +30,6 @@ public class CalenderView {
 	public JPanel myPanel;
 	public JPanel calpanel;
 	public JPanel cal2panel;
-	public JPanel mes;
 	public UserView uview;
 	public java.awt.Container pane;
 	public GridBagConstraints layout;
@@ -71,32 +73,21 @@ public class CalenderView {
 		MessageBar mbar = new MessageBar(0, 0);
 		EventPanel evpnl = new EventPanel(870, 30);
 
-		mes = new JPanel();
 		uview = new UserView(0, 250);
-		Sticker stick = new Sticker(new Rectangle(600, 200, 50, 50), "Hallo");
 		
-		mes.setBounds(150, 150, 50, 50);
-		mes.setBackground(new Color(200, 50, 50, 150));
-		mes.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		//Add controls to pane
 		myPanel.add(butt);
 		layout.gridx = 0;
 		layout.gridy = 0;
-		lpane.add(mes, new Integer(2));
 		lpane.add(wcal, new Integer(2));
 		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
-<<<<<<< HEAD
-		lpane.add(wcal.addStickers(), new Integer(3));
-		lpane.add(stick, new Integer(3));
-=======
+		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
 		lpane.add(evpnl, new Integer(2));
->>>>>>> aa853d903206c04c232ac592624a2308b4748672
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
-		lpane.repaint();
 
 		myPanel.setBounds(0, 0, 800, 600);
 		
