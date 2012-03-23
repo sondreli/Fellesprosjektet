@@ -5,7 +5,7 @@ import Database.DBAppointment;
 
 public class Appointment{
 
-	private MeetTime meetingTime;
+	private MeetTime timeOfAppointment;
 	private String description;
 	private int id;
 	private User leader;
@@ -13,7 +13,7 @@ public class Appointment{
 	
 	public Appointment(String description, User leader, MeetTime time) {
 		this.description = description;
-		this.meetingTime = time;
+		this.timeOfAppointment = time;
 		this.leader = leader;	
 		
 		this.id = DBAppointment.addAppointment(this);
@@ -21,7 +21,7 @@ public class Appointment{
 	}
 	public Appointment(String description, User leader, MeetTime time, int id) {
 		this.description = description;
-		this.meetingTime = time;
+		this.timeOfAppointment = time;
 		this.leader = leader;	
 		this.id = id;
 		
@@ -62,11 +62,11 @@ public class Appointment{
 	public void setLeader(User leader) {
 		this.leader = leader;
 	}
-	public MeetTime getMeetingTime() {
-		return meetingTime;
+	public MeetTime getTimeOfAppointment() {
+		return timeOfAppointment;
 	}
-	public void setMeetingTime(MeetTime meetingTime) {
-		this.meetingTime = meetingTime;
+	public void setTimeOfAppointment(MeetTime timeOfAppointment) {
+		this.timeOfAppointment = timeOfAppointment;
 	}
 	
 	

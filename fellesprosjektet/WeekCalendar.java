@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.omg.CORBA.Bounds;
 
+import model.Appointment;
 import model.Day;
 import model.MeetTime;
 import model.Meeting;
@@ -231,9 +232,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 	}
 	
-	public Sticker addSticker(Meeting myMeeting) {
+	public Rectangle getEventBounds(MeetTime time) {
 		Rectangle sbounds = bounds;
-		MeetTime time = myMeeting.getTimeOfMeeting();
 //		MeetTime time = new MeetTime(new Time(10, 0), new Time(11, 30), Day.Tuesday, 12, 2012);
 		
 //		if(time.getWeek() == data.getCurrentWeek()) {
@@ -255,8 +255,18 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		System.out.println(tblCalendar.getTableHeader().getHeight());
 		sbounds.setBounds(xpos, ypos, xsize, ysize);
 		
-		return new Sticker(sbounds, myMeeting.getDescription());
+		return sbounds;
 	
+	}
+	
+	public Sticker addMeeting(Meeting myMeeting) {
+		Rectangle sbounds = getEventBounds(myMeeting.getTimeOfMeeting());
+		return new Sticker(sbounds, myMeeting.getDescription());
+	}
+	
+	public Sticker addAppointment(Appointment myAppointment) {
+		Rectangle sbounds = getEventBounds(myAppointment.getTimeOfAppointment());
+		return new Sticker(sbounds, myAppointment.getDescription());
 	}
 
 }
