@@ -24,11 +24,12 @@ public class Meeting extends Appointment{
 	 * @param leader
 	 */
 
-	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader,
-			int start, int end){
-		super(dateOfMeeting, description, start, end, leader);
+	public Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime){
+		super(description, leader, meetingTime);
 		this.participants = participants;
 		this.room = room;
+		
+		
 	}
 
 
