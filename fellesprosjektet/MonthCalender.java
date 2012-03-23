@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import model.MyDate;
 
 public class MonthCalender extends JComponent implements PropertyChangeListener{
 	private JLabel lblMonth, lblYear;
