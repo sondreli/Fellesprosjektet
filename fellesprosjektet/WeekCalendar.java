@@ -29,6 +29,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.omg.CORBA.Bounds;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.DayDV;
+
 import model.Appointment;
 import model.Day;
 import model.MeetTime;
@@ -39,20 +41,19 @@ import model.Time;
 public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	private JLabel lblWeek;
 	private JButton btnPrev, btnNext;
-	private JComboBox cmbWeek;
 	private GridBagConstraints constrnts;
 	private JTable tblCalendar;
 	private DefaultTableModel mtblCalendar; //Table model
 	private JScrollPane stblCalendar; //The scrollpane
 	private JPanel pnlCalendar;
+	private JLayeredPane lpane;
 	private model.MyDate data;
 	private Rectangle bounds;
 	
-	public WeekCalendar(model.MyDate data, int xpos, int ypos) {
+	public WeekCalendar(JLayeredPane lpane, model.MyDate data, int xpos, int ypos) {
 		
 		//Create controls
 		lblWeek= new JLabel ("Uke");
-		cmbWeek = new JComboBox();
 		btnPrev = new JButton ("<<");
 		btnNext = new JButton (">>");
 		constrnts = new GridBagConstraints();
@@ -63,6 +64,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		pnlCalendar.setOpaque(true);
 		this.data = data;
 		bounds = new Rectangle(xpos, ypos, 600, 600);
+		this.lpane = lpane; 
 		
 		this.data.addPropertyChangeListener(this);
 		
@@ -129,11 +131,6 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		mtblCalendar.setColumnCount(8);
 		mtblCalendar.setRowCount(9);
 		
-		//Populate combobox
-		for (int i=0; i<=52; i++){
-			cmbWeek.addItem(String.valueOf(i));
-		}
-		
 		//Refresh calendar
 		refreshCalendar (data.getRealWeek(), data.getRealYear()); //Refresh calendar
 	}
@@ -165,6 +162,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 			}
 		}
 		
+		addNowTime(lpane);
 //		addStickers();
 		
 //		//Get first day of month and number of days
@@ -233,7 +231,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 //		if(time.getWeek() == data.getCurrentWeek()) {
 		int xpos, ypos, xsize, ysize;
-		int colwidth = sbounds.width/7 -1;
+		int colwidth = sbounds.width/8 -1;
 		
 		xsize = colwidth +1;
 		ysize = (int)((time.getEnd().getHour() - time.getStart().getHour())/2.0*tblCalendar.getRowHeight()) + 
@@ -247,11 +245,27 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 				/*ysize - 2*/5;
 
 		System.out.println("posx: " + xpos + " ypos: " + ypos + " colwidth: " + colwidth);
-		System.out.println(tblCalendar.getTableHeader().getHeight());
+		System.out.println("stbl:"+stblCalendar.getY()+
+							" btn:"+btnPrev.getHeight()+
+							" tblHeader:"+tblCalendar.getTableHeader().getHeight()+
+							" time:"+(int)((time.getStart().getHour()-6)/2.0*tblCalendar.getRowHeight())+
+							" minutes:"+(int)(time.getStart().getMinute()/60.0/2.0*tblCalendar.getRowHeight()));
 		sbounds.setBounds(xpos, ypos, xsize, ysize);
 		
 		return sbounds;
 	
+	}
+	
+	private void addNowTime(JLayeredPane lpane) {
+		Calendar cal = Calendar.getInstance();
+		Date time = cal.getTime();
+		Time start = new Time(time.getHours(), time.getMinutes());
+		Time end = new Time(start.getHour(), start.getMinute()+30);
+		MeetTime mtime = new MeetTime(start, end, Day.getDay(time.getDay()), data.getCurrentMonth(), data.getCurrentYear());
+		
+		System.out.println("day:"+time.getDay()+" hour:"+time.getHours()+" min:"+time.getMinutes());
+		
+		lpane.add(new Sticker(getEventBounds(mtime), "   "), new Integer(3));
 	}
 	
 	public void addMeeting(JLayeredPane lpane, ArrayList<Meeting> meetings) {
