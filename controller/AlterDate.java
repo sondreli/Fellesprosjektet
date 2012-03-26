@@ -23,7 +23,7 @@ public class AlterDate {
 		return week+6;
 	}
 	
-	public static int getFirstWeekOfMonth(model.MyCalendar mycal) {
+	public static int getFirstWeekOfMonth(model.MyDate mycal) {
 		int cweek = mycal.getCurrentWeek();
 		int cmonth = mycal.getCurrentMonth();
 		int cyear = mycal.getCurrentYear();
@@ -37,7 +37,7 @@ public class AlterDate {
 		return cweek;
 	}
 	
-	public static void increaseMonth(model.MyCalendar mycal) {
+	public static void increaseMonth(model.MyDate mycal) {
 //		int cdate;
 		int cweek = mycal.getCurrentWeek();
 		int cmonth = mycal.getCurrentMonth();
@@ -61,7 +61,7 @@ public class AlterDate {
 		mycal.setCurrentAll(cweek, cmonth, cyear);
 	}
 	
-	public static void decreaseMonth(model.MyCalendar mycal) {
+	public static void decreaseMonth(model.MyDate mycal) {
 		int cweek = mycal.getCurrentWeek();
 		int cmonth = mycal.getCurrentMonth();
 		int cyear = mycal.getCurrentYear();
@@ -84,7 +84,7 @@ public class AlterDate {
 		mycal.setCurrentAll(cweek, cmonth, cyear);
 	}
 	
-	public static void increaseWeek(model.MyCalendar mycal) {
+	public static void increaseWeek(model.MyDate mycal) {
 		int cweek = mycal.getCurrentWeek();
 		int cmonth = mycal.getCurrentMonth();
 		int cyear = mycal.getCurrentYear();
@@ -107,7 +107,7 @@ public class AlterDate {
 		mycal.setCurrentAll(cweek, cmonth, cyear);
 	}
 
-	public static void decreaseWeek(model.MyCalendar mycal) {
+	public static void decreaseWeek(model.MyDate mycal) {
 		int cweek = mycal.getCurrentWeek();
 		int cmonth = mycal.getCurrentMonth();
 		int cyear = mycal.getCurrentYear();

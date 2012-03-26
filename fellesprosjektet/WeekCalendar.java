@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 //import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -28,8 +29,10 @@ import javax.swing.table.DefaultTableModel;
 
 import org.omg.CORBA.Bounds;
 
+import model.Appointment;
 import model.Day;
 import model.MeetTime;
+import model.Meeting;
 import model.Time;
 
 
@@ -42,10 +45,10 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	private DefaultTableModel mtblCalendar; //Table model
 	private JScrollPane stblCalendar; //The scrollpane
 	private JPanel pnlCalendar;
-	private model.MyCalendar data;
+	private model.MyDate data;
 	private Rectangle bounds;
 	
-	public WeekCalendar(model.MyCalendar data, int xpos, int ypos) {
+	public WeekCalendar(model.MyDate data, int xpos, int ypos) {
 		
 		//Create controls
 		lblWeek= new JLabel ("Uke");
@@ -59,7 +62,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		pnlCalendar = new JPanel(null);
 		pnlCalendar.setOpaque(true);
 		this.data = data;
-		bounds = new Rectangle(xpos, ypos, 600, 400);
+		bounds = new Rectangle(xpos, ypos, 600, 600);
 		
 		this.data.addPropertyChangeListener(this);
 		
@@ -105,8 +108,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	
 	private void initCalendar() {
 		//Add headers
-		String[] headers = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
-		for (int i=0; i<7; i++){
+		String[] headers = {"   ", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}; //All headers
+		for (int i=0; i<8; i++){
 			mtblCalendar.addColumn(headers[i]);
 		}
 		
@@ -122,8 +125,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		tblCalendar.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		//Set row/column count
-		tblCalendar.setRowHeight(28);
-		mtblCalendar.setColumnCount(7);
+		tblCalendar.setRowHeight(50);
+		mtblCalendar.setColumnCount(8);
 		mtblCalendar.setRowCount(9);
 		
 		//Populate combobox
@@ -153,12 +156,16 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 		//Clear table
 		for (int i=0; i<9; i++){
-			for (int j=0; j<7; j++){
-				mtblCalendar.setValueAt(null, i, j);
+			for (int j=0; j<8; j++){
+				if(j == 0) {
+					mtblCalendar.setValueAt(6+2*i + " - " + (8+2*i), i, j);
+				}
+				else
+					mtblCalendar.setValueAt(null, i, j);
 			}
 		}
 		
-		addStickers();
+//		addStickers();
 		
 //		//Get first day of month and number of days
 //		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
@@ -179,18 +186,21 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	private class tblCalendarRenderer extends DefaultTableCellRenderer{
 		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
 			super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-			if (column == 0 || column == 6){ //Week-end
+			if (column == 1 || column == 7){ //Week-end
 				setBackground(new Color(255, 220, 220));
+			}
+			else if(column == 0) {
+				setBackground(new Color(235, 235, 235));
 			}
 			else{ //Week
 				setBackground(new Color(255, 255, 255));
 			}
 			if (value != null){
-				if (Integer.parseInt(value.toString()) == data.getRealDay() &&
-					data.getCurrentMonth() == data.getRealMonth() &&
-					data.getCurrentYear() == data.getRealYear()) { //Today
-					setBackground(new Color(220, 220, 255));
-				}
+//				if (Integer.parseInt(value.toString()) == data.getRealDay() &&
+//					data.getCurrentMonth() == data.getRealMonth() &&
+//					data.getCurrentYear() == data.getRealYear()) { //Today
+//					setBackground(new Color(220, 220, 255));
+//				}
 			}
 			setBorder(null);
 			setForeground(Color.black);
@@ -210,42 +220,56 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 			controller.AlterDate.increaseWeek(data);
 		}
 	}
-	
-	private int getMonth(int week, int year) {
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(Calendar.WEEK_OF_YEAR, week);
-		cal.set(Calendar.YEAR, year);
-		
-		Date date = cal.getTime();
-		System.out.println(date.getMonth());
-		return date.getMonth();
-	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		refreshCalendar(data.getCurrentWeek(), data.getCurrentYear());
 		pnlCalendar.repaint();
-		System.out.println("det skjer ting!");
-		
 	}
 	
-	public Sticker addStickers() {
+	public Rectangle getEventBounds(MeetTime time) {
 		Rectangle sbounds = bounds;
-		MeetTime time = new MeetTime(new Time(10, 0), new Time(10, 30), Day.Tuesday, 12, 2012);
+//		MeetTime time = new MeetTime(new Time(10, 0), new Time(11, 30), Day.Tuesday, 12, 2012);
 		
 //		if(time.getWeek() == data.getCurrentWeek()) {
 		int xpos, ypos, xsize, ysize;
-		int colwidth = sbounds.width/7;
-		xpos = (int)sbounds.getX() + time.getDay().getValue()*colwidth;
-		System.out.println("posx: " + xpos + " colwidth: " + colwidth);
-		ypos = 200;
-		xsize = colwidth;
-		ysize = 50;
+		int colwidth = sbounds.width/7 -1;
+		
+		xsize = colwidth +1;
+		ysize = (int)((time.getEnd().getHour() - time.getStart().getHour())/2.0*tblCalendar.getRowHeight()) + 
+				(int)((time.getEnd().getMinute() - time.getStart().getMinute())/60.0/2.0*tblCalendar.getRowHeight()) + 1;
+		
+		xpos = (int)sbounds.getX() + (time.getDay().getValue()+1)*colwidth + stblCalendar.getX();
+		ypos = stblCalendar.getY() + btnPrev.getHeight() + 
+				tblCalendar.getTableHeader().getHeight() +
+				(int)((time.getStart().getHour()-6)/2.0*tblCalendar.getRowHeight()) + // Legger til pos for timene
+				(int)(time.getStart().getMinute()/60.0/2.0*tblCalendar.getRowHeight()) + // Legger til pos for minuttene
+				/*ysize - 2*/5;
+
+		System.out.println("posx: " + xpos + " ypos: " + ypos + " colwidth: " + colwidth);
+		System.out.println(tblCalendar.getTableHeader().getHeight());
 		sbounds.setBounds(xpos, ypos, xsize, ysize);
 		
-		return new Sticker(sbounds, "Hallo");
+		return sbounds;
 	
+	}
+	
+	public void addMeeting(JLayeredPane lpane, ArrayList<Meeting> meetings) {
+		for (Meeting meeting : meetings) {
+			if(meeting.getMeetingTime().getWeek() == data.getCurrentWeek()) {
+				Rectangle sbounds = getEventBounds(meeting.getMeetingTime());
+				lpane.add(new Sticker(sbounds, meeting.getDescription()));
+			}
+		}
+	}
+	
+	public void addAppointment(JLayeredPane lpane, ArrayList<Appointment> appointments) {
+		for (Appointment appointment : appointments) {
+			if(appointment.getMeetingTime().getWeek() == data.getCurrentWeek()) {
+				Rectangle sbounds = getEventBounds(appointment.getMeetingTime());
+				lpane.add(new Sticker(sbounds, appointment.getDescription()));
+			}
+		}
 	}
 
 }

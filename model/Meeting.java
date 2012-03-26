@@ -7,7 +7,6 @@ import java.util.Date;
 public class Meeting extends Appointment{
 
 	private ArrayList<User> participants;
-	private Date dateOfMeeting;
 	private User leader;
 	private Answer answer;
 	private MeetingRoom room;
@@ -24,11 +23,12 @@ public class Meeting extends Appointment{
 	 * @param leader
 	 */
 
-	public Meeting(ArrayList<User> participants, MeetingRoom room, Date dateOfMeeting, String description, User leader,
-			int start, int end){
-		super(dateOfMeeting, description, start, end, leader);
+	public Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime){
+		super(description, leader, meetingTime);
 		this.participants = participants;
 		this.room = room;
+		
+		
 	}
 
 
@@ -39,16 +39,6 @@ public class Meeting extends Appointment{
 
 	public void setParticipants(ArrayList<User> participants) {
 		this.participants = participants;
-	}
-
-
-	public Date getDateOfMeeting() {
-		return dateOfMeeting;
-	}
-
-
-	public void setDateOfMeeting(Date dateOfMeeting) {
-		this.dateOfMeeting = dateOfMeeting;
 	}
 
 

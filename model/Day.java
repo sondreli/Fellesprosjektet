@@ -12,6 +12,14 @@ public enum Day {
 	public int getValue() {
 		return nr;
 	}
+
+	public static Day getDay(int nr){
+		for (Day day : values()) {
+			if(day.nr == nr)
+				return day;
+		}
+		throw new IllegalArgumentException();
+	}
 }
 
 
