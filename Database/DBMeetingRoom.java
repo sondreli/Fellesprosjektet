@@ -2,7 +2,11 @@ package database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import Database.Interact;
+
+import model.Meeting;
 import model.MeetingRoom;
 
 public class DBMeetingRoom {
@@ -24,8 +28,29 @@ public class DBMeetingRoom {
 		String query = "DELETE FROM m¿teRom WHERE navn = '" + name + "'";
 		Interact.executeUpdate(query);
 	}
-
-	public MeetingRoom makeMeetingRoomObject(ResultSet rs){
+	/**
+	 * Gets all the meetings in that room
+	 * @param room
+	 * @return ArrayList<Meeting>
+	 */
+	public ArrayList<Meeting> getMeetingsInRoom(MeetingRoom room){
+		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+		ResultSet rs = null;
+		
+		rs = Interact.execute("SELECT * FROM kobling WHERE navn = '" + room.getName() + "'");
+		try {
+			while(rs.next()){
+				meetings.add(DBMeeting.makeMeetingObject(rs));				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
+		
+	}
+	public static MeetingRoom makeMeetingRoomObject(ResultSet rs){
 		MeetingRoom room = null;
 
 		try {
@@ -40,5 +65,11 @@ public class DBMeetingRoom {
 		}
 
 		return room;
+	}
+
+	public static MeetingRoom getMeetingRoom(String roomName) {
+		ResultSet rs = Interact.execute("SELECT * FROM m¿teRom WHERE romNavn = '" + roomName + "'");
+		
+		return makeMeetingRoomObject(rs);
 	}
 }
