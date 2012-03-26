@@ -69,7 +69,7 @@ public class CalenderView {
 		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.MyDate();
 		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
-		wcal = new WeekCalendar(caldata, 270, 30);
+		wcal = new WeekCalendar(lpane, caldata, 270, 30);
 		MessageBar mbar = new MessageBar(0, 0);
 		EventPanel evpnl = new EventPanel(870, 30);
 
@@ -83,12 +83,14 @@ public class CalenderView {
 		lpane.add(wcal, new Integer(2));
 		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
-<<<<<<< HEAD
+
 //		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
-=======
-		lpane.add(wcal.addStickers(), new Integer(3));
-		lpane.add(stick, new Integer(3));
->>>>>>> 5f5bcbd3fcc9559fa9da27071b344f61c57607e9
+//		lpane.add(wcal.addStickers(), new Integer(3));
+
+
+//		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
+
+
 		lpane.add(evpnl, new Integer(2));
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);

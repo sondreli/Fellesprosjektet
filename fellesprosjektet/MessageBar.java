@@ -82,7 +82,7 @@ public class MessageBar extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			new NewMeeting();
 			
 		}
 		

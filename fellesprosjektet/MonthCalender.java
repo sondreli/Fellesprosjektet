@@ -240,7 +240,7 @@ public class MonthCalender extends JComponent implements PropertyChangeListener{
 				if (Integer.parseInt(value.toString()) == data.getRealDay() &&
 								data.getCurrentMonth() == data.getRealMonth() &&
 								data.getCurrentYear() == data.getRealYear()) { //Today
-					setBackground(new Color(220, 220, 255));
+					setBackground(new Color(190, 190, 255));
 				}
 //				if(row == 0 && column == data.getCurrentWeek()%7) {
 //					setBackground(new Color(220, 220, 255));
