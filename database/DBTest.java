@@ -19,7 +19,8 @@ public class DBTest {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		User test = new User("Autogenerert");
+		DBUser.addUser("Per", "Per Persen", "rtyu");
+		User test = DBUser.getUser("Per");
 		
 		Message mote = new Message("testee2", "zoo do?", test, test);
 		//DBAppointment.addAppointment(mote);
