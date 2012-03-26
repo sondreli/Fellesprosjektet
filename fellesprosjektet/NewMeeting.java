@@ -30,13 +30,15 @@ public class NewMeeting{
 	JTextField search;
 	JTextPane message;
 	JButton addButton, removeButton;
+	JButton deleteButton, okButton, abortButton;
 	JLabel usersLabel, addedLabel, dateLabel;
 	JLabel clockLabel, clockFromLabel, clockToLabel;
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
+	JFrame frame;
 	
-	JPanel pan1, pan2;
+	JPanel pan1, pan2, underPanel;
 	
 	
 	public static void main(String[]args){
@@ -45,12 +47,14 @@ public class NewMeeting{
 	
 	}
 	public NewMeeting(){
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
+		underPanel = new JPanel();
 		pan1.setLayout(new GridBagLayout());
 		pan2.setLayout(new GridBagLayout());
+		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
@@ -95,6 +99,12 @@ public class NewMeeting{
 		
 		addButton = new JButton("Add User");
 		removeButton = new JButton("Remove User");
+		deleteButton = new JButton("Slett");
+		okButton = new JButton("OK");
+		abortButton = new JButton("Avbryt");
+		
+		
+		
 		
 		usersLabel = new JLabel("Brukere");
 		addedLabel = new JLabel("Lagt til");
@@ -116,13 +126,16 @@ public class NewMeeting{
 		toMinute = new JComboBox(minutes);
 		meetingRoom = new JComboBox();
 		
+		
 		// add listeners
 		
 		addButton.addActionListener(new AddButtonListener());
 		removeButton.addActionListener(new RemoveButtonListener());
 		search.addKeyListener(new SearchFieldListener());
 		monthDate.addActionListener(new MonthChangeListener());
-		
+		deleteButton.addActionListener(new DeleteButtonListener());
+		abortButton.addActionListener(new AbortButtonListener());
+		okButton.addActionListener(new OKButtonListener());
 		
 		
 		// add testelements
@@ -255,6 +268,25 @@ public class NewMeeting{
 		pan2.add(addedUsersScrollList, cs);
 		
 		
+		cs.gridx = 0;
+		cs.gridy = 0;
+		cs.gridheight = 1;
+		cs.ipadx = 0;
+		cs.ipady = 0;
+		cs.fill = GridBagConstraints.NONE;
+		cs.anchor = GridBagConstraints.WEST;
+		underPanel.add(deleteButton, cs);
+		
+		cs.gridx = 1;
+		cs.anchor = GridBagConstraints.EAST;
+		underPanel.add(abortButton, cs);
+		
+		cs.gridx = 2;
+		underPanel.add(okButton, cs);
+		
+		
+		
+		
 		
 		pan1.setBounds(0, 0, 400, 500);
 		pan2.setBounds(0, 0, 300, 500);
@@ -269,9 +301,13 @@ public class NewMeeting{
 		frame.add(pan1, con);
 		con.gridx = 1;
 		frame.add(pan2, con);
+		con.gridx = 0;
+		con.gridy = 1;
+		con.gridwidth = 2;
+		frame.add(underPanel, con);
 		frame.setVisible(true);
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void fillList(DefaultListModel listModel){
@@ -367,9 +403,32 @@ public class NewMeeting{
 			}
 			else {
 				fillDays(31);
-			}
+			}	
+		}	
+	}
+	class DeleteButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+	class OKButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+	class AbortButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			frame.dispose();
 			
 		}
 		

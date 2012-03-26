@@ -86,8 +86,8 @@ public class CalenderView {
 
 //		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
 
-		lpane.add(wcal.addStickers(), new Integer(3));
-		lpane.add(stick, new Integer(3));
+	//	lpane.add(wcal.addStickers(), new Integer(3));
+		//lpane.add(stick, new Integer(3));
 		lpane.add(evpnl, new Integer(2));
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
