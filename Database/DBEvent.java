@@ -1,8 +1,16 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 0a16c6dafbe681169dae3c8bf79b0d19c1e4c860
+<<<<<<< HEAD
 
 =======
 >>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 package database;
+<<<<<<< HEAD
+=======
+>>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
+>>>>>>> 0a16c6dafbe681169dae3c8bf79b0d19c1e4c860
 
 import java.sql.SQLException;
 import java.sql.Time;

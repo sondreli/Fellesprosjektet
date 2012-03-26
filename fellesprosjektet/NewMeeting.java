@@ -90,10 +90,7 @@ public class NewMeeting{
 		String[] hours =  new String[24];
 		String[] minutes = new String[60];
 		
-<<<<<<< HEAD
-=======
 		
->>>>>>> 58e53932e4f6dba48315077d64467e607d4ba87d
 		for(int i = 0; i< 24; i++){
 			if(i < 10){
 				hours[i] = "0" + (i);
