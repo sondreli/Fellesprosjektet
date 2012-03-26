@@ -1,4 +1,5 @@
 package database;
+<<<<<<< HEAD
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,8 @@ import model.MeetTime;
 import model.Meeting;
 import model.MeetingRoom;
 import model.User;
+=======
+>>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 
 public class DBMeeting {
 
