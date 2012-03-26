@@ -20,7 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import Database.DBUser;
+import database.DBUser;
+
 
 import model.User;
 
