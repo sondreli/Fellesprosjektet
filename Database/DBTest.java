@@ -1,4 +1,4 @@
-package database;
+package Database;
 
 import java.util.ArrayList;
 import java.util.Date;

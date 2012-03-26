@@ -1,4 +1,4 @@
-package database;
+package Database;
 /**
  * @version 1.0
  * Dette programmet tar seg av tilkoblingen til databaseserveren.
