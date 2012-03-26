@@ -83,16 +83,14 @@ public class CalenderView {
 		lpane.add(wcal, new Integer(2));
 		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
-<<<<<<< HEAD
+
 //		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
 //		lpane.add(wcal.addStickers(), new Integer(3));
-=======
+
 
 //		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
 
-		lpane.add(wcal.addStickers(), new Integer(3));
-		lpane.add(stick, new Integer(3));
->>>>>>> 46264d8bbd15cd957d6f568f742ed8c825ed7b30
+
 		lpane.add(evpnl, new Integer(2));
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
