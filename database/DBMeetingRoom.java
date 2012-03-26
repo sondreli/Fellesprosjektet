@@ -4,7 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Database.Interact;
+import database.Interact;
+
 
 import model.Meeting;
 import model.MeetingRoom;
@@ -18,14 +19,14 @@ public class DBMeetingRoom {
 
 	private static void addMeetingRoom(String name, String description, String location) {
 
-		String query = "INSERT INTO m¿teRom " +
+		String query = "INSERT INTO mï¿½teRom " +
 		"(navn, sted, beskrivelse) VALUES ('"
 		+ name + "','" + description + "','" + location + "')";
 		Interact.executeUpdate(query);
 	}
 
 	public static void removeMeetingRoom(String name){
-		String query = "DELETE FROM m¿teRom WHERE navn = '" + name + "'";
+		String query = "DELETE FROM mï¿½teRom WHERE navn = '" + name + "'";
 		Interact.executeUpdate(query);
 	}
 	/**
@@ -48,7 +49,7 @@ public class DBMeetingRoom {
 		
 	}
 	public static void editMeetingRoom(MeetingRoom room){
-		Interact.executeUpdate("UPDATE m¿teRom SET navn = '" + room.getName() + "'," + 
+		Interact.executeUpdate("UPDATE mï¿½teRom SET navn = '" + room.getName() + "'," + 
 				"sted = '" + room.getLocation() + "'," + 
 				"beskrivelse = '" + room.getDescription() + "'" + 
 				"WHERE navn = '" + room.getName() + "'"
@@ -73,7 +74,7 @@ public class DBMeetingRoom {
 	}
 
 	public static MeetingRoom getMeetingRoom(String roomName) {
-		ResultSet rs = Interact.execute("SELECT * FROM m¿teRom WHERE romNavn = '" + roomName + "'");
+		ResultSet rs = Interact.execute("SELECT * FROM mï¿½teRom WHERE romNavn = '" + roomName + "'");
 		
 		return makeMeetingRoomObject(rs);
 	}

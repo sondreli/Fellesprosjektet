@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,13 +21,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-<<<<<<< HEAD
 import model.Meeting;
-=======
 import database.DBUser;
 
 
->>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 import model.User;
 
 public class NewMeeting{
@@ -43,34 +41,34 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
-<<<<<<< HEAD
+
 	ArrayList<Meeting> meetings;
 	Meeting meeting;
-=======
+
 	JFrame frame;
 	ArrayList<User> allUsers;
->>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
+
 	
 	JPanel pan1, pan2, underPanel;
 	
 	
-<<<<<<< HEAD
+
+//	public static void main(String[]args){
+//		
+//		NewMeeting gogo = new NewMeeting();
+//	
+//	}
+//	public NewMeeting(ArrayList<Meeting> meetings){
+//		JFrame frame = new JFrame();
+//
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
 	public NewMeeting(ArrayList<Meeting> meetings){
-		JFrame frame = new JFrame();
-=======
-	public static void main(String[]args){
-		
-		NewMeeting gogo = new NewMeeting();
-	
-	}
-	public NewMeeting(){
 		frame = new JFrame();
->>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
+
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();

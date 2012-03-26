@@ -25,7 +25,7 @@ public class DBTest {
 		//DBAppointment.addAppointment(mote);
 		
 		
-//		m¿te.setId(DBAppointment.getNewestID(m¿te));
+//		mï¿½te.setId(DBAppointment.getNewestID(mï¿½te));
 		ArrayList<Message> m  = DBMessage.getInbox(test);
 		for (Message message : m) {
 			System.out.println(message.getContent());
