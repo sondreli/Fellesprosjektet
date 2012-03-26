@@ -19,8 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 
+import database.DBUser;
+
 import model.User;
-import Database.DBUser;
 
 public class UserView extends JPanel{
 	

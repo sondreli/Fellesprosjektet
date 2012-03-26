@@ -4,7 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Database.Interact;
+import database.Interact;
+
 
 import model.Meeting;
 import model.MeetingRoom;

@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
