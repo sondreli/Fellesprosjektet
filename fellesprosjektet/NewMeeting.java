@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import Database.DBUser;
+
 import model.User;
 
 public class NewMeeting{
@@ -37,6 +39,7 @@ public class NewMeeting{
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
 	JFrame frame;
+	ArrayList<User> allUsers;
 	
 	JPanel pan1, pan2, underPanel;
 	
@@ -315,18 +318,27 @@ public class NewMeeting{
 		if(!listModel.isEmpty()){
 			listModel.clear();
 		}
-		
+		allUsers = new ArrayList<User>();
 		// legg til denne user
+		
+		
 		
 		User disUser = new User("Navn1", "Random1", "pass");
 		// Legg til Users
-		ArrayList<User> allUsers = new ArrayList<User>();
+		
+		// Get all users
+		
+		allUsers = DBUser.getAllUsers();
+		
+		addedUsers.addElement(allUsers.get(0));
+		/*
 		addedUsers.addElement(disUser);
 		allUsers.add(disUser);
 		for(int i = 2; i < 30;i++){
 			allUsers.add(new User("Navn" + i, "Random" + i, "pass"));
 		}
 		//ArrayList<User> allUsers = DBUser.getAllUsers();
+		*/
 		
 		for(User e : allUsers){
 			listModel.addElement(e);
@@ -348,10 +360,7 @@ public class NewMeeting{
 		if(!listModel.isEmpty()){
 			listModel.clear();
 		}
-		ArrayList<User> allUsers = new ArrayList<User>();
-		for(int i = 1; i < 30;i++){
-			allUsers.add(new User("Navn" + i));
-		}
+		
 		for (User e : allUsers){
 			if(e.getUserName().toLowerCase().contains(contains)){
 				listModel.addElement(e);
