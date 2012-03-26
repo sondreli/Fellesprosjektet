@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import model.Meeting;
 import model.User;
 
 public class NewMeeting{
@@ -35,16 +36,18 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
+	ArrayList<Meeting> meetings;
+	Meeting meeting;
 	
 	JPanel pan1, pan2;
 	
 	
-	public static void main(String[]args){
-		
-		NewMeeting gogo = new NewMeeting();
-	
-	}
-	public NewMeeting(){
+//	public static void main(String[]args){
+//		
+//		NewMeeting gogo = new NewMeeting();
+//	
+//	}
+	public NewMeeting(ArrayList<Meeting> meetings){
 		JFrame frame = new JFrame();
 		
 		pan1 = new JPanel();
@@ -52,6 +55,8 @@ public class NewMeeting{
 		pan1.setLayout(new GridBagLayout());
 		pan2.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
+		this.meetings = meetings;
+//		meeting = new Meeting(participants, room, description, leader, meetingTime)
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
 				"August", "September", "October", "November", "December"};
@@ -102,7 +107,7 @@ public class NewMeeting{
 		clockLabel = new JLabel("Klokkeslett  ");
 		clockFromLabel = new JLabel("Fra:");
 		clockToLabel = new JLabel("Til:");
-		meetingLabel = new JLabel("Møterom:");
+		meetingLabel = new JLabel("Mï¿½terom:");
 		messageLabel = new JLabel("Beskjed:");	
 		
 

@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import model.Day;
+import model.Meeting;
 import model.MyDate;
 import model.MeetTime;
 import model.Time;
@@ -37,6 +39,7 @@ public class CalenderView {
 	public MonthCalender cal;
 	public WeekCalendar wcal;
 	public JButton butt;
+	public ArrayList<Meeting> meetings;
 	
 	public CalenderView() {
 		//Look and feel
@@ -70,8 +73,9 @@ public class CalenderView {
 		caldata = new model.MyDate();
 		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
 		wcal = new WeekCalendar(lpane, caldata, 270, 30);
-		MessageBar mbar = new MessageBar(0, 0);
+		MessageBar mbar = new MessageBar(0, 0, meetings);
 		EventPanel evpnl = new EventPanel(870, 30);
+		meetings = new ArrayList<Meeting>();
 
 		uview = new UserView(0, 250);
 		
