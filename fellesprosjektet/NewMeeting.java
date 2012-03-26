@@ -306,6 +306,7 @@ public class NewMeeting{
 		con.gridwidth = 2;
 		frame.add(underPanel, con);
 		frame.setVisible(true);
+		frame.setResizable(false);
 		frame.pack();
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

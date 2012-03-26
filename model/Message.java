@@ -1,7 +1,7 @@
 package model;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -14,11 +14,14 @@ public class Message {
 	private User sender,  recepient;
 
 	public Message(String topic, String content,User recepient,User sender){
+		
 		this.topic = topic;
 		this.content = content;
-		this.dateSendt = new Date();
+	    java.util.Date utilDate = new java.util.Date();
+		this.dateSendt = new java.sql.Date(utilDate.getTime());
 		this.sender = sender;
 		this.recepient = recepient;
+		
 		
 		DBMessage.addMessage(this);
 		
@@ -30,12 +33,13 @@ public class Message {
 		this.sender = sender;
 		this.recepient = recepient;
 		
-		DBMessage.addMessage(this);
+		
 	}
 	//Setter datoen som en String
 	private String dateToString() {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-		Date date = new Date();
+		 java.util.Date utilDate = new java.util.Date();
+		Date date = new java.sql.Date(utilDate.getTime());
 		return dateFormat.format(date);
 	}
 	public String getContent() {
