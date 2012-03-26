@@ -5,7 +5,8 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import Database.DBMessage;
+import database.DBMessage;
+
 
 public class Message {
 

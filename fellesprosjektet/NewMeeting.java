@@ -20,7 +20,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+<<<<<<< HEAD
 import model.Meeting;
+=======
+import database.DBUser;
+
+
+>>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 import model.User;
 
 public class NewMeeting{
@@ -31,17 +37,24 @@ public class NewMeeting{
 	JTextField search;
 	JTextPane message;
 	JButton addButton, removeButton;
+	JButton deleteButton, okButton, abortButton;
 	JLabel usersLabel, addedLabel, dateLabel;
 	JLabel clockLabel, clockFromLabel, clockToLabel;
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
+<<<<<<< HEAD
 	ArrayList<Meeting> meetings;
 	Meeting meeting;
+=======
+	JFrame frame;
+	ArrayList<User> allUsers;
+>>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 	
-	JPanel pan1, pan2;
+	JPanel pan1, pan2, underPanel;
 	
 	
+<<<<<<< HEAD
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
@@ -49,11 +62,22 @@ public class NewMeeting{
 //	}
 	public NewMeeting(ArrayList<Meeting> meetings){
 		JFrame frame = new JFrame();
+=======
+	public static void main(String[]args){
+		
+		NewMeeting gogo = new NewMeeting();
+	
+	}
+	public NewMeeting(){
+		frame = new JFrame();
+>>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
+		underPanel = new JPanel();
 		pan1.setLayout(new GridBagLayout());
 		pan2.setLayout(new GridBagLayout());
+		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		this.meetings = meetings;
 //		meeting = new Meeting(participants, room, description, leader, meetingTime)
@@ -100,6 +124,12 @@ public class NewMeeting{
 		
 		addButton = new JButton("Add User");
 		removeButton = new JButton("Remove User");
+		deleteButton = new JButton("Slett");
+		okButton = new JButton("OK");
+		abortButton = new JButton("Avbryt");
+		
+		
+		
 		
 		usersLabel = new JLabel("Brukere");
 		addedLabel = new JLabel("Lagt til");
@@ -121,13 +151,16 @@ public class NewMeeting{
 		toMinute = new JComboBox(minutes);
 		meetingRoom = new JComboBox();
 		
+		
 		// add listeners
 		
 		addButton.addActionListener(new AddButtonListener());
 		removeButton.addActionListener(new RemoveButtonListener());
 		search.addKeyListener(new SearchFieldListener());
 		monthDate.addActionListener(new MonthChangeListener());
-		
+		deleteButton.addActionListener(new DeleteButtonListener());
+		abortButton.addActionListener(new AbortButtonListener());
+		okButton.addActionListener(new OKButtonListener());
 		
 		
 		// add testelements
@@ -260,6 +293,25 @@ public class NewMeeting{
 		pan2.add(addedUsersScrollList, cs);
 		
 		
+		cs.gridx = 0;
+		cs.gridy = 0;
+		cs.gridheight = 1;
+		cs.ipadx = 0;
+		cs.ipady = 0;
+		cs.fill = GridBagConstraints.NONE;
+		cs.anchor = GridBagConstraints.WEST;
+		underPanel.add(deleteButton, cs);
+		
+		cs.gridx = 1;
+		cs.anchor = GridBagConstraints.EAST;
+		underPanel.add(abortButton, cs);
+		
+		cs.gridx = 2;
+		underPanel.add(okButton, cs);
+		
+		
+		
+		
 		
 		pan1.setBounds(0, 0, 400, 500);
 		pan2.setBounds(0, 0, 300, 500);
@@ -274,27 +326,41 @@ public class NewMeeting{
 		frame.add(pan1, con);
 		con.gridx = 1;
 		frame.add(pan2, con);
+		con.gridx = 0;
+		con.gridy = 1;
+		con.gridwidth = 2;
+		frame.add(underPanel, con);
 		frame.setVisible(true);
+		frame.setResizable(false);
 		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void fillList(DefaultListModel listModel){
 		if(!listModel.isEmpty()){
 			listModel.clear();
 		}
-		
+		allUsers = new ArrayList<User>();
 		// legg til denne user
+		
+		
 		
 		User disUser = new User("Navn1", "Random1", "pass");
 		// Legg til Users
-		ArrayList<User> allUsers = new ArrayList<User>();
+		
+		// Get all users
+		
+		allUsers = DBUser.getAllUsers();
+		
+		addedUsers.addElement(allUsers.get(0));
+		/*
 		addedUsers.addElement(disUser);
 		allUsers.add(disUser);
 		for(int i = 2; i < 30;i++){
 			allUsers.add(new User("Navn" + i, "Random" + i, "pass"));
 		}
 		//ArrayList<User> allUsers = DBUser.getAllUsers();
+		*/
 		
 		for(User e : allUsers){
 			listModel.addElement(e);
@@ -316,10 +382,7 @@ public class NewMeeting{
 		if(!listModel.isEmpty()){
 			listModel.clear();
 		}
-		ArrayList<User> allUsers = new ArrayList<User>();
-		for(int i = 1; i < 30;i++){
-			allUsers.add(new User("Navn" + i));
-		}
+		
 		for (User e : allUsers){
 			if(e.getUserName().toLowerCase().contains(contains)){
 				listModel.addElement(e);
@@ -372,9 +435,32 @@ public class NewMeeting{
 			}
 			else {
 				fillDays(31);
-			}
+			}	
+		}	
+	}
+	class DeleteButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+	class OKButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
 			
+		}
+		
+	}
+	class AbortButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			frame.dispose();
 			
 		}
 		

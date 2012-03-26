@@ -1,6 +1,6 @@
 package model;
 
-import Database.DBAppointment;
+import database.DBAppointment;
 
 
 public class Appointment{

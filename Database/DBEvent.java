@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 package database;
 =======
 package Database;
 >>>>>>> parent of 9d36534... ppdatert DB metoder
+=======
+package database;
+>>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 
 import java.sql.SQLException;
 import java.sql.Time;
