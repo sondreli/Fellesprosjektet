@@ -46,8 +46,13 @@ public class DBMeetingRoom {
 			// TODO: handle exception
 		}
 		
-		
-		
+	}
+	public static void editMeetingRoom(MeetingRoom room){
+		Interact.executeUpdate("UPDATE m¿teRom SET navn = '" + room.getName() + "'," + 
+				"sted = '" + room.getLocation() + "'," + 
+				"beskrivelse = '" + room.getDescription() + "'" + 
+				"WHERE navn = '" + room.getName() + "'"
+		);
 		
 	}
 	public static MeetingRoom makeMeetingRoomObject(ResultSet rs){
