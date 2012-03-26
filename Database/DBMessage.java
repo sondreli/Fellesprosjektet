@@ -47,8 +47,9 @@ public class DBMessage {
 			Date sent = rs.getDate("datoSendt");
 			User sender = DBUser.getUser(rs.getString("fra")) ;
 			User recepient =  DBUser.getUser(rs.getString("til"));
+			boolean read = rs.getBoolean("lest");
 			
-			message = new Message(sent, topic, content, recepient, sender);
+			message = new Message(sent, topic, content, recepient, sender, read);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
