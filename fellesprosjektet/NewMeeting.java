@@ -21,7 +21,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import controller.AlterDate;
+
+import model.Day;
+import model.EventList;
+import model.MeetTime;
 import model.Meeting;
+import model.Time;
 import database.DBUser;
 
 
@@ -42,7 +48,7 @@ public class NewMeeting{
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
 
-	ArrayList<Meeting> meetings;
+	EventList meetings;
 	Meeting meeting;
 
 	JFrame frame;
@@ -66,7 +72,7 @@ public class NewMeeting{
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
-	public NewMeeting(ArrayList<Meeting> meetings){
+	public NewMeeting(EventList meetings){
 		frame = new JFrame();
 
 		
@@ -78,7 +84,7 @@ public class NewMeeting{
 		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		this.meetings = meetings;
-//		meeting = new Meeting(participants, room, description, leader, meetingTime)
+		meeting = new Meeting();
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
 				"August", "September", "October", "November", "December"};
@@ -392,6 +398,20 @@ public class NewMeeting{
 			}	
 		}
 	}
+	private MeetTime getTimeOfMeeting(){
+		Time start = new Time(Integer.parseInt(fromHour.getSelectedItem().toString()), Integer.parseInt(fromMinute.getSelectedItem().toString()));
+		Time end = new Time(Integer.parseInt(toHour.getSelectedItem().toString()), Integer.parseInt(toMinute.getSelectedItem().toString()));
+		int date = Integer.parseInt(numberDate.getSelectedItem().toString());
+		int month = monthDate.getSelectedIndex();
+		int year = 2012;
+				
+		Day day = AlterDate.getDayFromDate(date, month, year);
+		int week = AlterDate.getWeekFromDate(date, month, year);
+		
+		MeetTime mtime = new MeetTime(start, end, day, week, year);
+		
+		return mtime;
+	}
 	class AddButtonListener implements ActionListener{
 
 		@Override
@@ -449,8 +469,10 @@ public class NewMeeting{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
+			meeting.setDescription(message.getText());
+			meeting.setMeetingTime(getTimeOfMeeting());
+			meetings.add(meeting);
+			frame.dispose();
 		}
 		
 	}

@@ -10,6 +10,10 @@ public class Appointment{
 	private int id;
 	private User leader;
 
+
+	public Appointment() {
+		
+	}
 	
 	public Appointment(String description, User leader, MeetTime time) {
 		this.description = description;

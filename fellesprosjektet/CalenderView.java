@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import model.Day;
+import model.EventList;
 import model.Meeting;
 import model.MyDate;
 import model.MeetTime;
@@ -39,7 +40,7 @@ public class CalenderView {
 	public MonthCalender cal;
 	public WeekCalendar wcal;
 	public JButton butt;
-	public ArrayList<Meeting> meetings;
+	public EventList meetings;
 	
 	public CalenderView() {
 		//Look and feel
@@ -71,14 +72,13 @@ public class CalenderView {
 		layout = new GridBagConstraints();
 		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.MyDate();
-		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
-		wcal = new WeekCalendar(lpane, caldata, 270, 30);
+		meetings = new EventList();
 		MessageBar mbar = new MessageBar(0, 0, meetings);
+		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
+		wcal = new WeekCalendar(lpane, caldata, meetings, 270, 30);
 		EventPanel evpnl = new EventPanel(870, 30);
-		meetings = new ArrayList<Meeting>();
 
 		uview = new UserView(0, 250);
-		
 		
 		//Add controls to pane
 		myPanel.add(butt);
@@ -88,11 +88,6 @@ public class CalenderView {
 		lpane.add(mbar, new Integer(2));
 		lpane.add(uview, new Integer(2));
 
-//		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
-//		lpane.add(wcal.addStickers(), new Integer(3));
-
-
-//		lpane.add(wcal.addStickers(new MeetTime(new Time(10, 0), new Time(11, 0), Day.Sunday, 12, 2012)), new Integer(3));
 
 
 	//	lpane.add(wcal.addStickers(), new Integer(3));

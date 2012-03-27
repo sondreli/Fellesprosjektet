@@ -33,6 +33,7 @@ import com.sun.org.apache.xerces.internal.impl.dv.xs.DayDV;
 
 import model.Appointment;
 import model.Day;
+import model.EventList;
 import model.MeetTime;
 import model.Meeting;
 import model.Time;
@@ -49,8 +50,10 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	private JLayeredPane lpane;
 	private model.MyDate data;
 	private Rectangle bounds;
+	private EventList evlist;
+	private ArrayList<Sticker> myStickers;
 	
-	public WeekCalendar(JLayeredPane lpane, model.MyDate data, int xpos, int ypos) {
+	public WeekCalendar(JLayeredPane lpane, model.MyDate data, EventList evlist, int xpos, int ypos) {
 		
 		//Create controls
 		lblWeek= new JLabel ("Uke");
@@ -65,7 +68,10 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		this.data = data;
 		bounds = new Rectangle(xpos, ypos, 600, 600);
 		this.lpane = lpane; 
+		this.evlist = evlist;
+		myStickers = new ArrayList<Sticker>();
 		
+		this.evlist.addPropertyChangeListener(this);
 		this.data.addPropertyChangeListener(this);
 		
 		//Register action listeners
@@ -106,6 +112,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 //		this.setSize(1000, 400);
 		initCalendar();
+//		refreshCalendar(week, year);
 	}
 	
 	private void initCalendar() {
@@ -147,7 +154,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		//Allow/disallow buttons
 		btnPrev.setEnabled(true);
 		btnNext.setEnabled(true);
-//		if (week == 0 && year <= data.getRealYear()-10){btnPrev.setEnabled(false);} //Too early
+//		if (week == 0 && year <= data.getRealYearlistener()-10){btnPrev.setEnabled(false);} //Too early
 //		if (week == 11 && year >= data.getRealYear()+100){btnNext.setEnabled(false);} //Too late
 		lblWeek.setText(weeks[week-1]); //Refresh the month label (at the top)
 		
@@ -161,7 +168,8 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 					mtblCalendar.setValueAt(null, i, j);
 			}
 		}
-		
+		removeAllSticers();
+		drawEvents(lpane, evlist);
 		addNowTime(lpane);
 //		addStickers();
 		
@@ -226,30 +234,31 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	}
 	
 	public Rectangle getEventBounds(MeetTime time) {
-		Rectangle sbounds = bounds;
+		Rectangle sbounds = new Rectangle();
 //		MeetTime time = new MeetTime(new Time(10, 0), new Time(11, 30), Day.Tuesday, 12, 2012);
 		
 //		if(time.getWeek() == data.getCurrentWeek()) {
 		int xpos, ypos, xsize, ysize;
-		int colwidth = sbounds.width/8 -1;
+		int colwidth = bounds.width/8 -1;
 		
 		xsize = colwidth +1;
 		ysize = (int)((time.getEnd().getHour() - time.getStart().getHour())/2.0*tblCalendar.getRowHeight()) + 
 				(int)((time.getEnd().getMinute() - time.getStart().getMinute())/60.0/2.0*tblCalendar.getRowHeight()) + 1;
 		
-		xpos = (int)sbounds.getX() + (time.getDay().getValue()+1)*colwidth + stblCalendar.getX();
+		xpos = (int)bounds.getX() + (time.getDay().getValue()+1)*colwidth + stblCalendar.getX() - time.getDay().getValue();
 		ypos = stblCalendar.getY() + btnPrev.getHeight() + 
 				tblCalendar.getTableHeader().getHeight() +
 				(int)((time.getStart().getHour()-6)/2.0*tblCalendar.getRowHeight()) + // Legger til pos for timene
 				(int)(time.getStart().getMinute()/60.0/2.0*tblCalendar.getRowHeight()) + // Legger til pos for minuttene
 				/*ysize - 2*/5;
 
-		System.out.println("posx: " + xpos + " ypos: " + ypos + " colwidth: " + colwidth);
-		System.out.println("stbl:"+stblCalendar.getY()+
-							" btn:"+btnPrev.getHeight()+
-							" tblHeader:"+tblCalendar.getTableHeader().getHeight()+
-							" time:"+(int)((time.getStart().getHour()-6)/2.0*tblCalendar.getRowHeight())+
-							" minutes:"+(int)(time.getStart().getMinute()/60.0/2.0*tblCalendar.getRowHeight()));
+//		System.out.println("posx: " + xpos + " ypos: " + ypos + " colwidth: " + colwidth);
+//		System.out.println("stbl:"+stblCalendar.getY()+
+//							" btn:"+btnPrev.getHeight()+
+//							" tblHeader:"+tblCalendar.getTableHeader().getHeight()+
+//							" time:"+(int)((time.getStart().getHour()-6)/2.0*tblCalendar.getRowHeight())+
+//							" minutes:"+(int)(time.getStart().getMinute()/60.0/2.0*tblCalendar.getRowHeight()));
+		System.out.println("stblX:"+stblCalendar.getX()+" sboundsX:"+bounds.getX());
 		sbounds.setBounds(xpos, ypos, xsize, ysize);
 		
 		return sbounds;
@@ -260,19 +269,25 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		Calendar cal = Calendar.getInstance();
 		Date time = cal.getTime();
 		Time start = new Time(time.getHours(), time.getMinutes());
-		Time end = new Time(start.getHour(), start.getMinute()+30);
+		Time end = new Time(start.getHour(), start.getMinute()+10);
 		MeetTime mtime = new MeetTime(start, end, Day.getDay(time.getDay()), data.getCurrentMonth(), data.getCurrentYear());
 		
-		System.out.println("day:"+time.getDay()+" hour:"+time.getHours()+" min:"+time.getMinutes());
+//		System.out.println("day:"+time.getDay()+" hour:"+time.getHours()+" min:"+time.getMinutes());
 		
-		lpane.add(new Sticker(getEventBounds(mtime), "   "), new Integer(3));
+		Sticker temp = new Sticker(getEventBounds(mtime), "   ");
+		myStickers.add(temp);
+		lpane.add(temp, new Integer(3));
 	}
 	
-	public void addMeeting(JLayeredPane lpane, ArrayList<Meeting> meetings) {
-		for (Meeting meeting : meetings) {
-			if(meeting.getMeetingTime().getWeek() == data.getCurrentWeek()) {
-				Rectangle sbounds = getEventBounds(meeting.getMeetingTime());
-				lpane.add(new Sticker(sbounds, meeting.getDescription()));
+	public void drawEvents(JLayeredPane lpane, EventList meetings) {
+		for (Object meeting : meetings) {
+			if(((Meeting)meeting).getMeetingTime().getWeek() == data.getCurrentWeek()) {
+				Rectangle sbounds = getEventBounds(((Meeting)meeting).getMeetingTime());
+				Sticker temp = new Sticker(sbounds, ((Meeting)meeting).getDescription());
+				myStickers.add(temp);
+				lpane.add(temp, new Integer(3));
+				System.out.println("xpos:"+sbounds.getX()+" ypos:"+sbounds.getY()+
+									" width:"+sbounds.getWidth()+" heigth:"+sbounds.getHeight());
 			}
 		}
 	}
@@ -283,6 +298,12 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 				Rectangle sbounds = getEventBounds(appointment.getMeetingTime());
 				lpane.add(new Sticker(sbounds, appointment.getDescription()));
 			}
+		}
+	}
+	
+	private void removeAllSticers() {
+		for (Sticker sticker : myStickers) {
+			lpane.remove(sticker);
 		}
 	}
 
