@@ -14,13 +14,13 @@ public class DBParticipants {
 		if(meetingID != 0){
 			for (User user : parts) {
 				String query = "INSERT INTO deltaker " +
-				"(brukerNavn, mï¿½teId, svar) VALUES ('"
+				"(brukerNavn, m¿teId, svar) VALUES ('"
 				+ user.getUserName() + "','" + meetingID + "','" + "usvart" + "')";
 				Interact.executeUpdate(query);
 			}
 		}
 		else
-			System.out.println("feil i mï¿½teID");
+			System.out.println("feil i m¿teID");
 	}
 	
 	public ArrayList<Meeting> getUsersMeetings(User user){
@@ -53,16 +53,16 @@ public class DBParticipants {
 
 		switch (answer.charAt(0)) {
 		case 'y': 
-			query = "SELECT * FROM deltaker WHERE mï¿½teId = '" + meetingID + "' AND svar = 'ja'";
+			query = "SELECT * FROM deltaker WHERE m¿teId = '" + meetingID + "' AND svar = 'ja'";
 			break;
 		case 'n':
-			query = "SELECT * FROM deltaker WHERE mï¿½teId = '" + meetingID + "' AND svar = 'nei'";
+			query = "SELECT * FROM deltaker WHERE m¿teId = '" + meetingID + "' AND svar = 'nei'";
 			break;
 		case 'u':
-			query = "SELECT * FROM deltaker WHERE mï¿½teId = '" + meetingID + "' AND svar = 'usvart'";
+			query = "SELECT * FROM deltaker WHERE m¿teId = '" + meetingID + "' AND svar = 'usvart'";
 			break;
 		case 'a':
-			query = "SELECT * FROM deltaker WHERE mï¿½teId = '" + meetingID + "'";
+			query = "SELECT * FROM deltaker WHERE m¿teId = '" + meetingID + "'";
 			break;
 		default: System.out.println("intet deltakersvar valgt");
 		break;

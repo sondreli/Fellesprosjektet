@@ -22,16 +22,16 @@ public class DBMeeting {
 	public static int addMeeting(ArrayList<User> participants, MeetingRoom room, int ID){
 		int meetingID = 0;
 
-		String query = "INSERT INTO mï¿½te " +
+		String query = "INSERT INTO m¿te " +
 		"(romNavn, hendelseId) VALUES ('"
 		+ room.getName() + "','" + ID + "')";
 		Interact.executeUpdate(query);
 
-		ResultSet rs = Interact.execute("SELECT * FROM mï¿½te ORDER BY mï¿½teId DESC LIMIT 1");
+		ResultSet rs = Interact.execute("SELECT * FROM m¿te ORDER BY m¿teId DESC LIMIT 1");
 
 		try {
 			if(rs.next())
-				meetingID =  rs.getInt("mï¿½teId");
+				meetingID =  rs.getInt("m¿teId");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,7 +40,7 @@ public class DBMeeting {
 		
 		DBParticipants.addParticipants(participants, meetingID);
 		Interact.executeUpdate("INSERT INTO kobling " + 
-		"(mï¿½teId, romNavn) VALUES ('" + meetingID + "','" + room.getName() + "')");
+		"(m¿teId, romNavn) VALUES ('" + meetingID + "','" + room.getName() + "')");
 		
 		return meetingID;		
 	}
@@ -63,18 +63,18 @@ public class DBMeeting {
 	 * @param meeting
 	 */
 	public static void editMeeting(Meeting meeting){
-		//Mï¿½ sende melding til deltakere
+		//MŒ sende melding til deltakere
 		StringBuilder query = new StringBuilder();
 		
-		query.append("UPDATE mï¿½te SET mï¿½teId = '" + meeting.getMeetingID() + "',");
+		query.append("UPDATE m¿te SET m¿teId = '" + meeting.getMeetingID() + "',");
 		query.append("romNavn = '" + meeting.getRoom() + "',");
-		query.append("WHERE mï¿½teId = '" + meeting.getMeetingID() + "'");
+		query.append("WHERE m¿teId = '" + meeting.getMeetingID() + "'");
 		
 		Interact.executeUpdate(query.toString());	
 		}
 	public static void cancelMeeting(Meeting meeting){
-		//Mï¿½ sende melding til deltakere
-		Interact.executeUpdate("DELETE FROM mï¿½te WHERE mï¿½teId = '" + meeting.getMeetingID() + "'");
+		//MŒ sende melding til deltakere
+		Interact.executeUpdate("DELETE FROM m¿te WHERE m¿teId = '" + meeting.getMeetingID() + "'");
 
 	}
 	public static Meeting makeMeetingObject(ResultSet rs){
@@ -82,7 +82,7 @@ public class DBMeeting {
 		
 
 		try {
-			int meetingID = rs.getInt("mï¿½teId");
+			int meetingID = rs.getInt("m¿teId");
 			ArrayList<User> participants = DBParticipants.getParticipants(meetingID, "all");
 			MeetingRoom room = DBMeetingRoom.getMeetingRoom(rs.getString("romNavn"));
 			Appointment app = DBAppointment.getAppointmentbyID(rs.getInt("hendelseId"));
