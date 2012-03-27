@@ -78,7 +78,7 @@ public class DBMeetingRoom {
 			String description = rs.getString("beskrivelse");
 			String location = rs.getString("sted");
 
-			room = new MeetingRoom(name, description, location);
+			room = new MeetingRoom(location, name, description);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
