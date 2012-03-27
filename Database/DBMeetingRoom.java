@@ -45,8 +45,22 @@ public class DBMeetingRoom {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+			
 		}
+		return meetings;
+	}
+	public static ArrayList<MeetingRoom> getAllMeetingRooms(){
+		ResultSet rs = Interact.execute("SELECT * FROM m¿teRom");
+		ArrayList<MeetingRoom> rooms = new ArrayList<MeetingRoom>();
 		
+		try {
+			while(rs.next()){
+				rooms.add(makeMeetingRoomObject(rs));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return rooms;
 	}
 	public static void editMeetingRoom(MeetingRoom room){
 		Interact.executeUpdate("UPDATE m¿teRom SET navn = '" + room.getName() + "'," + 
