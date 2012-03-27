@@ -22,6 +22,22 @@ public class DBParticipants {
 		else
 			System.out.println("feil i m¿teID");
 	}
+	
+	public ArrayList<Meeting> getUsersMeetings(User user){
+		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+		Meeting meeting = null;
+		ResultSet rs = Interact.execute("SELECT * FROM deltaker WHERE brukerNavn = " + user.getUserName() + "'");
+		
+		try {
+			while(rs.next()){
+				meeting = DBMeeting.getMeeting(rs.getInt("m¿teId"));
+				meetings.add(meeting);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return meetings;
+	}
 	/**
 	 * 
 	 * @param meeting

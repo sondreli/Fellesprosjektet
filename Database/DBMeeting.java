@@ -45,7 +45,7 @@ public class DBMeeting {
 		return meetingID;		
 	}
 	
-	public Meeting getMeeting(int meetingID){
+	public static Meeting getMeeting(int meetingID){
 		ResultSet rs = Interact.execute("SELECT * FROM m¿te WHERE m¿teId = '" + meetingID + "'");
 		Meeting m¿te = null;
 		
