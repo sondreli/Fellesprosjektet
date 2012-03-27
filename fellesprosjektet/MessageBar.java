@@ -4,18 +4,23 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.EventList;
+import model.Meeting;
+
 public class MessageBar extends JPanel{
 	
 	JButton newEventButton, settingsButton, logOffButton, messagesButton;
 	JLabel fillLabel;
+	EventList meetings;
 	
 	
-	public MessageBar(int xpos, int ypos){
+	public MessageBar(int xpos, int ypos, EventList meetings){
 		//init
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
@@ -25,6 +30,7 @@ public class MessageBar extends JPanel{
 		logOffButton = new JButton("Log Off");
 		messagesButton = new JButton("Messages");
 		fillLabel = new JLabel();
+		this.meetings = meetings;
 		
 		
 		
@@ -82,7 +88,7 @@ public class MessageBar extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			new NewMeeting(meetings);
 			
 		}
 		
@@ -101,7 +107,7 @@ public class MessageBar extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		

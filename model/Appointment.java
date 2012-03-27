@@ -1,6 +1,6 @@
 package model;
 
-import Database.DBAppointment;
+import database.DBAppointment;
 
 
 public class Appointment{
@@ -10,13 +10,17 @@ public class Appointment{
 	private int id;
 	private User leader;
 
+
+	public Appointment() {
+		
+	}
 	
 	public Appointment(String description, User leader, MeetTime time) {
 		this.description = description;
 		this.meetingTime = time;
 		this.leader = leader;	
 		
-		this.id = DBAppointment.addAppointment(this);
+		this.id = DBAppointment.addAppointment(description, leader, time);
 		
 	}
 	public Appointment(String description, User leader, MeetTime time, int id) {

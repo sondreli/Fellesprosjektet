@@ -4,10 +4,36 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import model.Day;
+
 public class AlterDate {
 	
 	public AlterDate() {
 		
+	}
+	
+	public static Day getDayFromDate(int date, int month, int year) {
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DATE, date);
+		
+		int day = cal.get(Calendar.DAY_OF_WEEK);
+		
+		return Day.getDay(day);
+	}
+	
+	public static int getWeekFromDate(int date, int month, int year) {
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month);
+		cal.set(Calendar.DATE, date);
+		
+		int week = cal.get(Calendar.WEEK_OF_YEAR);
+		
+		return week;
 	}
 	
 	public static int getLastWeekOfYear(int year) {

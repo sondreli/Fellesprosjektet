@@ -1,42 +1,55 @@
 package model;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import Database.DBMessage;
+import database.DBMessage;
+
 
 public class Message {
 
 	private String content, topic;
 	private Date dateSendt;
 	private User sender,  recepient;
+	private boolean read;
 
 	public Message(String topic, String content,User recepient,User sender){
+		
 		this.topic = topic;
 		this.content = content;
-		this.dateSendt = new Date();
+	    java.util.Date utilDate = new java.util.Date();
+		this.dateSendt = new java.sql.Date(utilDate.getTime());
 		this.sender = sender;
 		this.recepient = recepient;
+		
 		
 		DBMessage.addMessage(this);
 		
 	}
-	public Message(Date dateSent,String topic, String content,User recepient,User sender ){
+	public Message(Date dateSent,String topic, String content,User recepient,User sender, boolean read ){
 		this.topic = topic;
 		this.content = content;
 		this.dateSendt = dateSent;
 		this.sender = sender;
 		this.recepient = recepient;
+		this.read = read;
 		
-		DBMessage.addMessage(this);
+		
 	}
 	//Setter datoen som en String
 	private String dateToString() {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
-		Date date = new Date();
+		 java.util.Date utilDate = new java.util.Date();
+		Date date = new java.sql.Date(utilDate.getTime());
 		return dateFormat.format(date);
+	}
+	public boolean getRead(){
+		return read;
+	}
+	public void setRead(boolean t){
+		this.read = t;
 	}
 	public String getContent() {
 		return content;

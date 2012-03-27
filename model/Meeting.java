@@ -1,7 +1,8 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
+
+import database.DBMeeting;
 
 
 public class Meeting extends Appointment{
@@ -11,6 +12,7 @@ public class Meeting extends Appointment{
 	private Answer answer;
 	private MeetingRoom room;
 	private String description;
+	private int meetingID;
 
 
 	/**
@@ -23,15 +25,33 @@ public class Meeting extends Appointment{
 	 * @param leader
 	 */
 
+	public Meeting() {
+
+	}
+	
 	public Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime){
 		super(description, leader, meetingTime);
 		this.participants = participants;
 		this.room = room;
 		
+		this.meetingID = DBMeeting.addMeeting(this);
 		
 	}
 
+	public Meeting(ArrayList<User> participants, MeetingRoom room, Appointment app, int meetingID){
+		super(app.getDescription(), app.getLeader(), app.getMeetingTime());
+		this.participants = participants;
+		this.room = room;
+		this.meetingID = meetingID;
+	}
 
+	public Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime, int meetingID){
+		super(description, leader, meetingTime);
+		this.participants = participants;
+		this.room = room;
+		this.meetingID = meetingID;
+		
+	}
 	public ArrayList<User> getParticipants() {
 		return participants;
 	}
@@ -79,6 +99,16 @@ public class Meeting extends Appointment{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+	public int getMeetingID() {
+		return meetingID;
+	}
+
+
+	public void setMeetingID(int meetingID) {
+		this.meetingID = meetingID;
 	}
 
 }
