@@ -25,6 +25,10 @@ public class Meeting extends Appointment{
 	 * @param leader
 	 */
 
+	public Meeting() {
+
+	}
+	
 	public Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime){
 		super(description, leader, meetingTime);
 		this.participants = participants;

@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,10 +21,23 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+<<<<<<< HEAD
+import controller.AlterDate;
+
+import model.Day;
+import model.EventList;
+import model.MeetTime;
+import model.Meeting;
+import model.Time;
+import database.DBUser;
+
+
+=======
 import model.Meeting;
 import model.MeetingRoom;
 import database.DBMeetingRoom;
 import database.DBUser;
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 import model.User;
 
 public class NewMeeting{
@@ -40,20 +54,47 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
+<<<<<<< HEAD
+
+	EventList meetings;
+	Meeting meeting;
+
+	JFrame frame;
+	ArrayList<User> allUsers;
+
+=======
 	ArrayList<Meeting> meetings;
 	Meeting meeting;
 	JFrame frame;
 	ArrayList<User> allUsers;
 	ArrayList<MeetingRoom> rooms;
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 	
 	JPanel pan1, pan2, underPanel;
 	
 	
+<<<<<<< HEAD
+
+=======
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
+<<<<<<< HEAD
+//	public NewMeeting(ArrayList<Meeting> meetings){
+//		JFrame frame = new JFrame();
+//
+//	public static void main(String[]args){
+//		
+//		NewMeeting gogo = new NewMeeting();
+//	
+//	}
+	public NewMeeting(EventList meetings){
+		frame = new JFrame();
+
+=======
 	public NewMeeting(ArrayList<Meeting> meetings){
 		JFrame frame = new JFrame();
 	}
@@ -64,6 +105,7 @@ public class NewMeeting{
 	}
 	public NewMeeting(){
 		frame = new JFrame();
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
@@ -73,7 +115,7 @@ public class NewMeeting{
 		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		this.meetings = meetings;
-//		meeting = new Meeting(participants, room, description, leader, meetingTime)
+		meeting = new Meeting();
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
 				"August", "September", "October", "November", "December"};
@@ -398,6 +440,20 @@ public class NewMeeting{
 			}	
 		}
 	}
+	private MeetTime getTimeOfMeeting(){
+		Time start = new Time(Integer.parseInt(fromHour.getSelectedItem().toString()), Integer.parseInt(fromMinute.getSelectedItem().toString()));
+		Time end = new Time(Integer.parseInt(toHour.getSelectedItem().toString()), Integer.parseInt(toMinute.getSelectedItem().toString()));
+		int date = Integer.parseInt(numberDate.getSelectedItem().toString());
+		int month = monthDate.getSelectedIndex();
+		int year = 2012;
+				
+		Day day = AlterDate.getDayFromDate(date, month, year);
+		int week = AlterDate.getWeekFromDate(date, month, year);
+		
+		MeetTime mtime = new MeetTime(start, end, day, week, year);
+		
+		return mtime;
+	}
 	class AddButtonListener implements ActionListener{
 
 		@Override
@@ -455,8 +511,10 @@ public class NewMeeting{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
+			meeting.setDescription(message.getText());
+			meeting.setMeetingTime(getTimeOfMeeting());
+			meetings.add(meeting);
+			frame.dispose();
 		}
 		
 	}

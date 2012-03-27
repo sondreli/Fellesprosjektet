@@ -10,16 +10,17 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.EventList;
 import model.Meeting;
 
 public class MessageBar extends JPanel{
 	
 	JButton newEventButton, settingsButton, logOffButton, messagesButton;
 	JLabel fillLabel;
-	ArrayList<Meeting> meetings;
+	EventList meetings;
 	
 	
-	public MessageBar(int xpos, int ypos, ArrayList<Meeting> meetings){
+	public MessageBar(int xpos, int ypos, EventList meetings){
 		//init
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();

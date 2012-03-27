@@ -2,10 +2,10 @@ package database;
 /**
  * @version 1.0
  * Dette programmet tar seg av tilkoblingen til databaseserveren.
- * Det er mulig å benytte flere drivere.
+ * Det er mulig ï¿½ benytte flere drivere.
  * 
- * Kall dbConnect() fra DatabaseInteract-klassen for å opprette en tilkobling. 0 returneres hvis ok.
- * getConnection() for å få tilkoblingen.
+ * Kall dbConnect() fra DatabaseInteract-klassen for ï¿½ opprette en tilkobling. 0 returneres hvis ok.
+ * getConnection() for ï¿½ fï¿½ tilkoblingen.
  * @author HulkingUnicorn
  */
 
