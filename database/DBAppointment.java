@@ -17,14 +17,11 @@ public class DBAppointment{
 	public static int addAppointment(String description, User leader, MeetTime time){
 
 		String query = "INSERT INTO hendelse " +
-<<<<<<< HEAD:database/DBAppointment.java
 		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mï¿½ned, ï¿½r) VALUES ('"
 		+ leader.getUserName() + "','" + description + "','" + time.getStart().getHour() + "','" + time.getEnd().getHour() + "','" + 
-=======
 		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mŒned, Œr) VALUES ('"
 		+ leader.getUserName() + "','" + 
 		description + "','" + time.getStart().getHour() + "','" + time.getEnd().getHour() + "','" + 
->>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b:Database/DBAppointment.java
 		time.getStart().getMinute() + "','" + time.getEnd().getMinute() + "','" + time.getDay().getValue() + "','" + time.getWeek() + "','" + 
 		time.getMonth() + "','" + time.getYear() + "')";
 		Interact.executeUpdate(query);
@@ -52,8 +49,8 @@ public class DBAppointment{
 		query.append("sluttMinutt = '" + app.getMeetingTime().getEnd().getMinute() + "',");
 		query.append("dag = '" + app.getMeetingTime().getDay().getValue() + "',");
 		query.append("uke = '" + app.getMeetingTime().getWeek() + "',");
-		query.append("mï¿½ned = '" + app.getMeetingTime().getMonth() + "',");
-		query.append("ï¿½r = '" + app.getMeetingTime().getYear() + "',");
+		query.append("mŒned = '" + app.getMeetingTime().getMonth() + "',");
+		query.append("Œr = '" + app.getMeetingTime().getYear() + "',");
 		query.append("beskrivelse = '" + app.getDescription() + "'");
 		query.append("WHERE brukerNavn = '" + app.getId() + "'");
 
@@ -114,7 +111,7 @@ public class DBAppointment{
 			model.Time end = new model.Time(rs.getInt("sluttTime"), rs.getInt("sluttMinutt"));
 			Day day = Day.getDay(rs.getInt("dag"));
 			int week = rs.getInt("uke");
-			int year = rs.getInt("ï¿½r");
+			int year = rs.getInt("Œr");
 			int id = rs.getInt("hendelseId");
 			MeetTime time = new MeetTime(start, end, day, week, year);
 

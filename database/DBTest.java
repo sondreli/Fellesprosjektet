@@ -28,16 +28,13 @@ public class DBTest {
 		User leader = new User("SuperLeader", "Wilhelm", "hemmelig");
 		MeetTime meetingTime = new MeetTime(new Time(12, 15), new Time(16, 00), Day.Friday, 52, 2012);
 		
-<<<<<<< HEAD:database/DBTest.java
 		
-//		mï¿½te.setId(DBAppointment.getNewestID(mï¿½te));
+//		m¿te.setId(DBAppointment.getNewestID(m¿te));
 		ArrayList<Message> m  = DBMessage.getInbox(test);
 		for (Message message : m) {
 			System.out.println(message.getContent());
 		}
-=======
 		Meeting meeting = new Meeting(participants, room, description, leader, meetingTime);
->>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b:Database/DBTest.java
 		
 
 	}
