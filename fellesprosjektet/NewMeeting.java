@@ -21,7 +21,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-<<<<<<< HEAD
 import controller.AlterDate;
 
 import model.Day;
@@ -32,12 +31,10 @@ import model.Time;
 import database.DBUser;
 
 
-=======
 import model.Meeting;
 import model.MeetingRoom;
 import database.DBMeetingRoom;
 import database.DBUser;
->>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 import model.User;
 
 public class NewMeeting{
@@ -54,35 +51,24 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
-<<<<<<< HEAD
 
 	EventList meetings;
 	Meeting meeting;
 
 	JFrame frame;
 	ArrayList<User> allUsers;
-
-=======
-	ArrayList<Meeting> meetings;
-	Meeting meeting;
-	JFrame frame;
-	ArrayList<User> allUsers;
 	ArrayList<MeetingRoom> rooms;
->>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 	
 	JPanel pan1, pan2, underPanel;
 	
 	
-<<<<<<< HEAD
 
-=======
->>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
+
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
-<<<<<<< HEAD
 //	public NewMeeting(ArrayList<Meeting> meetings){
 //		JFrame frame = new JFrame();
 //
@@ -91,21 +77,20 @@ public class NewMeeting{
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
-	public NewMeeting(EventList meetings){
-		frame = new JFrame();
+//	public NewMeeting(EventList meetings){
+//		frame = new JFrame();
+//}
 
-=======
 	public NewMeeting(ArrayList<Meeting> meetings){
 		JFrame frame = new JFrame();
 	}
-	public static void main(String[]args){
-		
-		NewMeeting gogo = new NewMeeting();
-	
-	}
-	public NewMeeting(){
+//	public static void main(String[]args){
+//		
+//		NewMeeting gogo = new NewMeeting();
+//	
+//	}
+	public NewMeeting(EventList meetings){
 		frame = new JFrame();
->>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
@@ -172,7 +157,7 @@ public class NewMeeting{
 		clockLabel = new JLabel("Klokkeslett  ");
 		clockFromLabel = new JLabel("Fra:");
 		clockToLabel = new JLabel("Til:");
-		meetingLabel = new JLabel("M¿terom:");
+		meetingLabel = new JLabel("Mï¿½terom:");
 		messageLabel = new JLabel("Beskjed:");	
 		
 

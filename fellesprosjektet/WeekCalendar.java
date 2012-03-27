@@ -112,7 +112,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		
 //		this.setSize(1000, 400);
 		initCalendar();
-//		refreshCalendar(week, year);
+
 	}
 	
 	private void initCalendar() {
