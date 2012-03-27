@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+<<<<<<< HEAD
 import controller.AlterDate;
 
 import model.Day;
@@ -31,6 +32,12 @@ import model.Time;
 import database.DBUser;
 
 
+=======
+import model.Meeting;
+import model.MeetingRoom;
+import database.DBMeetingRoom;
+import database.DBUser;
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 import model.User;
 
 public class NewMeeting{
@@ -47,6 +54,7 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
+<<<<<<< HEAD
 
 	EventList meetings;
 	Meeting meeting;
@@ -54,16 +62,27 @@ public class NewMeeting{
 	JFrame frame;
 	ArrayList<User> allUsers;
 
+=======
+	ArrayList<Meeting> meetings;
+	Meeting meeting;
+	JFrame frame;
+	ArrayList<User> allUsers;
+	ArrayList<MeetingRoom> rooms;
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 	
 	JPanel pan1, pan2, underPanel;
 	
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
+<<<<<<< HEAD
 //	public NewMeeting(ArrayList<Meeting> meetings){
 //		JFrame frame = new JFrame();
 //
@@ -75,6 +94,18 @@ public class NewMeeting{
 	public NewMeeting(EventList meetings){
 		frame = new JFrame();
 
+=======
+	public NewMeeting(ArrayList<Meeting> meetings){
+		JFrame frame = new JFrame();
+	}
+	public static void main(String[]args){
+		
+		NewMeeting gogo = new NewMeeting();
+	
+	}
+	public NewMeeting(){
+		frame = new JFrame();
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
@@ -141,7 +172,7 @@ public class NewMeeting{
 		clockLabel = new JLabel("Klokkeslett  ");
 		clockFromLabel = new JLabel("Fra:");
 		clockToLabel = new JLabel("Til:");
-		meetingLabel = new JLabel("Mï¿½terom:");
+		meetingLabel = new JLabel("M¿terom:");
 		messageLabel = new JLabel("Beskjed:");	
 		
 
@@ -168,8 +199,8 @@ public class NewMeeting{
 		
 		
 		// add testelements
-		
-		fillList(users);
+		fillMeetingRoomList(meetingRoom);
+		fillUserList(users);
 		
 		
 		
@@ -339,8 +370,19 @@ public class NewMeeting{
 		frame.pack();
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	public void fillList(DefaultListModel listModel){
+	public void fillMeetingRoomList(JComboBox comboBox){
+		if(comboBox.getItemCount() != 0){
+			comboBox.removeAllItems();
+		}
+		rooms = new ArrayList<MeetingRoom>();
+		
+		rooms = DBMeetingRoom.getAllMeetingRooms();
+		
+		for(MeetingRoom e : rooms){
+			comboBox.addItem(e);
+		}
+	}
+	public void fillUserList(DefaultListModel listModel){
 		if(!listModel.isEmpty()){
 			listModel.clear();
 		}

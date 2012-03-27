@@ -11,7 +11,7 @@ public class DBParticipants {
 
 	public static void addParticipants(ArrayList<User> parts, int meetingID){
 
-		if(meetingID == 0){
+		if(meetingID != 0){
 			for (User user : parts) {
 				String query = "INSERT INTO deltaker " +
 				"(brukerNavn, m�teId, svar) VALUES ('"

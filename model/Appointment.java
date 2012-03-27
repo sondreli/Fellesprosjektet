@@ -20,7 +20,7 @@ public class Appointment{
 		this.meetingTime = time;
 		this.leader = leader;	
 		
-		this.id = DBAppointment.addAppointment(this);
+		this.id = DBAppointment.addAppointment(description, leader, time);
 		
 	}
 	public Appointment(String description, User leader, MeetTime time, int id) {

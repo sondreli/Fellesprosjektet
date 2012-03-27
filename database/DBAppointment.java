@@ -2,12 +2,7 @@ package database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Date;
-
-import com.sun.org.apache.xerces.internal.impl.dv.xs.DayDV;
-
 import model.Appointment;
 import model.Day;
 import model.MeetTime;
@@ -22,8 +17,14 @@ public class DBAppointment{
 	public static int addAppointment(String description, User leader, MeetTime time){
 
 		String query = "INSERT INTO hendelse " +
+<<<<<<< HEAD:database/DBAppointment.java
 		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mï¿½ned, ï¿½r) VALUES ('"
 		+ leader.getUserName() + "','" + description + "','" + time.getStart().getHour() + "','" + time.getEnd().getHour() + "','" + 
+=======
+		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mŒned, Œr) VALUES ('"
+		+ leader.getUserName() + "','" + 
+		description + "','" + time.getStart().getHour() + "','" + time.getEnd().getHour() + "','" + 
+>>>>>>> dd83cb7e980065eb8ebe1a091fc3e9b99af7f22b:Database/DBAppointment.java
 		time.getStart().getMinute() + "','" + time.getEnd().getMinute() + "','" + time.getDay().getValue() + "','" + time.getWeek() + "','" + 
 		time.getMonth() + "','" + time.getYear() + "')";
 		Interact.executeUpdate(query);

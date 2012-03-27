@@ -44,6 +44,19 @@ public class DBMeeting {
 		
 		return meetingID;		
 	}
+	
+	public Meeting getMeeting(int meetingID){
+		ResultSet rs = Interact.execute("SELECT * FROM m퓍e WHERE m퓍eId = '" + meetingID + "'");
+		Meeting m퓍e = null;
+		
+		try {
+			if(rs.next())
+				m퓍e = makeMeetingObject(rs);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return m퓍e;
+	}
 	/**
 	 * ONLY use if changing meetingID or roomName.
 	 * If editing other parts, use editParticipants or editAppointment
