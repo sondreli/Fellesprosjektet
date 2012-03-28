@@ -97,6 +97,5 @@ public class MyDate {
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		change.removePropertyChangeListener(listener);
 	}
-	private ArrayList<Meeting> meetings;
 	
 }

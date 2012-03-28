@@ -81,4 +81,9 @@ public class Message {
 	public void setRecepient(User recepient) {
 		this.recepient = recepient;
 	}
+	
+	@Override
+	public String toString(){
+		return getTopic() + " " + getSender().toString() + " " + getDateSendt();
+	}
 }
