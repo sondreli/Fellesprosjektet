@@ -20,13 +20,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-<<<<<<< HEAD
 import model.Meeting;
-=======
 import database.DBUser;
 
-
->>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 import model.User;
 
 public class NewMeeting{
@@ -43,26 +39,24 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
-<<<<<<< HEAD
 	ArrayList<Meeting> meetings;
 	Meeting meeting;
-=======
 	JFrame frame;
 	ArrayList<User> allUsers;
->>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
 	
 	JPanel pan1, pan2, underPanel;
 	
 	
-<<<<<<< HEAD
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
 	public NewMeeting(ArrayList<Meeting> meetings){
-		JFrame frame = new JFrame();
-=======
+		this.meetings = meetings; 
+		new NewMeeting();
+	}
+
 	public static void main(String[]args){
 		
 		NewMeeting gogo = new NewMeeting();
@@ -70,7 +64,7 @@ public class NewMeeting{
 	}
 	public NewMeeting(){
 		frame = new JFrame();
->>>>>>> 25f8ea6e157b663c4661024f06dbcfa79e876fdd
+
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
@@ -79,7 +73,7 @@ public class NewMeeting{
 		pan2.setLayout(new GridBagLayout());
 		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
-		this.meetings = meetings;
+		
 //		meeting = new Meeting(participants, room, description, leader, meetingTime)
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
