@@ -25,7 +25,7 @@ public class EventPanel extends JPanel {
 		
 		listModel = new DefaultListModel();
 		eventList = new JList();
-		headLabel = new JLabel("Oppkommende Møter");
+		headLabel = new JLabel("Oppkommende Mï¿½ter");
 		scrollList = new JScrollPane(eventList);
 		
 		eventList.setModel(listModel);
@@ -48,7 +48,7 @@ public class EventPanel extends JPanel {
 		add(scrollList, cs);
 		
 		
-		this.setBounds(xpos, ypos, 130, 400);
+		this.setBounds(xpos, ypos, 155, 400);
 		
 		
 	}

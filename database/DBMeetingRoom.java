@@ -74,6 +74,11 @@ public class DBMeetingRoom {
 		MeetingRoom room = null;
 
 		try {
+			
+			if(!rs.isLast()){
+				rs.next();
+			}
+			System.out.println("navn:"+rs.getString("navn"));
 			String name = rs.getString("navn");
 			String description = rs.getString("beskrivelse");
 			String location = rs.getString("sted");
@@ -81,6 +86,7 @@ public class DBMeetingRoom {
 			room = new MeetingRoom(location, name, description);
 
 		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 
@@ -88,7 +94,7 @@ public class DBMeetingRoom {
 	}
 
 	public static MeetingRoom getMeetingRoom(String roomName) {
-		ResultSet rs = Interact.execute("SELECT * FROM møteRom WHERE romNavn = '" + roomName + "'");
+		ResultSet rs = Interact.execute("SELECT * FROM møteRom WHERE navn = '" + roomName + "'");
 		
 		return makeMeetingRoomObject(rs);
 	}

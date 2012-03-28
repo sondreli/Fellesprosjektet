@@ -92,14 +92,7 @@ public class Innlogging  extends JPanel{
 
 		public static void main(String[] args) {
 
-<<<<<<< HEAD
-			JPanel panel = new Innlogging();
-			JFrame frame = new JFrame("Øving 1");
-			frame.getContentPane().add(panel);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.pack();
-			frame.setVisible(true);
-=======
+
 			new Innlogging();
 			
 		}
@@ -163,7 +156,6 @@ public class Innlogging  extends JPanel{
 				
 				frame.dispose();
 			}
->>>>>>> d3fc93420eb4f6df9d8051443841a92613af3280
 			
 		}
 

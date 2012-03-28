@@ -40,7 +40,7 @@ public class DBParticipants {
 	}
 	/**
 	 * 
-	 * @param meeting
+	 * @param evens
 	 * @param answer: returns participants based on "yes", "no", "unanswered" or "all"
 	 * @return ArrayList<User> with participants
 	 */
@@ -53,16 +53,16 @@ public class DBParticipants {
 
 		switch (answer.charAt(0)) {
 		case 'y': 
-			query = "SELECT * FROM deltaker WHERE m�teId = '" + meetingID + "' AND svar = 'ja'";
+			query = "SELECT * FROM deltaker WHERE møteId = '" + meetingID + "' AND svar = 'ja'";
 			break;
 		case 'n':
-			query = "SELECT * FROM deltaker WHERE m�teId = '" + meetingID + "' AND svar = 'nei'";
+			query = "SELECT * FROM deltaker WHERE møteId = '" + meetingID + "' AND svar = 'nei'";
 			break;
 		case 'u':
-			query = "SELECT * FROM deltaker WHERE m�teId = '" + meetingID + "' AND svar = 'usvart'";
+			query = "SELECT * FROM deltaker WHERE møteId = '" + meetingID + "' AND svar = 'usvart'";
 			break;
 		case 'a':
-			query = "SELECT * FROM deltaker WHERE m�teId = '" + meetingID + "'";
+			query = "SELECT * FROM deltaker WHERE møteId = '" + meetingID + "'";
 			break;
 		default: System.out.println("intet deltakersvar valgt");
 		break;
@@ -71,7 +71,8 @@ public class DBParticipants {
 
 		try {
 			while(rs.next()){
-				user = DBUser.makeUserObject(rs);
+				
+				user = DBUser.getUser(rs.getString("brukerNavn"));
 				users.add(user);
 			}
 		} catch (Exception e) {
