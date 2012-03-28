@@ -19,14 +19,14 @@ public class DBMeetingRoom {
 
 	private static void addMeetingRoom(String name, String description, String location) {
 
-		String query = "INSERT INTO m\uc3b8teRom " +
+		String query = "INSERT INTO møteRom " +
 		"(navn, sted, beskrivelse) VALUES ('"
 		+ name + "','" + description + "','" + location + "')";
 		Interact.executeUpdate(query);
 	}
 
 	public static void removeMeetingRoom(String name){
-		String query = "DELETE FROM m\uc3b8teRom WHERE navn = '" + name + "'";
+		String query = "DELETE FROM møteRom WHERE navn = '" + name + "'";
 		Interact.executeUpdate(query);
 	}
 	/**
@@ -50,7 +50,7 @@ public class DBMeetingRoom {
 		return meetings;
 	}
 	public static ArrayList<MeetingRoom> getAllMeetingRooms(){
-		ResultSet rs = Interact.execute("SELECT * FROM m\uc3b8teRom");
+		ResultSet rs = Interact.execute("SELECT * FROM møteRom");
 		ArrayList<MeetingRoom> rooms = new ArrayList<MeetingRoom>();
 		
 		try {
@@ -63,7 +63,7 @@ public class DBMeetingRoom {
 		return rooms;
 	}
 	public static void editMeetingRoom(MeetingRoom room){
-		Interact.executeUpdate("UPDATE m\uc3b8teRom SET navn = '" + room.getName() + "'," + 
+		Interact.executeUpdate("UPDATE møteRom SET navn = '" + room.getName() + "'," + 
 				"sted = '" + room.getLocation() + "'," + 
 				"beskrivelse = '" + room.getDescription() + "'" + 
 				"WHERE navn = '" + room.getName() + "'"
@@ -88,7 +88,7 @@ public class DBMeetingRoom {
 	}
 
 	public static MeetingRoom getMeetingRoom(String roomName) {
-		ResultSet rs = Interact.execute("SELECT * FROM m\uc3b8teRom WHERE romNavn = '" + roomName + "'");
+		ResultSet rs = Interact.execute("SELECT * FROM møteRom WHERE romNavn = '" + roomName + "'");
 		
 		return makeMeetingRoomObject(rs);
 	}
