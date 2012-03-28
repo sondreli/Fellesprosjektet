@@ -45,7 +45,7 @@ public class Innlogging  extends JPanel{
 		public static void main(String[] args) {
 
 			JPanel panel = new Innlogging();
-			JFrame frame = new JFrame("Øving 1");
+			JFrame frame = new JFrame("Ã˜ving 1");
 			frame.getContentPane().add(panel);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.pack();

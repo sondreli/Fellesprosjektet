@@ -21,26 +21,19 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-<<<<<<< HEAD
 import model.Meeting;
 import database.DBUser;
 
-=======
 import controller.AlterDate;
 
 import model.Day;
 import model.EventList;
 import model.MeetTime;
-import model.Meeting;
 import model.Time;
-import database.DBUser;
 
 
-import model.Meeting;
 import model.MeetingRoom;
 import database.DBMeetingRoom;
-import database.DBUser;
->>>>>>> d492f7e85f9935a0a14fb1e850b589d5cde749a5
 import model.User;
 
 public class NewMeeting{
@@ -57,26 +50,21 @@ public class NewMeeting{
 	JLabel meetingLabel, messageLabel; 
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
-<<<<<<< HEAD
-	ArrayList<Meeting> meetings;
+//	ArrayList<Meeting> meetings;
 	Meeting meeting;
 	JFrame frame;
 	ArrayList<User> allUsers;
-=======
 
 	EventList meetings;
-	Meeting meeting;
+//	Meeting meeting;
 
-	JFrame frame;
-	ArrayList<User> allUsers;
+//	JFrame frame;
+//	ArrayList<User> allUsers;
 	ArrayList<MeetingRoom> rooms;
->>>>>>> d492f7e85f9935a0a14fb1e850b589d5cde749a5
 	
 	JPanel pan1, pan2, underPanel;
 	
 	
-<<<<<<< HEAD
-=======
 
 
 //	public static void main(String[]args){
@@ -87,7 +75,6 @@ public class NewMeeting{
 //	public NewMeeting(ArrayList<Meeting> meetings){
 //		JFrame frame = new JFrame();
 //
->>>>>>> d492f7e85f9935a0a14fb1e850b589d5cde749a5
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
@@ -97,20 +84,13 @@ public class NewMeeting{
 //		frame = new JFrame();
 //}
 
-	public NewMeeting(ArrayList<Meeting> meetings){
-<<<<<<< HEAD
-		this.meetings = meetings; 
-		new NewMeeting();
-	}
 
-	public static void main(String[]args){
-		
-		NewMeeting gogo = new NewMeeting();
-	
-=======
-		JFrame frame = new JFrame();
->>>>>>> d492f7e85f9935a0a14fb1e850b589d5cde749a5
-	}
+//	public static void main(String[]args){
+//		
+//		NewMeeting gogo = new NewMeeting();
+//	
+//		JFrame frame = new JFrame();
+//	}
 //	public static void main(String[]args){
 //		
 //		NewMeeting gogo = new NewMeeting();
@@ -118,10 +98,7 @@ public class NewMeeting{
 //	}
 	public NewMeeting(EventList meetings){
 		frame = new JFrame();
-<<<<<<< HEAD
 
-=======
->>>>>>> d492f7e85f9935a0a14fb1e850b589d5cde749a5
 		
 		pan1 = new JPanel();
 		pan2 = new JPanel();
@@ -130,13 +107,10 @@ public class NewMeeting{
 		pan2.setLayout(new GridBagLayout());
 		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
-<<<<<<< HEAD
 		
 //		meeting = new Meeting(participants, room, description, leader, meetingTime)
-=======
 		this.meetings = meetings;
 		meeting = new Meeting();
->>>>>>> d492f7e85f9935a0a14fb1e850b589d5cde749a5
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
 				"August", "September", "October", "November", "December"};
