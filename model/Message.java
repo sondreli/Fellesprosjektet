@@ -14,6 +14,8 @@ public class Message {
 	private Date dateSendt;
 	private User sender,  recepient;
 	private boolean read;
+	private String status;
+	private int ID;
 
 	public Message(String topic, String content,User recepient,User sender){
 		
@@ -28,13 +30,15 @@ public class Message {
 		DBMessage.addMessage(this);
 		
 	}
-	public Message(Date dateSent,String topic, String content,User recepient,User sender, boolean read ){
+	public Message(int id, Date dateSent,String topic, String content,User recepient,User sender, boolean read, String status){
 		this.topic = topic;
 		this.content = content;
 		this.dateSendt = dateSent;
 		this.sender = sender;
 		this.recepient = recepient;
 		this.read = read;
+		this.status = status;
+		this.ID = id;
 		
 		
 	}
@@ -80,6 +84,15 @@ public class Message {
 	}
 	public void setRecepient(User recepient) {
 		this.recepient = recepient;
+	}
+	public String getStatus(){
+		return status;
+	}
+	public void setStatus(String Status){
+		this.status = Status;
+	}
+	public int getID(){
+		return ID;
 	}
 	
 	@Override
