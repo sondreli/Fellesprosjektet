@@ -30,6 +30,7 @@ import model.User;
 import com.sun.xml.internal.ws.api.server.Container;
 
 import database.DBAppointment;
+import database.DBParticipants;
 
 public class CalenderView {
 	public JFrame myFrame = new JFrame("Calender");
@@ -46,7 +47,7 @@ public class CalenderView {
 	public EventList events;
 	private User user;
 	
-	public CalenderView() {
+	public CalenderView(User user) {
 		//Look and feel
 		try {UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
 		catch (ClassNotFoundException e) {}
@@ -72,7 +73,7 @@ public class CalenderView {
 		cal2panel = new JPanel();
 		layout = new GridBagConstraints();
 		caldata = new model.MyDate();
-		user = new User("bruker");
+		this.user = user;
 		events = new EventList();
 		addEvents(user);
 		MessageBar mbar = new MessageBar(0, 0, events, user);
@@ -80,7 +81,7 @@ public class CalenderView {
 		wcal = new WeekCalendar(lpane, caldata, events, 270, 30);
 		EventPanel evpnl = new EventPanel(870, 30);
 
-		uview = new UserView(0, 250);
+		uview = new UserView(0, 250, user, this);
 		
 		//Add controls to pane
 		layout.gridx = 0;
@@ -111,10 +112,13 @@ public class CalenderView {
 	}
 	
 	public void addEvents(User user) {
-		System.out.println("bruker:"+user.getUserName());
 		for (Appointment appointment : DBAppointment.getUsersAppointments(user)) {
 			events.add(appointment);
-			System.out.println("uke:"+appointment.getMeetingTime().getWeek());
+			System.out.println("id:"+appointment.getId());
+		}
+		for (Meeting meeting : DBParticipants.getUsersMeetings(user)) {
+			events.add(meeting);
+			System.out.println("møte:"+meeting.getId());
 		}
 	}
 }

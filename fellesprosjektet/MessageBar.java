@@ -16,7 +16,7 @@ import model.User;
 
 public class MessageBar extends JPanel{
 	
-	JButton newEventButton, settingsButton, logOffButton, messagesButton;
+	JButton newAppointmentButton, newMeetingButton, settingsButton, logOffButton, messagesButton;
 	JLabel fillLabel;
 	EventList meetings;
 	User user;
@@ -27,7 +27,8 @@ public class MessageBar extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
 		
-		newEventButton = new JButton("New Event");
+		newAppointmentButton = new JButton("New Appointment");
+		newMeetingButton = new JButton("New Meeting");
 		settingsButton = new JButton("Settings");
 		logOffButton = new JButton("Log Off");
 		messagesButton = new JButton("Messages");
@@ -39,7 +40,8 @@ public class MessageBar extends JPanel{
 		
 		//add listeners
 		messagesButton.addActionListener(new MessageButtonListener());
-		newEventButton.addActionListener(new NewEventListener());
+		newAppointmentButton.addActionListener(new NewAppointmentListener());
+		newMeetingButton.addActionListener(new NewMeetingListener());
 		settingsButton.addActionListener(new SettingsListener());
 		logOffButton.addActionListener(new LogOffButtonListener());
 		
@@ -61,14 +63,18 @@ public class MessageBar extends JPanel{
 		cs.anchor = GridBagConstraints.NORTHWEST;
 		cs.gridx = 2;
 		cs.ipadx = 0;
-		add(newEventButton, cs);
+		add(newAppointmentButton, cs);
 		
-		
+		cs.anchor = GridBagConstraints.NORTHWEST;
 		cs.gridx = 3;
+		cs.ipadx = 0;
+		add(newMeetingButton, cs);
+		
+		cs.gridx = 4;
 		add(settingsButton, cs);
 		
 		cs.anchor = GridBagConstraints.EAST;
-		cs.gridx = 4;
+		cs.gridx = 5;
 		
 		add(logOffButton, cs);
 		
@@ -87,7 +93,7 @@ public class MessageBar extends JPanel{
 		
 		
 	}
-	class NewEventListener implements ActionListener{
+	class NewMeetingListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -95,6 +101,14 @@ public class MessageBar extends JPanel{
 			
 		}
 		
+	}
+	class NewAppointmentListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 	class SettingsListener implements ActionListener{
 

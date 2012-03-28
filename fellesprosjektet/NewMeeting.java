@@ -24,6 +24,7 @@ import javax.swing.JTextPane;
 
 import model.Meeting;
 import database.DBAppointment;
+import database.DBMeeting;
 import database.DBUser;
 
 import controller.AlterDate;
@@ -514,7 +515,13 @@ public class NewMeeting{
 			meeting.setMeetingTime(getTimeOfMeeting());
 			meeting.setLeader(user);
 			meetings.add(meeting);
-			DBAppointment.addAppointment(meeting);
+			
+			ArrayList<User> participants = new ArrayList<User>();
+			for(int i=0; i<addedUsersList.getModel().getSize(); i++) {
+				participants.add((User)addedUsersList.getModel().getElementAt(i));
+			}
+			MeetingRoom room = (MeetingRoom)meetingRoom.getSelectedItem();
+			DBMeeting.addMeeting(participants, room, DBAppointment.addAppointment(meeting));
 			frame.dispose();
 		}
 		

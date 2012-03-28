@@ -37,7 +37,6 @@ public class DBMeeting {
 			e.printStackTrace();
 		}
 
-		
 		DBParticipants.addParticipants(participants, meetingID);
 		Interact.executeUpdate("INSERT INTO kobling " + 
 		"(møteId, romNavn) VALUES ('" + meetingID + "','" + room.getName() + "')");
