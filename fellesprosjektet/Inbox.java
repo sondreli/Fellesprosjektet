@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
+import database.DBMessage;
+
 import model.Message;
 import model.User;
 
@@ -34,18 +36,17 @@ public class Inbox {
 	DefaultListModel listModel;
 	JList list;
 	JScrollPane scrollList, scrollMessage;
-	
-	
+	ArrayList<Message> messages;
 	
 	JButton acceptButton, declineButton;
 	JButton switchButton;
 	
+	User thisUser;
 	
-	public static void main(String[]args){
-		new Inbox();
-	}
-	public Inbox(){
+	
+	public Inbox(User user){
 		
+		thisUser = user;
 		// init everything
 		frame = new JFrame("Inbox");
 		
@@ -85,6 +86,7 @@ public class Inbox {
 		scrollList = new JScrollPane(list);
 		scrollMessage = new JScrollPane(textArea);
 		
+		messages = makeMessages();
 		
 		
 		list.setModel(listModel);
@@ -183,38 +185,45 @@ public class Inbox {
 		frame.setVisible(true);
 		
 		
-		ArrayList<Message> messages = makeMessages();
-		for(Message m: messages){
-			listModel.addElement(m);
-		}
 
-
-
-
-		
-		
-		
-		
 		
 	}
 	
 	public ArrayList<Message> makeMessages(){
-		ArrayList<Message> messages = new ArrayList<Message>();
-		
-		for(int i = 0; i < 10; i++){
-			messages.add(new Message(new Date(5, 5, 2012), "Emne" + i, "Dette er meldingen", new User("Navn"), new User("navn"), false));
+		ArrayList<Message> messages = DBMessage.getInbox(thisUser);
+		for(Message m: messages){
+			listModel.addElement(m);
+		}
+		return messages;
+	}
+	public void fillList(boolean status){
+		listModel.clear();
+		if(status){
+			for(Message m: messages){
+				if(m.getRead()){
+					listModel.addElement(m);
+				}
+			}
+		}
+		else{
+			for(Message m: messages){
+				if(!m.getRead()){
+					listModel.addElement(m);
+				}
+			}
 		}
 		
-		return messages;
 	}
 
 	class AcceptButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			listModel.clear();
+			if(list.getSelectedValue() != null){
+				Message message = (Message)(list.getSelectedValue());
+				message.setRead(true);
+			}
 
-			
 		}
 		
 	}
@@ -222,7 +231,10 @@ public class Inbox {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+			if(list.getSelectedValue() != null){
+				Message message = (Message)(list.getSelectedValue());
+				message.setRead(false);
+			}
 			
 		}
 		
@@ -233,10 +245,11 @@ public class Inbox {
 		public void actionPerformed(ActionEvent arg0) {
 			if(switchButton.getText() == "New Messages"){
 				switchButton.setText("Old Messages");
+				fillList(false);
 			}
 			else{
 				switchButton.setText("New Messages");
-				switchButton.setSize(100, 200);
+				fillList(true);
 			}
 		}
 		
