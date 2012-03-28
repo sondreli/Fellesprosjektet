@@ -19,8 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import sun.java2d.loops.GeneralRenderer;
 
 import database.DBMessage;
+import database.DBUser;
 
 import model.Message;
 import model.User;
@@ -43,6 +48,11 @@ public class Inbox {
 	
 	User thisUser;
 	
+	public static void main(String[]args){
+		User user = DBUser.getAllUsers().get(0);
+		new Inbox(user);
+		
+	}
 	
 	public Inbox(User user){
 		
@@ -66,16 +76,21 @@ public class Inbox {
 		fraLabel = new JLabel("fra");
 		datoLabel = new JLabel("dato");
 		
-		messageEmneLabel = new JLabel("emnetest");
-		messageFromLabel = new JLabel("fratest");
-		messageDateLabel = new JLabel("datetest");
+		
+		messageEmneLabel = new JLabel("Topic:");
+		messageFromLabel = new JLabel("From :");
+		messageDateLabel = new JLabel("Date  :");
 		
 		
 		acceptButton = new JButton("Accept");
 		declineButton = new JButton("Decline");
 		switchButton = new JButton("Old Messages");
 		
+		acceptButton.setEnabled(false);
+		declineButton.setEnabled(false);
+		
 		textArea = new JTextArea();
+		textArea.setEditable(false);
 		
 		GridBagConstraints cs = new GridBagConstraints();
 		
@@ -85,9 +100,8 @@ public class Inbox {
 		
 		scrollList = new JScrollPane(list);
 		scrollMessage = new JScrollPane(textArea);
-		
-		messages = makeMessages();
-		
+		scrollList.setSize(150, 150);
+		scrollList.setIgnoreRepaint(true);
 		
 		list.setModel(listModel);
 		
@@ -98,8 +112,10 @@ public class Inbox {
 		acceptButton.addActionListener(new AcceptButtonListener());
 		declineButton.addActionListener(new DeclineButtonListener());
 		switchButton.addActionListener(new SwitchButtonListener());
+		list.addListSelectionListener(new SelectedMessageChanged());
 		
 		// legg til i panes
+		cs.fill = GridBagConstraints.NONE;
 		cs.gridx = 0;
 		cs.gridy = 0;
 		cs.ipadx = 50;
@@ -118,11 +134,14 @@ public class Inbox {
 		cs.gridx = 0;
 		cs.gridy = 1;
 		cs.gridwidth = 3;
-		cs.ipadx = 0;
+		cs.ipadx = 50;
+		cs.ipady = 35;
+		cs.fill = GridBagConstraints.BOTH;
 		cs.anchor = GridBagConstraints.CENTER;
 		
-		
-		pan1.add(scrollList, cs);
+	    
+	    ((GridBagLayout)pan1.getLayout()).setConstraints(scrollList, cs);
+		pan1.add(scrollList);
 		
 		// for pan2
 		cs = new GridBagConstraints();
@@ -140,8 +159,8 @@ public class Inbox {
 		pan2.add(messageDateLabel, cs);
 		
 		cs.gridy = 3;
-		cs.ipadx = 200 - scrollMessage.getWidth();
-		cs.ipady = 100 - scrollMessage.getHeight();
+		cs.ipadx = 200;
+		cs.ipady = 100;
 		pan2.add(scrollMessage, cs);
 		
 		cs.gridwidth = 1;
@@ -158,12 +177,14 @@ public class Inbox {
 		
 		cs = new GridBagConstraints();
 		cs.ipadx = 5;
+		cs.fill = GridBagConstraints.HORIZONTAL;
 		pan3.add(switchButton, cs);
 		
 		GridBagConstraints con = new GridBagConstraints();
 		pan1.setBounds(0, 0, 200, 300);
 		pan2.setBounds(200, 0, 200, 300);
 		pan3.setBounds(0,300,40,40);
+		con.anchor = GridBagConstraints.NORTHWEST;
 		con.gridx = 0;
 		con.gridy = 0;
 		con.insets = new Insets(1, 1, 1, 1);
@@ -174,25 +195,30 @@ public class Inbox {
 		pan4.add(pan2, con);
 		con.gridy = 1;
 		con.gridx = 0;
+		con.fill = GridBagConstraints.HORIZONTAL;
 		pan4.add(pan3, con);
 		
 		
 
-		frame.setContentPane(pan4);
+		frame.getContentPane().add(pan4, BorderLayout.NORTH);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 		
+		
+		messages = makeMessages();
 		
 
 		
 	}
 	
 	public ArrayList<Message> makeMessages(){
+		listModel.clear();
 		ArrayList<Message> messages = DBMessage.getInbox(thisUser);
 		for(Message m: messages){
-			listModel.addElement(m);
+			if(!m.getRead()){
+				listModel.addElement(m);
+			}
 		}
 		return messages;
 	}
@@ -213,15 +239,50 @@ public class Inbox {
 			}
 		}
 		
+		
 	}
+	public void emptyMessageBox(){
+		messageEmneLabel.setText("Topic:");
+		messageFromLabel.setText("From :");
+		messageDateLabel.setText("Date  :");
+		textArea.setText("");
+		
+	}
+	class SelectedMessageChanged implements ListSelectionListener{
 
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			if(list.getSelectedValue() != null){
+				Message message = (Message)list.getSelectedValue();
+				textArea.setText(message.getContent());
+				messageEmneLabel.setText("Topic: " + message.getTopic());
+				messageFromLabel.setText("From : " + message.getSender().getName());
+				messageDateLabel.setText("Date  : " + message.getDateSendt().toString());
+				message.setRead(true);
+				DBMessage.editMessage(message);
+				if(!message.getStatus().equals("Waiting")){
+					acceptButton.setEnabled(false);
+					declineButton.setEnabled(false);
+				} else {
+					acceptButton.setEnabled(true);
+					declineButton.setEnabled(true);
+				}
+			}
+			
+			
+		}
+		
+	}
 	class AcceptButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(list.getSelectedValue() != null){
-				Message message = (Message)(list.getSelectedValue());
-				message.setRead(true);
+				Message message = (Message)list.getSelectedValue();
+				message.setStatus("Accepted");
+				acceptButton.setEnabled(false);
+				declineButton.setEnabled(false);
+				DBMessage.editMessage(message);
 			}
 
 		}
@@ -233,7 +294,10 @@ public class Inbox {
 		public void actionPerformed(ActionEvent arg0) {
 			if(list.getSelectedValue() != null){
 				Message message = (Message)(list.getSelectedValue());
-				message.setRead(false);
+				message.setStatus("Declined");
+				acceptButton.setEnabled(false);
+				declineButton.setEnabled(false);
+				DBMessage.editMessage(message);
 			}
 			
 		}
@@ -243,6 +307,7 @@ public class Inbox {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			emptyMessageBox();
 			if(switchButton.getText() == "New Messages"){
 				switchButton.setText("Old Messages");
 				fillList(false);
