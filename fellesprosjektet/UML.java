@@ -274,6 +274,37 @@ class WeekCalendar {
 
 }
 
+package database;
+
+class DatabaseConnect {
+	-String driver = "org.gjt.mm.mysql.Driver";
+	-String url = "jdbc:mysql://mysql.stud.ntnu.no/datdanny_SU47";
+	-String user = "datdanny_sql47";
+	-String password = "gruppe47";
+	-Connection connection;
+	
+	#int dbConnect() 
+
+	-boolean loadDriver() 
+	
+	-boolean initConnection()
+	+String getDriver() 
+	
+	+setDriver(String driver) 
+	
+	+getUrl() 
+
+	+setUrl(String url) 
+	
+	+getUser() 
+
+	+setUser(String user) 
+	
+	+changePassword(String oldPassword, String newPassword1, String newPassword2 ) 
+	
+	#Connection getConnection() 
+}
+
 
 @enduml
  */
