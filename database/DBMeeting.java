@@ -57,6 +57,23 @@ public class DBMeeting {
 		}
 		return m\uc3b8te;
 	}
+	public static ArrayList<Meeting> getAllMeetings(){
+		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+		ResultSet rs = Interact.execute("SELECT * FROM m\uc3b8te");
+		
+		try {
+			if(rs.next()){
+				meetings.add(makeMeetingObject(rs));
+			}
+			
+		} catch (Exception e){
+			
+		}
+		
+		
+		return meetings;
+		
+	}
 	/**
 	 * ONLY use if changing meetingID or roomName.
 	 * If editing other parts, use editParticipants or editAppointment
