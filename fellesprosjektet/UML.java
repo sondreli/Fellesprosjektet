@@ -1,4 +1,5 @@
 
+
 /*
 @startuml
 title Klassediagram
@@ -23,12 +24,13 @@ AbortButtonListener <|. ActionListener
 OKButtonListener <|. ActionListener
 DeleteButtonListener <|. ActionListener
 SearchFieldListener <|. KeyListener
-
-
-
-
-
-
+Sticker -|> JPanel
+UserView -|> JPanel
+SearchListener <|. KeyListener
+UserListSelectionChangedListener <|. ListSelectionListener
+SearchFieldListener <|. FocusListener
+WeekCalendar -|> JPanel
+WeekCalendar  <|. PropertyChangeListener
 
 class CalenderView {
 	+ JFrame myFrame = new JFrame("Calender");
@@ -126,7 +128,7 @@ class tbl_Action{
 
 
 class NewMeeting{
-	
+
 	+DefaultListModel users, addedUsers;
 	+JList usersList, addedUsersList;
 	+JScrollPane usersScrollList, addedUsersScrollList, messageScroll;
@@ -182,10 +184,95 @@ class SearchFieldListener{
 		+ keyTyped(KeyEvent arg0) 
 }
 
+class Sticker {
+	+JLabel lblmessage;
+
+	+Sticker(Rectangle pos, String message) 
+}
+
+class UserView{
+
+	+DefaultListModel listModel;
+	+JList userList;
+	+JTextField searchField;
+	+JScrollPane scrollList;
+	+User thisUser;
+	+CalenderView view;
 
 
+	+UserView(int xpos, int ypos, User user, CalenderView view)
+
+	+fillList()
+	+fillList(String contains)
+
+	class SearchListener{
+
+		+ keyPressed(KeyEvent arg0) 
+		+ keyReleased(KeyEvent arg0) 
+		+ keyTyped(KeyEvent arg0) 
+	}
+
+	class UserListSelectionChangedListener {
+		+ valueChanged(ListSelectionEvent arg0)
+
+	}
+	class SearchFieldListener {
 
 
+		+ focusGained(FocusEvent arg0) 
+
+
+		+ focusLost(FocusEvent arg0) 
+	}
+
+}
+
+class WeekCalendar {
+	- JLabel lblWeek;
+	- JButton btnPrev, btnNext;
+	- GridBagConstraints constrnts;
+	- JTable tblCalendar;
+	- DefaultTableModel mtblCalendar; //Table model
+	- JScrollPane stblCalendar; //The scrollpane
+	- JPanel pnlCalendar;
+	- JLayeredPane lpane;
+	- model.MyDate data;
+	- Rectangle bounds;
+	- EventList evlist;
+	- ArrayList<Sticker> myStickers;
+	
+	- WeekCalendar(JLayeredPane lpane, model.MyDate data, EventList evlist, int xpos, int ypos) {
+	}
+	
+	- void initCalendar() {
+	}
+	
+	- void refreshCalendar(int week, int year){
+	}
+
+	- class tblCalendarRenderer extends DefaultTableCellRenderer{
+		- Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
+	}
+	
+	- class btnPrev_Action implements ActionListener{
+		+ actionPerformed (ActionEvent e)
+	}
+	- class btnNext_Action implements ActionListener{
+		+ actionPerformed (ActionEvent e)
+	}
+
+	+ propertyChange(PropertyChangeEvent evt) 
+	
+	- Rectangle getEventBounds(MeetTime time) 
+	
+	- void addNowTime(JLayeredPane lpane) 
+	
+	+ drawEvents(JLayeredPane lpane, EventList meetings) 
+	
+	+ addAppointment(JLayeredPane lpane, ArrayList<Appointment> appointments) 	
+	- void removeAllSticers() 
+
+}
 
 
 @enduml
