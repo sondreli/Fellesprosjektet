@@ -139,7 +139,7 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 		mtblCalendar.setRowCount(9);
 		
 		//Refresh calendar
-		refreshCalendar (data.getRealWeek(), data.getRealYear()); //Refresh calendar
+		refreshCalendar(data.getRealWeek(), data.getRealYear()); //Refresh calendar
 	}
 	
 	private void refreshCalendar(int week, int year){

@@ -56,7 +56,7 @@ public class MessageBar extends JPanel{
 		add(messagesButton, cs);
 		
 		cs.gridx = 1;
-		cs.ipadx = 460;
+		cs.ipadx = 320;
 		add(fillLabel, cs);
 		
 		
@@ -79,7 +79,7 @@ public class MessageBar extends JPanel{
 		add(logOffButton, cs);
 		
 		
-		this.setBounds(xpos, ypos, 1000, 30);
+		this.setBounds(xpos, ypos, 1100, 30);
 
 		
 	}
@@ -106,7 +106,7 @@ public class MessageBar extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			new NewAppointment(meetings, user);
 			
 		}
 	}

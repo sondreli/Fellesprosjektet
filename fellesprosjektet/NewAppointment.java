@@ -20,16 +20,23 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import controller.AlterDate;
+
 import model.Appointment;
+import model.Day;
+import model.EventList;
+import model.MeetTime;
 import model.Meeting;
 import model.MeetingRoom;
+import model.Time;
+import database.DBAppointment;
 import database.DBMeetingRoom;
 import database.DBUser;
 import model.User;
 
 public class NewAppointment{
 	
-	JScrollPane messageScroll;
+	JScrollPane messageScroll;// TODO Auto-generated method stub
 	JTextPane message;
 	JButton deleteButton, okButton, abortButton;
 	JLabel addedLabel, dateLabel;
@@ -38,21 +45,23 @@ public class NewAppointment{
 	JComboBox numberDate, monthDate, fromHour, fromMinute;
 	JComboBox toHour, toMinute, meetingRoom;
 	ArrayList<Meeting> meetings;
-	Meeting meeting;
+	Appointment event;
 	JFrame frame;
 	ArrayList<User> allUsers;
 	ArrayList<MeetingRoom> rooms;
+	EventList events;
+	User user;
 	
 	JPanel pan1, underPanel;
 	public NewAppointment(ArrayList<Appointment> apps){
 		JFrame frame = new JFrame();
 	}
-	public static void main(String[]args){
-		
-		NewAppointment gogo = new NewAppointment();
-	
-	}
-	public NewAppointment(){
+//	public static void main(String[]args){
+//		
+//		NewAppointment gogo = new NewAppointment();
+//	
+//	}
+	public NewAppointment(EventList events, User user){
 		frame = new JFrame();
 		
 		pan1 = new JPanel();
@@ -60,7 +69,9 @@ public class NewAppointment{
 		pan1.setLayout(new GridBagLayout());
 		underPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
-		this.meetings = meetings;
+		this.events = events;
+		this.user = user;
+		event = new Appointment();
 //		meeting = new Meeting(participants, room, description, leader, meetingTime)
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
@@ -103,7 +114,7 @@ public class NewAppointment{
 		clockLabel = new JLabel("Klokkeslett  ");
 		clockFromLabel = new JLabel("Fra:");
 		clockToLabel = new JLabel("Til:");
-		meetingLabel = new JLabel("M¿terom:");
+		meetingLabel = new JLabel("Mï¿½terom:");
 		messageLabel = new JLabel("Beskjed:");	
 		
 
@@ -295,6 +306,20 @@ public class NewAppointment{
 			}	
 		}	
 	}
+	private MeetTime getTimeOfMeeting(){
+		Time start = new Time(Integer.parseInt(fromHour.getSelectedItem().toString()), Integer.parseInt(fromMinute.getSelectedItem().toString()));
+		Time end = new Time(Integer.parseInt(toHour.getSelectedItem().toString()), Integer.parseInt(toMinute.getSelectedItem().toString()));
+		int date = Integer.parseInt(numberDate.getSelectedItem().toString());
+		int month = monthDate.getSelectedIndex();
+		int year = 2012;
+				
+		Day day = AlterDate.getDayFromDate(date, month, year);
+		int week = AlterDate.getWeekFromDate(date, month, year);
+		
+		MeetTime mtime = new MeetTime(start, end, day, week, year);
+		
+		return mtime;
+	}
 	class DeleteButtonListener implements ActionListener{
 
 		@Override
@@ -308,8 +333,12 @@ public class NewAppointment{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+			event.setDescription(message.getText());
+			event.setMeetingTime(getTimeOfMeeting());
+			event.setLeader(user);
+			events.add(event);
 			
+			DBAppointment.addAppointment(event);
 		}
 		
 	}
