@@ -12,15 +12,17 @@ import javax.swing.JPanel;
 
 import model.EventList;
 import model.Meeting;
+import model.User;
 
 public class MessageBar extends JPanel{
 	
 	JButton newEventButton, settingsButton, logOffButton, messagesButton;
 	JLabel fillLabel;
 	EventList meetings;
+	User user;
 	
 	
-	public MessageBar(int xpos, int ypos, EventList meetings){
+	public MessageBar(int xpos, int ypos, EventList meetings, User user){
 		//init
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints cs = new GridBagConstraints();
@@ -31,6 +33,7 @@ public class MessageBar extends JPanel{
 		messagesButton = new JButton("Messages");
 		fillLabel = new JLabel();
 		this.meetings = meetings;
+		this.user = user;
 		
 		
 		
@@ -88,7 +91,7 @@ public class MessageBar extends JPanel{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new NewMeeting(meetings);
+			new NewMeeting(meetings, user);
 			
 		}
 		

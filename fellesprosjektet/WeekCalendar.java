@@ -281,9 +281,9 @@ public class WeekCalendar extends JPanel implements PropertyChangeListener {
 	
 	public void drawEvents(JLayeredPane lpane, EventList meetings) {
 		for (Object meeting : meetings) {
-			if(((Meeting)meeting).getMeetingTime().getWeek() == data.getCurrentWeek()) {
-				Rectangle sbounds = getEventBounds(((Meeting)meeting).getMeetingTime());
-				Sticker temp = new Sticker(sbounds, ((Meeting)meeting).getDescription());
+			if(((Appointment)meeting).getMeetingTime().getWeek() == data.getCurrentWeek()) {
+				Rectangle sbounds = getEventBounds(((Appointment)meeting).getMeetingTime());
+				Sticker temp = new Sticker(sbounds, ((Appointment)meeting).getDescription());
 				myStickers.add(temp);
 				lpane.add(temp, new Integer(3));
 				System.out.println("xpos:"+sbounds.getX()+" ypos:"+sbounds.getY()+

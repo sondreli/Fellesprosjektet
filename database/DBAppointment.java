@@ -17,9 +17,7 @@ public class DBAppointment{
 	public static int addAppointment(String description, User leader, MeetTime time){
 
 		String query = "INSERT INTO hendelse " +
-		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mï¿½ned, ï¿½r) VALUES ('"
-		+ leader.getUserName() + "','" + description + "','" + time.getStart().getHour() + "','" + time.getEnd().getHour() + "','" + 
-		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mŒned, Œr) VALUES ('"
+		"(brukerNavn, beskrivelse, startTime, sluttTime, startMinutt, sluttMinutt, dag, uke, mÃ¥ned, Ã¥r) VALUES ('"
 		+ leader.getUserName() + "','" + 
 		description + "','" + time.getStart().getHour() + "','" + time.getEnd().getHour() + "','" + 
 		time.getStart().getMinute() + "','" + time.getEnd().getMinute() + "','" + time.getDay().getValue() + "','" + time.getWeek() + "','" + 
@@ -49,8 +47,8 @@ public class DBAppointment{
 		query.append("sluttMinutt = '" + app.getMeetingTime().getEnd().getMinute() + "',");
 		query.append("dag = '" + app.getMeetingTime().getDay().getValue() + "',");
 		query.append("uke = '" + app.getMeetingTime().getWeek() + "',");
-		query.append("mŒned = '" + app.getMeetingTime().getMonth() + "',");
-		query.append("Œr = '" + app.getMeetingTime().getYear() + "',");
+		query.append("mï¿½ned = '" + app.getMeetingTime().getMonth() + "',");
+		query.append("ï¿½r = '" + app.getMeetingTime().getYear() + "',");
 		query.append("beskrivelse = '" + app.getDescription() + "'");
 		query.append("WHERE brukerNavn = '" + app.getId() + "'");
 
@@ -101,24 +99,26 @@ public class DBAppointment{
 
 	public static Appointment makeAppointmentObject(ResultSet rs){
 		Appointment app = null;
-
+		
 		try {
 			String description = rs.getString("beskrivelse");
-			User leader = (User) rs.getObject("brukerNavn");
+			User leader = (User) DBUser.getUser(rs.getString("brukerNavn"));
 
 			//creates MeetTime object
 			model.Time start = new model.Time(rs.getInt("startTime"), rs.getInt("startMinutt"));
 			model.Time end = new model.Time(rs.getInt("sluttTime"), rs.getInt("sluttMinutt"));
 			Day day = Day.getDay(rs.getInt("dag"));
 			int week = rs.getInt("uke");
-			int year = rs.getInt("Œr");
+			int year = rs.getInt("Ã¥r");
 			int id = rs.getInt("hendelseId");
 			MeetTime time = new MeetTime(start, end, day, week, year);
 
 			app = new Appointment(description, leader, time, id);
+			System.out.println("desc:"+app.getDescription());
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("hei");
 		}
 
 		return app;

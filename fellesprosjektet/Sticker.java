@@ -25,6 +25,6 @@ public class Sticker extends JPanel {
 		
 		constrnts.gridx = 0;
 		constrnts.gridy = 0;
-		add(lblmessage);
+		add(lblmessage, constrnts);
 	}
 }

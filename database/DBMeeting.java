@@ -57,23 +57,23 @@ public class DBMeeting {
 		}
 		return møte;
 	}
-	public static ArrayList<Meeting> getAllMeetings(){
-		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
-		ResultSet rs = Interact.execute("SELECT * FROM m\uc3b8te");
-		
-		try {
-			if(rs.next()){
-				meetings.add(makeMeetingObject(rs));
-			}
-			
-		} catch (Exception e){
-			
-		}
-		
-		
-		return meetings;
-		
-	}
+//	public static ArrayList<Meeting> getAllMeetings(User user){
+//		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+//		ResultSet rs = Interact.execute("SELECT * FROM møte WHERE bruker='"+user+"'");
+//		
+//		try {
+//			if(rs.next()){
+//				meetings.add(makeMeetingObject(rs));
+//			}
+//			
+//		} catch (Exception e){
+//			
+//		}
+//		
+//		
+//		return meetings;
+//		
+//	}
 	/**
 	 * ONLY use if changing meetingID or roomName.
 	 * If editing other parts, use editParticipants or editAppointment

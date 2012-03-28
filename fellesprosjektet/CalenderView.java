@@ -18,19 +18,22 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import model.Appointment;
 import model.Day;
 import model.EventList;
 import model.Meeting;
 import model.MyDate;
 import model.MeetTime;
 import model.Time;
+import model.User;
 
 import com.sun.xml.internal.ws.api.server.Container;
+
+import database.DBAppointment;
 
 public class CalenderView {
 	public JFrame myFrame = new JFrame("Calender");
 	public JLayeredPane lpane = new JLayeredPane();
-	public JPanel myPanel;
 	public JPanel calpanel;
 	public JPanel cal2panel;
 	public UserView uview;
@@ -40,7 +43,8 @@ public class CalenderView {
 	public MonthCalender cal;
 	public WeekCalendar wcal;
 	public JButton butt;
-	public EventList meetings;
+	public EventList events;
+	private User user;
 	
 	public CalenderView() {
 		//Look and feel
@@ -51,7 +55,6 @@ public class CalenderView {
 		catch (UnsupportedLookAndFeelException e) {}
 		
 //		myFrame = new JFrame();
-		myPanel = new JPanel();
 		
 		//Prepare frame
 		Dimension mysize = new Dimension(1200, 600);
@@ -65,23 +68,21 @@ public class CalenderView {
 		myFrame.setVisible(true);
 
 		//Create controls
-		butt = new JButton("hei");
-		myPanel = new JPanel();
 		calpanel = new JPanel();
 		cal2panel = new JPanel();
 		layout = new GridBagConstraints();
-		myPanel.setLayout(new GridBagLayout());
 		caldata = new model.MyDate();
-		meetings = new EventList();
-		MessageBar mbar = new MessageBar(0, 0, meetings);
+		user = new User("bruker");
+		events = new EventList();
+		addEvents(user);
+		MessageBar mbar = new MessageBar(0, 0, events, user);
 		cal = new MonthCalender(lpane, caldata, 0, 30, 1, BorderLayout.WEST);
-		wcal = new WeekCalendar(lpane, caldata, meetings, 270, 30);
+		wcal = new WeekCalendar(lpane, caldata, events, 270, 30);
 		EventPanel evpnl = new EventPanel(870, 30);
 
 		uview = new UserView(0, 250);
 		
 		//Add controls to pane
-		myPanel.add(butt);
 		layout.gridx = 0;
 		layout.gridy = 0;
 		lpane.add(wcal, new Integer(2));
@@ -100,10 +101,20 @@ public class CalenderView {
 //		lpane.add(myPanel);
 //		lpane.add(cal);//, BorderLayout.WEST);
 //		lpane.add(cal2, BorderLayout.EAST);
-
-		myPanel.setBounds(0, 0, 800, 600);
 		
 		
 //		myPanel.add(cal);
+	}
+	
+	public void clearEvents() {
+		events.clear();
+	}
+	
+	public void addEvents(User user) {
+		System.out.println("bruker:"+user.getUserName());
+		for (Appointment appointment : DBAppointment.getUsersAppointments(user)) {
+			events.add(appointment);
+			System.out.println("uke:"+appointment.getMeetingTime().getWeek());
+		}
 	}
 }

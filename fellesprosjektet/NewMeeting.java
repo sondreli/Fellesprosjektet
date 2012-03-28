@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.jws.soap.SOAPBinding.Use;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import model.Meeting;
+import database.DBAppointment;
 import database.DBUser;
 
 import controller.AlterDate;
@@ -54,6 +56,7 @@ public class NewMeeting{
 	Meeting meeting;
 	JFrame frame;
 	ArrayList<User> allUsers;
+	User user;
 
 	EventList meetings;
 //	Meeting meeting;
@@ -96,7 +99,7 @@ public class NewMeeting{
 //		NewMeeting gogo = new NewMeeting();
 //	
 //	}
-	public NewMeeting(EventList meetings){
+	public NewMeeting(EventList meetings, User user){
 		frame = new JFrame();
 
 		
@@ -111,6 +114,7 @@ public class NewMeeting{
 //		meeting = new Meeting(participants, room, description, leader, meetingTime)
 		this.meetings = meetings;
 		meeting = new Meeting();
+		this.user = user;
 		
 		String[] months =  {"January", "February", "March", "April", "May", "June", "July",
 				"August", "September", "October", "November", "December"};
@@ -508,7 +512,9 @@ public class NewMeeting{
 		public void actionPerformed(ActionEvent arg0) {
 			meeting.setDescription(message.getText());
 			meeting.setMeetingTime(getTimeOfMeeting());
+			meeting.setLeader(user);
 			meetings.add(meeting);
+			DBAppointment.addAppointment(meeting);
 			frame.dispose();
 		}
 		
