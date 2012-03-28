@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import database.DBUser;
 
@@ -29,15 +31,18 @@ public class UserView extends JPanel{
 	JList userList;
 	JTextField searchField;
 	JScrollPane scrollList;
+	User thisUser;
+	CalenderView view;
 	
 	
-	public UserView(int xpos, int ypos){
+	public UserView(int xpos, int ypos, User user, CalenderView view){
 		
 		//init
 		this.setLayout(new GridBagLayout());
 		searchField = new JTextField();		
 		userList = new JList();
 		scrollList = new JScrollPane(userList);
+		this.view = view;
 		
 		GridBagConstraints cs = new GridBagConstraints();
 		listModel = new DefaultListModel();
@@ -78,6 +83,8 @@ public class UserView extends JPanel{
 		searchField.setText("Search for users");
 		searchField.addFocusListener(new SearchFieldListener());
 		searchField.addKeyListener(new SearchListener());
+
+		userList.addListSelectionListener(new UserListSelectionChangedListener());
 		this.setBounds(xpos, ypos, 140, 400);
 		
 	}
@@ -87,16 +94,12 @@ public class UserView extends JPanel{
 			listModel.clear();
 		}
 		// Legg til Users
-		ArrayList<User> allUsers = new ArrayList<User>();
-		allUsers.add(new User("Navn1"));
-		allUsers.add(new User("Navn2"));
-		
-		for(int i = 3; i < 30;i++){
-			allUsers.add(new User("Navn" + i));
-		}
-		//ArrayList<User> allUsers = DBUser.getAllUsers();
-		
+		ArrayList<User> allUsers = DBUser.getAllUsers();
+		listModel.addElement(thisUser);
 		for(User e : allUsers){
+			if(e.equals(thisUser)){
+				continue;
+			}
 			listModel.addElement(e);
 		}
 	}
@@ -104,11 +107,11 @@ public class UserView extends JPanel{
 		if(!listModel.isEmpty()){
 			listModel.clear();
 		}
-		ArrayList<User> allUsers = new ArrayList<User>();
-		for(int i = 1; i < 30;i++){
-			allUsers.add(new User("Navn" + i));
-		}
+		ArrayList<User> allUsers = DBUser.getAllUsers();
 		for (User e : allUsers){
+			if(e.equals(thisUser)){
+				continue;
+			}
 			if(e.getUserName().toLowerCase().contains(contains)){
 				listModel.addElement(e);
 				continue;
@@ -149,6 +152,23 @@ public class UserView extends JPanel{
 		
 	}
 	
+	class UserListSelectionChangedListener implements ListSelectionListener{
+
+		@Override
+		public void valueChanged(ListSelectionEvent arg0) {
+			view.clearEvents();
+			if(!listModel.isEmpty()){
+				
+				for( User u : (User[])userList.getSelectedValues()){
+					view.addEvents(u);
+				}
+			}else {
+				view.addEvents(thisUser);
+			}
+			
+		}
+		
+	}
 	class SearchFieldListener implements FocusListener{
 		
 
