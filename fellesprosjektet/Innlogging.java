@@ -1,55 +1,169 @@
 package fellesprosjektet;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.User;
+
+import com.sun.media.sound.Toolkit;
+
+import database.DBUser;
+
 public class Innlogging  extends JPanel{
 
-		private JTextField felt= new JTextField(30), felt2= new JTextField(30);
-		private JLabel navn = new JLabel("Brukernavn: "), navn2 = new JLabel("Passord: ");
-		int noe;
+		private JFrame frame;
+		private JPanel pane;
+		private JTextField userName, passWord;
+		private JButton login, cancel;
+		private JLabel userNameLabel, passwordLabel;
 		
 		public Innlogging() {
-			JPanel pane = new JPanel();
+			frame = new JFrame("Login");
+			frame.setLayout(new BorderLayout());
+			pane = new JPanel();
 			pane.setLayout(new GridBagLayout());
+			
+			login = new JButton("Login");
+			cancel = new JButton("Cancel");
+			
+			userNameLabel = new JLabel("Brukernavn: ");
+			passwordLabel = new JLabel("Passord: ");
+			
+			userName = new JTextField(30);
+			passWord = new JTextField(30);
+			
+			login.addActionListener(new loginButtonListener());
+			cancel.addActionListener(new cancelButtonListener());
+			userName.addFocusListener(new FieldFocusListener());
+			passWord.addFocusListener(new FieldFocusListener());
+			
 			GridBagConstraints c = new GridBagConstraints();
+			
+			
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 1;
 			c.gridx = 0;
 			c.gridy = 0;
-			pane.add(navn, c);
+			pane.add(userNameLabel, c);
+			
 			c.gridx = 1;
 			c.gridy = 0;
-			pane.add(felt, c);
+			pane.add(userName, c);
+			
 			c.gridx = 0;
 			c.gridy = 1;
-			pane.add(navn2, c);
+			pane.add(passwordLabel, c);
+			
 			c.gridx = 1;
 			c.gridy = 1;
-			pane.add(felt2, c);
-			Object[] options = { "Logg inn", "Cancel" };
-			noe = JOptionPane.showOptionDialog(null,
-					pane, "Innlogging",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-			if(noe == 0){
-				System.out.println(felt.getText()+ "\n"+felt2.getText());
-			}
+			pane.add(passWord, c);
+			
+			c.anchor = GridBagConstraints.EAST;
+			c.gridx = 0;
+			c.gridy = 2;
+			pane.add(login, c);
+			
+			
+			c.anchor = GridBagConstraints.WEST;
+			c.gridx = 1;
+			pane.add(cancel, c);
+			
+			
+			
+			frame.setSize(300, 100);
+			frame.setLocation(400, 225);
+			frame.getContentPane().add(pane);
+			frame.setVisible(true);
+			
 		}
 
 		public static void main(String[] args) {
 
+<<<<<<< HEAD
 			JPanel panel = new Innlogging();
 			JFrame frame = new JFrame("Øving 1");
 			frame.getContentPane().add(panel);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.pack();
 			frame.setVisible(true);
+=======
+			new Innlogging();
+			
+		}
+		public void emptyEVERYTHING(){
+			userName.setText("");
+			passWord.setText("");
+		}
+		class loginButtonListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!userName.getText().equals("") || !passWord.getText().equals("")){
+					User user = DBUser.getUser(userName.getText());
+					if(user == null){
+						userName.setText("Wrong Username");
+						passWord.setText("Or Password");
+					}else if(!user.getPassword().equals(passWord.getText())){
+						userName.setText("Wrong Username");
+						passWord.setText("Or Password");
+					}else{
+						new CalenderView(user);
+						frame.dispose();
+					}
+					
+				}else{
+					
+					userName.setText("Remember to Fill");
+					passWord.setText("All the Fields");
+					
+				}
+					
+				
+				
+			}
+			
+		}
+		class FieldFocusListener implements FocusListener{
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				if(userName.getText() != null){
+					if(userName.getText().equals("Wrong Username") ||
+							userName.getText().equals("Remember to Fill")){
+						emptyEVERYTHING();
+					}
+				}
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		}
+		class cancelButtonListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.dispose();
+			}
+>>>>>>> d3fc93420eb4f6df9d8051443841a92613af3280
 			
 		}
 
