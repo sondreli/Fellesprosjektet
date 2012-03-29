@@ -36,8 +36,8 @@ public class DBEvent {
 	public static void main (String[]args){
 	
 			System.out.println(getTime(1));
-		}
 	}
+}
 	
 
 

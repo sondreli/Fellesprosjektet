@@ -1,5 +1,6 @@
 
 
+
 /*
 @startuml
 title Klassediagram
@@ -31,6 +32,9 @@ UserListSelectionChangedListener <|. ListSelectionListener
 SearchFieldListener <|. FocusListener
 WeekCalendar -|> JPanel
 WeekCalendar  <|. PropertyChangeListener
+btnPrev_Action <|. ActionListener
+btnNext_Action <|. ActionListener
+tblCalendarRenderer -|> DefaultTableCellRenderer
 
 class CalenderView {
 	+ JFrame myFrame = new JFrame("Calender");
@@ -241,27 +245,15 @@ class WeekCalendar {
 	- EventList evlist;
 	- ArrayList<Sticker> myStickers;
 	
-	- WeekCalendar(JLayeredPane lpane, model.MyDate data, EventList evlist, int xpos, int ypos) {
-	}
+	- WeekCalendar(JLayeredPane lpane, model.MyDate data, EventList evlist, int xpos, int ypos)
 	
-	- void initCalendar() {
-	}
+	- initCalendar() 
 	
-	- void refreshCalendar(int week, int year){
-	}
+	- refreshCalendar(int week, int year)
 
-	- class tblCalendarRenderer extends DefaultTableCellRenderer{
-		- Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
-	}
-	
-	- class btnPrev_Action implements ActionListener{
-		+ actionPerformed (ActionEvent e)
-	}
-	- class btnNext_Action implements ActionListener{
-		+ actionPerformed (ActionEvent e)
-	}
 
-	+ propertyChange(PropertyChangeEvent evt) 
+
+	+ void propertyChange(PropertyChangeEvent evt) 
 	
 	- Rectangle getEventBounds(MeetTime time) 
 	
@@ -271,9 +263,18 @@ class WeekCalendar {
 	
 	+ addAppointment(JLayeredPane lpane, ArrayList<Appointment> appointments) 	
 	- void removeAllSticers() 
+	
 
 }
-
+	class tblCalendarRenderer {
+		- Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
+	}
+	class btnPrev_Action {
+		+ actionPerformed (ActionEvent e)
+	}
+	class btnNext_Action {
+		+ actionPerformed (ActionEvent e)
+	}
 package database;
 
 class DatabaseConnect {
@@ -304,7 +305,70 @@ class DatabaseConnect {
 	
 	#Connection getConnection() 
 }
+class DBAppointment{
+	+ int addAppointment(Appointment app)
+	+ int addAppointment(String description, User leader, MeetTime time)
+	+ void editAppointment(Appointment app)
+	+ Appointment getAppointmentbyID(int id)
+	+ ArrayList<Appointment> getUsersAppointments(User user)
+	+ int getNewestID(Appointment app)
+	+ Appointment makeAppointmentObject(ResultSet rs)
 
+}
+class DBEvent {
+	- String HENDELSE = "hendelse";
+	- String HENDELSE_ID = "hendelseId";
+	- String HENDELSE_START = "start";
+	- String HENDELSE_SLUTT = "slutt";
+	- String HENDELSE_DATO = "dato";
+	+ ArrayList<Time> getTime(int ID)
+
+}
+
+class DBMeeting {
+	+ int addMeeting(Meeting meeting)
+	+ int addMeeting(ArrayList<User> participants, MeetingRoom room, int ID)
+	+ Meeting getMeeting(int meetingID)
+
+	+ void editMeeting(Meeting meeting)
+	+ void cancelMeeting(Meeting meeting)
+	+ Meeting makeMeetingObject(ResultSet rs)
+}
+class DBMeetingRoom {
+	+ void addMeetingRoom(MeetingRoom room)
+	- void addMeetingRoom(String name, String description, String location) 
+	+ void removeMeetingRoom(String name)
+	+ ArrayList<Meeting> getMeetingsInRoom(MeetingRoom room)
+	+ ArrayList<MeetingRoom> getAllMeetingRooms()
+	+ void editMeetingRoom(MeetingRoom room)
+	+ MeetingRoom makeMeetingRoomObject(ResultSet rs)
+	+ MeetingRoom getMeetingRoom(String roomName) 
+}
+class DBMessage {
+	+ void addMessage(Message message)
+	+ void addMessage(Date dateSent, String topic, String content,User recepient,User sender)
+	+ void editMessage(Message message)
+	+ ArrayList<Message> getInbox(User user)
+	+ Message makeMessageObject(ResultSet rs)
+}
+class DBParticipants {
+	+ void addParticipants(ArrayList<User> parts, int meetingID)
+	+ ArrayList<Meeting> getUsersMeetings(User user)
+	+ ArrayList<User> getParticipants(int meetingID, String answer)
+}
+class DBUser {
+	+ void addUser(User user)
+	+ void addUser(String userName, String name, String password)
+	+ void removeUser(String brukerNavn)
+	+ void editUser(User update)
+	+ User getUser(String userName)
+	+ ArrayList<User> getAllUsers() 
+	+ User makeUserObject(ResultSet rs)
+}
+class Interact {
+	+ ResultSet execute(String sql) 
+	+ void executeUpdate(String sql)
+}
 
 @enduml
  */
