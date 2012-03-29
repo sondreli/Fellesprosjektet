@@ -339,6 +339,7 @@ public class NewAppointment{
 			events.add(event);
 			
 			DBAppointment.addAppointment(event);
+			frame.dispose();
 		}
 		
 	}
