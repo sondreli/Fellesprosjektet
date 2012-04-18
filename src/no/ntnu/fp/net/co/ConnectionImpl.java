@@ -7,6 +7,8 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Collections;
@@ -86,7 +88,42 @@ public class ConnectionImpl extends AbstractConnection {
      * @see Connection#accept()
      */
     public Connection accept() throws IOException, SocketTimeoutException {
-        throw new NotImplementedException();
+    	if (state != State.CLOSED && state != State.LISTEN) {
+    		throw new ConnectException("Socket is not closed");
+    	}
+    	
+    	state = State.LISTEN;
+        KtnDatagram received = null;
+        while (!isValid(received)) {
+        	received = receivePacket(true); //venter p� � motta syn-pakke
+        }
+        
+        ConnectionImpl newConnection = new ConnectionImpl(createPort()); //ny connection lages
+        newConnection.prepareConnection(received); //avslutter three-way handshake
+        return newConnection;
+    }
+    
+    private void prepareConnection(KtnDatagram packet) throws IOException {
+    	lastValidPacketReceived = packet;
+    	state = State.SYN_RCVD;
+    	remoteAddress = packet.getSrc_addr();
+    	remotePort = packet.getSrc_port(); //synkroniserer seg mot tilkobleren
+    	System.out.println("New socket at port " + myPort);
+    	sendAck(packet, true);
+    	KtnDatagram retur = receiveAck();
+    	if (!isValid(retur)) {
+    		state = State.CLOSED;
+    		throw new IOException("Error during connection");
+    	}
+    	state = State.ESTABLISHED;
+    }
+    
+    private int createPort() {
+    	int port = (int)Math.random()*100+10000;
+    	while(usedPorts.containsValue(port)) {
+    		port = (int)Math.random()*100+10000;
+    	}
+    	return port;
     }
 
     /**
@@ -135,6 +172,9 @@ public class ConnectionImpl extends AbstractConnection {
      * @return true if packet is free of errors, false otherwise.
      */
     protected boolean isValid(KtnDatagram packet) {
-        throw new NotImplementedException();
+        if(packet != null && packet.getChecksum() == packet.calculateChecksum()) {
+        	return true;
+        }
+        return false;
     }
 }
