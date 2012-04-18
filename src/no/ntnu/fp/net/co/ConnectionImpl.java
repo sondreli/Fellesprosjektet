@@ -46,8 +46,11 @@ public class ConnectionImpl extends AbstractConnection {
      *            - the local port to associate with this connection
      */
     public ConnectionImpl(int myPort) {
-        throw new NotImplementedException();
-    }
+        super();
+        this.myPort = myPort; //setter port og myaddress, eneste som ikke var satt i abstractconnection constructoren
+        myAddress = getIPv4Address();
+        usedPorts.put(myPort, true);
+    }    
 
     private String getIPv4Address() {
         try {
