@@ -155,7 +155,21 @@ class NewMeeting{
 	}
 
 class AddButtonListener{
-		+ actionPerformed(ActionEvent arg0) 
+		+ actionPerformed(Act@startuml
+title Klassediagram
+package fellesprosjektet
+EventPanel --|> JPanel
+MessageBar --|> JPanel
+MessageButtonListener <|- ActionListener
+NewEventListener <|. ActionListener
+SettingsListener <|. ActionListener
+LogOffButtonListener <|. ActionListener
+MonthCalender -|> JComponent
+MonthCalender <|. PropertyChangeListener
+tblCalendarRenderer --|> DefaultTableCellRenderer
+btnPrev_Action <|. ActionListener
+btnNext_Action <|. ActionListener
+cmbYear_Action <|. ionEvent arg0) 
 }
 
 class RemoveButtonListener{
