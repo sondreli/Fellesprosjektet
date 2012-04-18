@@ -1,28 +1,29 @@
 
 
+
 /*
 @startuml
 title Klassediagram
 package fellesprosjektet
 EventPanel --|> JPanel
 MessageBar --|> JPanel
-MessageButtonListener <|- ActionListener
-NewEventListener <|. ActionListener
-SettingsListener <|. ActionListener
-LogOffButtonListener <|. ActionListener
+MessageButtonListener  <|. ActionListener
+NewEventListener  <|. ActionListener
+SettingsListener  <|. ActionListener
+LogOffButtonListener  <|. ActionListener
 MonthCalender -|> JComponent
 MonthCalender <|. PropertyChangeListener
 tblCalendarRenderer --|> DefaultTableCellRenderer
-btnPrev_Action <|. ActionListener
-btnNext_Action <|. ActionListener
-cmbYear_Action <|. ActionListener
+btnPrev_Action  <|. ActionListener
+btnNext_Action  <|. ActionListener
+cmbYear_Action  <|. ActionListener
 tbl_Action <|. MouseListener
-AddButtonListener <|. ActionListener
-RemoveButtonListener <|. ActionListener
-MonthChangeListener <|. ActionListener
-AbortButtonListener <|. ActionListener
-OKButtonListener <|. ActionListener
-DeleteButtonListener <|. ActionListener
+AddButtonListener  <|. ActionListener
+RemoveButtonListener  <|. ActionListener
+MonthChangeListener  <|. ActionListener
+AbortButtonListener  <|. ActionListener
+OKButtonListener  <|. ActionListener
+DeleteButtonListener  <|. ActionListener
 SearchFieldListener <|. KeyListener
 Sticker -|> JPanel
 UserView -|> JPanel
@@ -31,6 +32,9 @@ UserListSelectionChangedListener <|. ListSelectionListener
 SearchFieldListener <|. FocusListener
 WeekCalendar -|> JPanel
 WeekCalendar  <|. PropertyChangeListener
+btnPrev_Action  <|. ActionListener
+btnNext_Action  <|. ActionListener
+tblCalendarRenderer -|> DefaultTableCellRenderer
 
 class CalenderView {
 	+ JFrame myFrame = new JFrame("Calender");
@@ -255,27 +259,15 @@ class WeekCalendar {
 	- EventList evlist;
 	- ArrayList<Sticker> myStickers;
 	
-	- WeekCalendar(JLayeredPane lpane, model.MyDate data, EventList evlist, int xpos, int ypos) {
-	}
+	- WeekCalendar(JLayeredPane lpane, model.MyDate data, EventList evlist, int xpos, int ypos)
 	
-	- void initCalendar() {
-	}
+	- initCalendar() 
 	
-	- void refreshCalendar(int week, int year){
-	}
+	- refreshCalendar(int week, int year)
 
-	- class tblCalendarRenderer extends DefaultTableCellRenderer{
-		- Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
-	}
-	
-	- class btnPrev_Action implements ActionListener{
-		+ actionPerformed (ActionEvent e)
-	}
-	- class btnNext_Action implements ActionListener{
-		+ actionPerformed (ActionEvent e)
-	}
 
-	+ propertyChange(PropertyChangeEvent evt) 
+
+	+ void propertyChange(PropertyChangeEvent evt) 
 	
 	- Rectangle getEventBounds(MeetTime time) 
 	
@@ -285,10 +277,297 @@ class WeekCalendar {
 	
 	+ addAppointment(JLayeredPane lpane, ArrayList<Appointment> appointments) 	
 	- void removeAllSticers() 
+	
+
+}
+	class tblCalendarRenderer {
+		- Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
+	}
+	class btnPrev_Action {
+		+ actionPerformed (ActionEvent e)
+	}
+	class btnNext_Action {
+		+ actionPerformed (ActionEvent e)
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+package database
+
+class DatabaseConnect {
+	-String driver = "org.gjt.mm.mysql.Driver";
+	-String url = "jdbc:mysql://mysql.stud.ntnu.no/datdanny_SU47";
+	-String user = "datdanny_sql47";
+	-String password = "gruppe47";
+	-Connection connection;
+	
+	#int dbConnect() 
+
+	-boolean loadDriver() 
+	
+	-boolean initConnection()
+	+String getDriver() 
+	
+	+setDriver(String driver) 
+	
+	+getUrl() 
+
+	+setUrl(String url) 
+	
+	+getUser() 
+
+	+setUser(String user) 
+	
+	+changePassword(String oldPassword, String newPassword1, String newPassword2 ) 
+	
+	#Connection getConnection() 
+}
+class DBAppointment{
+	+ int addAppointment(Appointment app)
+	+ int addAppointment(String description, User leader, MeetTime time)
+	+ void editAppointment(Appointment app)
+	+ Appointment getAppointmentbyID(int id)
+	+ ArrayList<Appointment> getUsersAppointments(User user)
+	+ int getNewestID(Appointment app)
+	+ Appointment makeAppointmentObject(ResultSet rs)
+
+}
+class DBEvent {
+	- String HENDELSE = "hendelse";
+	- String HENDELSE_ID = "hendelseId";
+	- String HENDELSE_START = "start";
+	- String HENDELSE_SLUTT = "slutt";
+	- String HENDELSE_DATO = "dato";
+	+ ArrayList<Time> getTime(int ID)
 
 }
 
+class DBMeeting {
+	+ int addMeeting(Meeting meeting)
+	+ int addMeeting(ArrayList<User> participants, MeetingRoom room, int ID)
+	+ Meeting getMeeting(int meetingID)
 
+	+ void editMeeting(Meeting meeting)
+	+ void cancelMeeting(Meeting meeting)
+	+ Meeting makeMeetingObject(ResultSet rs)
+}
+class DBMeetingRoom {
+	+ void addMeetingRoom(MeetingRoom room)
+	- void addMeetingRoom(String name, String description, String location) 
+	+ void removeMeetingRoom(String name)
+	+ ArrayList<Meeting> getMeetingsInRoom(MeetingRoom room)
+	+ ArrayList<MeetingRoom> getAllMeetingRooms()
+	+ void editMeetingRoom(MeetingRoom room)
+	+ MeetingRoom makeMeetingRoomObject(ResultSet rs)
+	+ MeetingRoom getMeetingRoom(String roomName) 
+}
+class DBMessage {
+	+ void addMessage(Message message)
+	+ void addMessage(Date dateSent, String topic, String content,User recepient,User sender)
+	+ void editMessage(Message message)
+	+ ArrayList<Message> getInbox(User user)
+	+ Message makeMessageObject(ResultSet rs)
+}
+class DBParticipants {
+	+ void addParticipants(ArrayList<User> parts, int meetingID)
+	+ ArrayList<Meeting> getUsersMeetings(User user)
+	+ ArrayList<User> getParticipants(int meetingID, String answer)
+}
+class DBUser {
+	+ void addUser(User user)
+	+ void addUser(String userName, String name, String password)
+	+ void removeUser(String brukerNavn)
+	+ void editUser(User update)
+	+ User getUser(String userName)
+	+ ArrayList<User> getAllUsers() 
+	+ User makeUserObject(ResultSet rs)
+}
+class Interact {
+	+ ResultSet execute(String sql) 
+	+ void executeUpdate(String sql)
+}
+
+end package
+
+
+
+package model
+EventList -|> ArrayList
+Meeting -|> Appointment
+enum Answer 
+enum Change
+enum Day 
+class Appointment{
+
+	-MeetTime meetingTime;
+	-String description;
+	-int id;
+	-User leader;
+	+Appointment() 
+	+Appointment(String description, User leader, MeetTime time) 
+	+Appointment(String description, User leader, MeetTime time, int id) 
+	+String getDescription() 
+	+void setDescription(String description) 
+	+int getId() 
+	+void setId(int id) 
+	+User getLeader() 
+	+void setLeader(User leader) 
+	+MeetTime getMeetingTime() 
+	+void setMeetingTime(MeetTime meetingTime) 
+	
+}
+class EventList{
+	- PropertyChangeSupport change;
+	+ EventList() 
+	+ addMeeting(Meeting m) 
+	+ addAppointment(Appointment a) 
+	+ addPropertyChangeListener(PropertyChangeListener listener) 
+	+ removePropertyChangeListener(PropertyChangeListener listener) 
+}
+
+class Meeting{
+	- ArrayList<User> participants;
+	- User leader;
+	- Answer answer;
+	- MeetingRoom room;
+	- String description;
+	- int meetingID;
+	+ Meeting() 
+	+ Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime)
+	+ Meeting(ArrayList<User> participants, MeetingRoom room, Appointment app, int meetingID)
+	+ Meeting(ArrayList<User> participants, MeetingRoom room, String description, User leader, MeetTime meetingTime, int meetingID)
+	+ ArrayList<User> getParticipants() 
+	+ void setParticipants(ArrayList<User> participants) 
+	+ User getLeader() 
+	+ void setLeader(User leader) 
+	+ Answer getAnswer() 
+	+ void setAnswer(Answer answer) 
+	+ MeetingRoom getRoom() 
+	+ void setRoom(MeetingRoom room) 
+	+ String getDescription() 
+	+ void setDescription(String description) 
+	+ int getMeetingID() 
+	+ void setMeetingID(int meetingID) 
+}
+
+class MeetingRoom {
+	- String name, location, description;
+	+MeetingRoom(String location, String name, String description)
+	+String getName() 
+	+void setName(String name) 
+	+String getLocation() 
+	+void setLocation(String location) 
+	+String getDescription() 
+	+void setDescription(String description) 
+	+String toString()
+}
+
+class MeetTime {
+	- Time start;
+	- Time end;
+	- Day day;
+	- int week;  
+	- int month; 
+	- int year;  
+	+ MeetTime(Time start, Time end, Day day, int week, int year)
+	+ Time getStart() 
+	+ void setStart(Time start)
+	+ Time getEnd() 
+	+ void setEnd(Time end) 
+	+ Day getDay()
+	+ void setDay(Day day) 
+	+ int getWeek() 
+	+ int getMonth() 
+	+ int getYear() 
+}
+
+class Message {
+	- String content, topic;
+	- Date dateSendt;
+	- User sender,  recepient;
+	- boolean read;
+	- String status;
+	- int ID;
+	+ Message(String topic, String content,User recepient,User sender)
+	+ Message(int id, Date dateSent,String topic, String content,User recepient,User sender, boolean read, String status)
+	- String dateToString() 
+	+ boolean getRead()
+	+ void setRead(boolean t)
+	+ String getContent() 
+	+ void setContent(String content) 
+	+ String getTopic() 
+	+ void setTopic(String topic) 
+	+ Date getDateSendt() 
+	+ void setDateSendt(Date dateSendt) 
+	+ User getSender() 
+	+ void setSender(User sender) 
+	+ User getRecepient() 
+	
+	+ void setRecepient(User recepient) 
+	+ String getStatus()
+	+ void setStatus(String Status)
+	+ int getID()
+	+ String toString()
+}
+
+class MyDate {
+	- int realYear, realMonth, realWeek, realDay, currentYear, currentMonth, currentWeek;
+	- PropertyChangeSupport change;
+	+ MyDate() 
+	+ int getRealYear() 
+	+ void setRealYear(int realYear) 
+	+ int getRealMonth() 
+	+ void setRealMonth(int realMonth) 
+	+ int getRealWeek() 
+	+ void setRealWeek(int realWeek) 
+	+ int getRealDay() 
+	+ void setRealDay(int realDay) 
+	+ int getCurrentYear()
+	+ void setCurrentYear(int currentYear)
+	+ int getCurrentMonth() 
+	+ void setCurrentMonth(int currentMonth) 
+	+ int getCurrentWeek() 
+	+ void setCurrentWeek(int currentWeek) 
+	+ void setCurrentAll(int week, int month, int year) 
+	+ void addPropertyChangeListener(PropertyChangeListener listener) 
+	+ void removePropertyChangeListener(PropertyChangeListener listener) 
+}
+class Time {
+	- int hour;
+	- int minute;
+	+ Time(int hour, int minute) 
+	+ int getHour()
+	+ void setHour(int hour)
+	+ int getMinute() 
+	+ void setMinute(int minute) 
+	
+}
+
+class User {
+	- String userName;
+	- String name;
+	- String password;
+	- ArrayList<Message> inbox;
+	+ String toString() 
+	+ User(String usrName)
+	+ User(String usrName, String name, String password)
+	+ String getUserName() 
+	+ void setUserName(String userName) 
+	+ String getName() 
+	+ void setName(String name) 
+	+ String getPassword() 
+	+ void setPassword(String password) 
+	+ ArrayList<Message> getInbox() 
+	+ void setInbox(ArrayList<Message> inbox)
+}
+
+model -up-> database
+fellesprosjektet -up-> model
 @enduml
  */
 

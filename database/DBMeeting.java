@@ -22,16 +22,16 @@ public class DBMeeting {
 	public static int addMeeting(ArrayList<User> participants, MeetingRoom room, int ID){
 		int meetingID = 0;
 
-		String query = "INSERT INTO mÃ¸te " +
+		String query = "INSERT INTO møte " +
 		"(romNavn, hendelseId) VALUES ('"
 		+ room.getName() + "','" + ID + "')";
 		Interact.executeUpdate(query);
 
-		ResultSet rs = Interact.execute("SELECT * FROM mÃ¸te ORDER BY mÃ¸teId DESC LIMIT 1");
+		ResultSet rs = Interact.execute("SELECT * FROM møte ORDER BY møteId DESC LIMIT 1");
 
 		try {
 			if(rs.next())
-				meetingID =  rs.getInt("mÃ¸teId");
+				meetingID =  rs.getInt("møteId");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,26 +39,26 @@ public class DBMeeting {
 
 		DBParticipants.addParticipants(participants, meetingID);
 		Interact.executeUpdate("INSERT INTO kobling " + 
-		"(mÃ¸teId, romNavn) VALUES ('" + meetingID + "','" + room.getName() + "')");
+		"(møteId, romNavn) VALUES ('" + meetingID + "','" + room.getName() + "')");
 		
 		return meetingID;		
 	}
-	// Ã¸ kan skrives som Ã¸
+	// ø kan skrives som ø
 	public static Meeting getMeeting(int meetingID){
-		ResultSet rs = Interact.execute("SELECT * FROM mÃ¸te WHERE mÃ¸teId = '" + meetingID + "'");
-		Meeting mÃ¸te = null;
+		ResultSet rs = Interact.execute("SELECT * FROM møte WHERE møteId = '" + meetingID + "'");
+		Meeting møte = null;
 		
 		try {
 			if(rs.next())
-				mÃ¸te = makeMeetingObject(rs);
+				møte = makeMeetingObject(rs);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return mÃ¸te;
+		return møte;
 	}
 //	public static ArrayList<Meeting> getAllMeetings(User user){
 //		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
-//		ResultSet rs = Interact.execute("SELECT * FROM mÃ¸te WHERE bruker='"+user+"'");
+//		ResultSet rs = Interact.execute("SELECT * FROM møte WHERE bruker='"+user+"'");
 //		
 //		try {
 //			if(rs.next()){
@@ -79,18 +79,18 @@ public class DBMeeting {
 	 * @param meeting
 	 */
 	public static void editMeeting(Meeting meeting){
-		//MÃ¸ sende melding til deltakere
+		//Mø sende melding til deltakere
 		StringBuilder query = new StringBuilder();
 		
-		query.append("UPDATE mÃ¸te SET mÃ¸teId = '" + meeting.getMeetingID() + "',");
+		query.append("UPDATE møte SET møteId = '" + meeting.getMeetingID() + "',");
 		query.append("romNavn = '" + meeting.getRoom() + "',");
-		query.append("WHERE mÃ¸teId = '" + meeting.getMeetingID() + "'");
+		query.append("WHERE møteId = '" + meeting.getMeetingID() + "'");
 		
 		Interact.executeUpdate(query.toString());	
 		}
 	public static void cancelMeeting(Meeting meeting){
-		//MÃ¸ sende melding til deltakere
-		Interact.executeUpdate("DELETE FROM mÃ¸te WHERE mÃ¸teId = '" + meeting.getMeetingID() + "'");
+		//Mø sende melding til deltakere
+		Interact.executeUpdate("DELETE FROM møte WHERE møteId = '" + meeting.getMeetingID() + "'");
 
 	}
 	public static Meeting makeMeetingObject(ResultSet rs){
@@ -98,7 +98,7 @@ public class DBMeeting {
 		
 
 		try {
-			int meetingID = rs.getInt("mÃ¸teId");
+			int meetingID = rs.getInt("møteId");
 			ArrayList<User> participants = DBParticipants.getParticipants(meetingID, "all");
 			MeetingRoom room = DBMeetingRoom.getMeetingRoom(rs.getString("romNavn"));
 			Appointment app = DBAppointment.getAppointmentbyID(rs.getInt("hendelseId"));
