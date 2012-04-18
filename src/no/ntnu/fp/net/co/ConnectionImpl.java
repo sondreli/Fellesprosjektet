@@ -36,105 +36,146 @@ import no.ntnu.fp.net.cl.KtnDatagram.Flag;
  */
 public class ConnectionImpl extends AbstractConnection {
 
-    /** Keeps track of the used ports for each server port. */
-    private static Map<Integer, Boolean> usedPorts = Collections.synchronizedMap(new HashMap<Integer, Boolean>());
+	/** Keeps track of the used ports for each server port. */
+	private static Map<Integer, Boolean> usedPorts = Collections.synchronizedMap(new HashMap<Integer, Boolean>());
 
-    /**
-     * Initialise initial sequence number and setup state machine.
-     * 
-     * @param myPort
-     *            - the local port to associate with this connection
-     */
-    public ConnectionImpl(int myPort) {
-        super();
-        this.myPort = myPort; //setter port og myaddress, eneste som ikke var satt i abstractconnection constructoren
-        myAddress = getIPv4Address();
-        usedPorts.put(myPort, true);
-    }    
+	/**
+	 * Initialise initial sequence number and setup state machine.
+	 * 
+	 * @param myPort
+	 *            - the local port to associate with this connection
+	 */
+	public ConnectionImpl(int myPort) {
+		super();
+		this.myPort = myPort; //setter port og myaddress, eneste som ikke var satt i abstractconnection constructoren
+		myAddress = getIPv4Address();
+		usedPorts.put(myPort, true);
+	}    
 
-    private String getIPv4Address() {
-        try {
-            return InetAddress.getLocalHost().getHostAddress();
-        }
-        catch (UnknownHostException e) {
-            return "127.0.0.1";
-        }
-    }
+	private String getIPv4Address() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress();
+		}
+		catch (UnknownHostException e) {
+			return "127.0.0.1";
+		}
+	}
 
-    /**
-     * Establish a connection to a remote location.
-     * 
-     * @param remoteAddress
-     *            - the remote IP-address to connect to
-     * @param remotePort
-     *            - the remote portnumber to connect to
-     * @throws IOException
-     *             If there's an I/O error.
-     * @throws java.net.SocketTimeoutException
-     *             If timeout expires before connection is completed.
-     * @see Connection#connect(InetAddress, int)
-     */
-    public void connect(InetAddress remoteAddress, int remotePort) throws IOException,
-            SocketTimeoutException {
-        throw new NotImplementedException();
-    }
+	/**
+	 * Establish a connection to a remote location.
+	 * 
+	 * @param remoteAddress
+	 *            - the remote IP-address to connect to
+	 * @param remotePort
+	 *            - the remote portnumber to connect to
+	 * @throws IOException
+	 *             If there's an I/O error.
+	 * @throws java.net.SocketTimeoutException
+	 *             If timeout expires before connection is completed.
+	 * @see Connection#connect(InetAddress, int)
+	 */
+	public void connect(InetAddress remoteAddress, int remotePort) throws IOException,
+	SocketTimeoutException {
 
-    /**
-     * Listen for, and accept, incoming connections.
-     * 
-     * @return A new ConnectionImpl-object representing the new connection.
-     * @see Connection#accept()
-     */
-    public Connection accept() throws IOException, SocketTimeoutException {
-        throw new NotImplementedException();
-    }
+		if (state != State.CLOSED) {
+			throw new ConnectException("Socket is not closed");
+		}
+		this.remoteAddress = remoteAddress.getHostAddress();
+		this.remotePort = remotePort;
+		try{
+			state = State.SYN_SENT;
+			KtnDatagram retur = sendPackage(constructInternalPacket(Flag.SYN));
+			sendAck(retur, false);
+			state = State.ESTABLISHED;
+		}
+		catch (Exception E) {
+			state = State.CLOSED;
+			throw new IOException("Error contacting Host: " + E);
+		}
 
-    /**
-     * Send a message from the application.
-     * 
-     * @param msg
-     *            - the String to be sent.
-     * @throws ConnectException
-     *             If no connection exists.
-     * @throws IOException
-     *             If no ACK was received.
-     * @see AbstractConnection#sendDataPacketWithRetransmit(KtnDatagram)
-     * @see no.ntnu.fp.net.co.Connection#send(String)
-     */
-    public void send(String msg) throws ConnectException, IOException {
-        throw new NotImplementedException();
-    }
 
-    /**
-     * Wait for incoming data.
-     * 
-     * @return The received data's payload as a String.
-     * @see Connection#receive()
-     * @see AbstractConnection#receivePacket(boolean)
-     * @see AbstractConnection#sendAck(KtnDatagram, boolean)
-     */
-    public String receive() throws ConnectException, IOException {
-        throw new NotImplementedException();
-    }
+	}
 
-    /**
-     * Close the connection.
-     * 
-     * @see Connection#close()
-     */
-    public void close() throws IOException {
-        throw new NotImplementedException();
-    }
+	/**
+	 * Listen for, and accept, incoming connections.
+	 * 
+	 * @return A new ConnectionImpl-object representing the new connection.
+	 * @see Connection#accept()
+	 */
+	public Connection accept() throws IOException, SocketTimeoutException {
+		throw new NotImplementedException();
+	}
 
-    /**
-     * Test a packet for transmission errors. This function should only called
-     * with data or ACK packets in the ESTABLISHED state.
-     * 
-     * @param packet
-     *            Packet to test.
-     * @return true if packet is free of errors, false otherwise.
-     */
-    protected boolean isValid(KtnDatagram packet) {
-        throw new NotImplementedException();
-    }
+	/**
+	 * Send a message from the application.
+	 * 
+	 * @param msg
+	 *            - the String to be sent.
+	 * @throws ConnectException
+	 *             If no connection exists.
+	 * @throws IOException
+	 *             If no ACK was received.
+	 * @see AbstractConnection#sendDataPacketWithRetransmit(KtnDatagram)
+	 * @see no.ntnu.fp.net.co.Connection#send(String)
+	 */
+	public void send(String msg) throws ConnectException, IOException {
+		if(state != State.ESTABLISHED)
+			throw new ConnectException("Error sending, not connected");
+
+		sendPackage(constructDataPacket(msg));
+	}
+
+	//Sends the input package and waits for ack
+	public KtnDatagram sendPackage(KtnDatagram sendPackage) throws ConnectException, IOException{
+		int attempts = 40;
+		KtnDatagram answer = null;
+		while(attempts-- > 0 && !isValid(answer)){
+			try {
+				simplySendPacket(sendPackage);
+				answer = receiveAck();
+
+			} catch (Exception e) {
+				// intet svar
+			}
+
+		}
+		if(!isValid(answer)){
+			state = State.CLOSED;
+			throw new IOException("Could not send packet");
+		}
+		return answer;
+	}
+
+	/**
+	 * Wait for incoming data.
+	 * 
+	 * @return The received data's payload as a String.
+	 * @see Connection#receive()
+	 * @see AbstractConnection#receivePacket(boolean)
+	 * @see AbstractConnection#sendAck(KtnDatagram, boolean)
+	 */
+	public String receive() throws ConnectException, IOException {
+		throw new NotImplementedException();
+	}
+
+	/**
+	 * Close the connection.
+	 * 
+	 * @see Connection#close()
+	 */
+	public void close() throws IOException {
+		throw new NotImplementedException();
+	}
+
+	/**
+	 * Test a packet for transmission errors. This function should only called
+	 * with data or ACK packets in the ESTABLISHED state.
+	 * 
+	 * @param packet
+	 *            Packet to test.
+	 * @return true if packet is free of errors, false otherwise.
+	 */
+	protected boolean isValid(KtnDatagram packet) {
+		throw new NotImplementedException();
+	}
 }
