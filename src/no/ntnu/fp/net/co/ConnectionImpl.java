@@ -103,6 +103,7 @@ public class ConnectionImpl extends AbstractConnection {
 		while(attempts-- > 0 && !isValid(answer)){
 			try {
 				simplySendPacket(sendPackage);
+				lastDataPacketSent = sendPackage;
 				answer = receiveAck();
 
 			} catch (Exception e) {
