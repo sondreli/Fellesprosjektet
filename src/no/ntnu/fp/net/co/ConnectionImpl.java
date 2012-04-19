@@ -193,11 +193,50 @@ public class ConnectionImpl extends AbstractConnection {
      * @return true if packet is free of errors, false otherwise.
      */
     protected boolean isValid(KtnDatagram packet) {
-        if(packet != null && packet.getChecksum() == packet.calculateChecksum()) {
-        	return true;
-        }
-        return false;
-    }
+    	//hvis pakken er null; return false
+    	if (packet == null){
+    	return false;
+    	}
+    	//hvis pakken har feil checksum; return false
+    	if(packet.getChecksum() != packet.calculateChecksum()){
+    	return false;
+    	}
+    	//hvis det er en Fin pakke, og payload ikke er null; return false
+    	if (packet.getFlag() == Flag.FIN && packet.getPayload() != null){
+    	return false;
+    	}
+    	//hvis det er en ack pakke, og den ikke acker siste pakke som er sendt; return false
+    	if ((packet.getFlag() == Flag.ACK || packet.getFlag() == Flag.SYN_ACK) && packet.getAck() != lastDataPacketSent.getSeq_nr()) {
+    	return false;
+    	}
+    	//hvis state er LISTEN, må det være en SYN pakke
+    	if (state == State.LISTEN){
+    	return (packet.getFlag() == Flag.SYN);
+    	}
+    	//for alle andre states må remotePort og remoteAddress være satt. Hvis pakken ikke er fra riktig host; return false
+    	if (packet.getSrc_addr() != remoteAddress || packet.getSrc_port() != remotePort){
+    	return false;
+    	}
+    	//hvis state er SYN_SENT, må det være en SYN_ACK pakke
+    	if (state == State.SYN_SENT){
+    	return (packet.getFlag() == Flag.SYN_ACK);
+    	}
+    	//hvis state er SYN_RCVD må pakken være en ACK
+    	if (state == State.SYN_RCVD){
+    	return (packet.getFlag() == Flag.ACK);
+    	}
+    	//hvis state er FIN_WAIT_1 eller FIN_WAIT_2, må pakken være fin eller ack
+    	if(state == State.FIN_WAIT_1 || state == State.FIN_WAIT_2){
+    	return (packet.getFlag() == Flag.FIN || packet.getFlag() == Flag.ACK);
+    	}
+    	//hvis state er CLOSE_WAIT, må set være en fin pakke
+    	if(state == State.CLOSE_WAIT){
+    	return (packet.getFlag() == Flag.FIN);
+    	}
+
+
+    	return true;
+    	}
 
 	/**
 	 * Wait for incoming data.
